@@ -15,10 +15,10 @@ export default function CreatePage() {
   }
 
   const renderedClassList = classImgData.map(classItem => {
-    const selectedStyle = selected === classItem.name ? 'border-blue-800 border-4' : '';
+    const selectedStyle = selected === classItem.name ? 'border-blue-800 border-4' : 'border-2 border-gray-400';
 
     return (
-      <div key={classItem.name} className={"w-40 m-1 p-8 border-2 border-gray-400 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => setSelected(classItem.name)}>
+      <div key={classItem.name} className={"w-40 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => setSelected(classItem.name)}>
         <classItem.icon className="text-xl" />
         <h5 className="font-medium mt-3">{classItem.name}</h5>
       </div>
