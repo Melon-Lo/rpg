@@ -1,6 +1,6 @@
 export default function App () {
   return (
-    <div>
+    <div className="mt-10">
       app
     </div>
   );
