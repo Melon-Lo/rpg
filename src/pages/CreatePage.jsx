@@ -1,26 +1,33 @@
 import Button from "../components/Button";
 import classImgData from "../data/class/classImgData";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { changeName, changeClassTitle } from "../store";
 
 export default function CreatePage() {
-  const [name, setName] = useState('');
-  const [selected, setSelected] = useState('');
+  const dispatch = useDispatch();
+  const { name, classTitle } = useSelector(state => {
+    return {
+      name: state.form.name,
+      classTitle: state.form.classTitle,
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(name, classTitle);
   }
 
   const handleChange = (e) => {
-    setName(e.target.value);
+    dispatch(changeName(e.target.value));
   }
 
   const renderedClassList = classImgData.map(classItem => {
-    const selectedStyle = selected === classItem.name ? 'border-blue-800 border-4' : 'border-2 border-gray-400';
+    const selectedStyle = classTitle === classItem.classTitle ? 'border-blue-800 border-4' : 'border-2 border-gray-400';
 
     return (
-      <div key={classItem.name} className={"w-40 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => setSelected(classItem.name)}>
+      <div key={classItem.classTitle} className={"w-40 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => dispatch(changeClassTitle(classItem.classTitle))}>
         <classItem.icon className="text-xl" />
-        <h5 className="font-medium mt-3">{classItem.name}</h5>
+        <h5 className="font-medium mt-3">{classItem.classTitle}</h5>
       </div>
     )
   });
