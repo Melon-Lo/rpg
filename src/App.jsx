@@ -6,7 +6,7 @@ import Route from "./components/Route";
 
 export default function App () {
   return (
-    <div className="container">
+    <div className="">
       <Header />
       <div className="mt-20">
         <Route path='/'>
