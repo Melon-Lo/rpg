@@ -2,10 +2,28 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const charStats = createSlice({
   name: "charStats",
+
+  // DEV ONLY
+  // initialState: {
+  //   name: "小明",
+  //   classTitle: "戰士",
+  //   engClassTitle: "fighter",
+  //   level: 1,
+  //   HP: 100,
+  //   maxHP: 100,
+  //   MP: 5,
+  //   maxMP: 5,
+  //   ATK: 10,
+  //   DEF: 10,
+  //   MATK: 10,
+  //   MDEF: 10,
+  //   SPD: 10,
+  // },
+
   initialState: {
     name: "",
     classTitle: "",
-    engClassTitle: "",
+    level: 1,
     HP: 0,
     maxHP: 0,
     MP: 0,
