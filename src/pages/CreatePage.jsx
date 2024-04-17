@@ -5,9 +5,11 @@ import { changeName, changeClassTitle } from "../store";
 import { rollDiceToDetermineStats, resetStats } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { generateFighterStats, generateMagicianStats } from "../utils/generateRandomStats";
+import useNavigation from "../hooks/useNavigation";
 import Swal from 'sweetalert2';
 
 export default function CreatePage() {
+  const { navigate } = useNavigation();
   const dispatch = useDispatch();
   const { name, classTitle } = useSelector(state => {
     return {
@@ -78,6 +80,7 @@ export default function CreatePage() {
           confirmButtonText: '開始冒險',
         });
       }
+      navigate('/');
     });
   };
 
