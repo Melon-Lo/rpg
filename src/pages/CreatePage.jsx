@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import classImgData from "../data/class/classImgData";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeClassTitle } from "../store";
-import { rollDiceToDetermineStats } from "../store";
+import { rollDiceToDetermineStats, resetStats } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { type } from "@testing-library/user-event/dist/type";
 import { generateFighterStats, generateMagicianStats } from "../utils/generateRandomStats";
@@ -30,7 +30,44 @@ export default function CreatePage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, classTitle);
+
+    // 姓名不得為空白
+    if (name.length === 0) {
+      Swal.fire({
+        text: "姓名不得為空白！",
+        icon: "warning"
+      });
+      return
+    }
+
+    // 需要選擇職業並擲骰子決定數值
+    if (!classTitle) {
+      Swal.fire({
+        text: "請選擇職業並擲骰子決定數值！",
+        icon: "warning"
+      });
+      return
+    }
+
+    Swal.fire({
+      text: '都確定了嗎？',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消'
+    }).then((result) => {
+      // 如果用戶點擊了確認按鈕，則繼續執行後續操作
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '角色創建成功',
+          text: '請開始你的冒險！',
+          icon: 'success',
+          confirmButtonText: '開始冒險',
+        });
+      }
+    });
   };
 
   const handleChange = (e) => {
@@ -38,25 +75,27 @@ export default function CreatePage() {
   };
 
   const handleSelectClass = (item) => {
-    dispatch(changeClassTitle(item.classTitle))
+    dispatch(changeClassTitle(item.classTitle));
+
+    // 當選擇不同的職業時，數值會重設
+    if (item.classTitle === classTitle) return;
+    dispatch(resetStats());
   };
 
   const handleRollDice = () => {
-    const rollDiceAction = (statsObject) => ({
-      type: 'charStats/rollDiceToDetermineStats',
-      payload: statsObject,
-    });
-
     let payload;
     if (classTitle === '戰士') {
       payload = generateFighterStats();
     } else if (classTitle === '法師') {
       payload = generateMagicianStats();
     } else {
-      Swal.fire("請先選擇職業！");
+      Swal.fire({
+        text: "請先選擇職業！",
+        icon: "warning"
+      });
     }
 
-    dispatch(rollDiceAction(payload));
+    dispatch(rollDiceToDetermineStats(payload));
   };
 
   // 職業列表

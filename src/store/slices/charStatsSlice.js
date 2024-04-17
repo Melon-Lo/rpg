@@ -21,8 +21,17 @@ const charStats = createSlice({
       // 使用 action.payload 更新狀態，狀態就是 action.payload 本身
       return action.payload;
     },
+    resetStats(state, action) {
+      state.maxHP = 0;
+      state.maxMP = 0;
+      state.ATK = 0;
+      state.DEF = 0;
+      state.MATK = 0;
+      state.MDEF = 0;
+      state.SPD = 0;
+    },
   },
 });
 
-export const { rollDiceToDetermineStats } = charStats.actions;
+export const { rollDiceToDetermineStats, resetStats } = charStats.actions;
 export const charStatsReducer = charStats.reducer;

@@ -3,6 +3,7 @@ import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
 import {
   charStatsReducer,
   rollDiceToDetermineStats,
+  resetStats,
 } from "./slices/charStatsSlice";
 
 const store = configureStore({
@@ -12,4 +13,10 @@ const store = configureStore({
   },
 });
 
-export { store, changeName, changeClassTitle, rollDiceToDetermineStats };
+export {
+  store,
+  changeName,
+  changeClassTitle,
+  rollDiceToDetermineStats,
+  resetStats,
+};
