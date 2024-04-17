@@ -1,7 +1,6 @@
 import Button from "../components/Button";
 import classImgData from "../data/class/classImgData";
 import { useDispatch, useSelector } from "react-redux";
-import {  } from "../store";
 import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, rollDiceToDetermineStats, resetStats } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { generateFighterStats, generateMagicianStats } from "../utils/generateRandomStats";
@@ -56,6 +55,7 @@ export default function CreatePage() {
       html: `
         <div>
           <h5>名字：${name}</h5>
+          <h5>職業：${classTitle}</h5>
           <h5>最大HP：${maxHP}</h5>
           <h5>最大MP：${maxMP}</h5>
           <h5>攻擊力：${ATK}</h5>

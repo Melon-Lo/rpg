@@ -18,6 +18,8 @@ const charStats = createSlice({
     MATK: 10,
     MDEF: 10,
     SPD: 10,
+    exp: 0,
+    expToNextLevel: 50,
   },
 
   // initialState: {
@@ -33,6 +35,8 @@ const charStats = createSlice({
   //   MATK: 0,
   //   MDEF: 0,
   //   SPD: 0,
+  //   exp: 0,
+  //   expToNextLevel: 50,
   // },
   reducers: {
     changeStatName(state, action) {

@@ -1,6 +1,17 @@
 // fighter
 export function generateFighterStats() {
-  let ATK, DEF, MATK, MDEF, SPD, maxHP, maxMP, HP, MP, level;
+  let ATK,
+    DEF,
+    MATK,
+    MDEF,
+    SPD,
+    maxHP,
+    maxMP,
+    HP,
+    MP,
+    level,
+    exp,
+    expToNextLevel;
 
   // ATK DEF 在 10~15之間
   ATK = Math.floor(Math.random() * 6) + 10;
@@ -17,6 +28,8 @@ export function generateFighterStats() {
   maxMP = 5;
   MP = 5;
   level = 1;
+  exp = 0;
+  expToNextLevel = 50;
 
   // 確保總和為 35
   let total = ATK + DEF + MATK + MDEF + SPD;
@@ -43,12 +56,25 @@ export function generateFighterStats() {
     HP,
     MP,
     level,
+    exp,
+    expToNextLevel,
   };
 }
 
 // magician
 export function generateMagicianStats() {
-  let ATK, DEF, MATK, MDEF, SPD, maxHP, maxMP, HP, MP, level;
+  let ATK,
+    DEF,
+    MATK,
+    MDEF,
+    SPD,
+    maxHP,
+    maxMP,
+    HP,
+    MP,
+    level,
+    exp,
+    expToNextLevel;
 
   // ATK DEF 在 3~8之間
   ATK = Math.floor(Math.random() * 6) + 3;
@@ -67,6 +93,8 @@ export function generateMagicianStats() {
   maxMP = 35;
   MP = 35;
   level = 1;
+  exp = 0;
+  expToNextLevel = 50;
 
   // 確保總和為 35
   let total = ATK + DEF + MATK + MDEF + SPD;
@@ -93,5 +121,7 @@ export function generateMagicianStats() {
     HP,
     MP,
     level,
+    exp,
+    expToNextLevel,
   };
 }
