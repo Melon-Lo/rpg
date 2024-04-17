@@ -17,8 +17,6 @@ export default function StatusSection() {
     };
   });
 
-  console.log(exp, expToNextLevel);
-
   const { money } = useSelector(state => {
     return {
       money: state.items.money,
@@ -26,12 +24,12 @@ export default function StatusSection() {
   });
 
   return (
-    <section className="flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded">
+    <section className="w-11/12 flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded">
       <div className="flex justify-between items-center w-full">
         <div className="w-4/12">
           <div>
             <span>{name}</span>
-            <span className="text-sm text-gray-500 ml-3">{classTitle}</span>
+            <span className="text-sm text-gray-500 mx-2">{classTitle}</span>
           </div>
           <div>
             LV.{level}
