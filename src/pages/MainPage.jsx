@@ -1,9 +1,9 @@
-import StatusBar from "../components/StatusBar"
+import StatusSection from "../components/StatusSection"
 
 export default function MainPage() {
   return (
     <div>
-      <StatusBar />
+      <StatusSection />
     </div>
   )
 };

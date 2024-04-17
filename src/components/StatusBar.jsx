@@ -1,65 +1,15 @@
-import { useSelector } from "react-redux";
-import { RiCoinsLine } from "react-icons/ri";
-
-export default function StatusBar() {
-  const { name, classTitle, level, HP, maxHP, MP, maxMP } = useSelector(state => {
-    return {
-      name: state.charStats.name,
-      classTitle: state.charStats.classTitle,
-      level: state.charStats.level,
-      HP: state.charStats.HP,
-      maxHP: state.charStats.maxHP,
-      MP: state.charStats.MP,
-      maxMP: state.charStats.maxMP,
-    };
-  });
-
-  console.log(level);
-
-  const { money } = useSelector(state => {
-    return {
-      money: state.items.money,
-    };
-  });
+export default function StatusBar({ type, color, currentValue, maxValue }) {
+  const currentRatio = currentValue / maxValue;
 
   return (
-    <section className="flex flex-col items-end px-3">
-      <div className="flex justify-between w-full">
-        <div className="w-6/12">
-          <div>
-            {name}｜{classTitle}
-          </div>
-          <div>
-            LV.{level}
-          </div>
-        </div>
-        <div className="w-6/12">
-          <div className="flex justify-between">
-            <div>
-              HP：{HP}/{maxHP}
-            </div>
-            <div>
-              HP條
-            </div>
-          </div>
-          <div className="flex justify-between">
-            <div>
-              MP：{MP}/{maxMP}
-            </div>
-            <div>
-              MP條
-            </div>
-          </div>
-        </div>
+    <div className="flex justify-between p-2">
+      <div>
+        {type}：{currentValue} / {maxValue}
       </div>
-      <div className="flex">
-        <div>
-          <RiCoinsLine />
-        </div>
-        <div>
-          {money}
-        </div>
+      <div className="w-5/12 md:w-7/12 bg-gray-500 rounded-md relative overflow-hidden">
+        {/* 依照比例顯示長度 */}
+        <div id="hpBar" className={"absolute inset-0 bg-" + color + "-500"} style={{ width: currentRatio * 100 + '%' }}></div>
       </div>
-    </section>
-  );
+    </div>
+  )
 }
