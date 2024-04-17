@@ -49,7 +49,19 @@ export default function CreatePage() {
     }
 
     Swal.fire({
-      text: '都確定了嗎？',
+      title: '都確定了嗎？',
+      html: `
+        <div>
+          <h5>名字：${name}</h5>
+          <h5>最大HP：${maxHP}</h5>
+          <h5>最大MP：${maxMP}</h5>
+          <h5>攻擊力：${ATK}</h5>
+          <h5>防禦力：${DEF}</h5>
+          <h5>魔法攻擊力：${MATK}</h5>
+          <h5>魔法防禦力：${MDEF}</h5>
+          <h5>速度：${SPD}</h5>
+        <div>
+      `,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -112,7 +124,7 @@ export default function CreatePage() {
   return (
     <div className="flex flex-col items-center py-3">
       <div className="text-center">
-        <h1 className="text-xl">歡迎來到好玩的RPG！</h1>
+        <h1 className="text-4xl">歡迎來到好玩的RPG！</h1>
         <h3 className="text-lg text-gray-600 mt-3">在此建立你的角色</h3>
       </div>
       <form className="mt-10 w-full flex flex-col items-center" onSubmit={handleSubmit}>
