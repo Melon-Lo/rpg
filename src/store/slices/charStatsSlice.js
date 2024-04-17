@@ -35,6 +35,12 @@ const charStats = createSlice({
     SPD: 0,
   },
   reducers: {
+    changeStatName(state, action) {
+      state.name = action.payload;
+    },
+    changeStatClassTitle(state, action) {
+      state.classTitle = action.payload;
+    },
     rollDiceToDetermineStats(state, action) {
       // 使用 action.payload 更新狀態，狀態就是 action.payload 本身
       return action.payload;
@@ -51,5 +57,10 @@ const charStats = createSlice({
   },
 });
 
-export const { rollDiceToDetermineStats, resetStats } = charStats.actions;
+export const {
+  changeStatName,
+  changeStatClassTitle,
+  rollDiceToDetermineStats,
+  resetStats,
+} = charStats.actions;
 export const charStatsReducer = charStats.reducer;

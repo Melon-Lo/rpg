@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
 import {
+  changeStatName,
+  changeStatClassTitle,
   charStatsReducer,
   rollDiceToDetermineStats,
   resetStats,
@@ -20,6 +22,8 @@ export {
   store,
   changeName,
   changeClassTitle,
+  changeStatName,
+  changeStatClassTitle,
   rollDiceToDetermineStats,
   resetStats,
 };

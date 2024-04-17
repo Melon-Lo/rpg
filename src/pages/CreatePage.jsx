@@ -1,8 +1,8 @@
 import Button from "../components/Button";
 import classImgData from "../data/class/classImgData";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle } from "../store";
-import { rollDiceToDetermineStats, resetStats } from "../store";
+import {  } from "../store";
+import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, rollDiceToDetermineStats, resetStats } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { generateFighterStats, generateMagicianStats } from "../utils/generateRandomStats";
 import useNavigation from "../hooks/useNavigation";
@@ -29,6 +29,7 @@ export default function CreatePage() {
     };
   });
 
+  // 送出資料
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -79,15 +80,20 @@ export default function CreatePage() {
           icon: 'success',
           confirmButtonText: '開始冒險',
         });
+
+        dispatch(changeStatName(name));
+        dispatch(changeStatClassTitle(classTitle));
+        navigate('/');
       }
-      navigate('/');
     });
   };
 
+  // 輸入名字
   const handleInputChange = (e) => {
     dispatch(changeName(e.target.value));
   };
 
+  // 選職業
   const handleSelectClass = (item) => {
     dispatch(changeClassTitle(item.classTitle));
 
@@ -96,6 +102,7 @@ export default function CreatePage() {
     dispatch(resetStats());
   };
 
+  // 擲骰子
   const handleRollDice = () => {
     let payload;
     if (classTitle === '戰士') {

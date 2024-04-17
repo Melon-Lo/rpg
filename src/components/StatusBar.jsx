@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RiCoinsLine } from "react-icons/ri";
 
 export default function StatusBar() {
@@ -13,6 +13,8 @@ export default function StatusBar() {
       maxMP: state.charStats.maxMP,
     };
   });
+
+  console.log(level);
 
   const { money } = useSelector(state => {
     return {
