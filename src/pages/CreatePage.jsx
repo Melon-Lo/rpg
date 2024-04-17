@@ -22,11 +22,15 @@ export default function CreatePage() {
     dispatch(changeName(e.target.value));
   }
 
+  const handleSelectClass = (item) => {
+    dispatch(changeClassTitle(item.classTitle))
+  }
+
   const renderedClassList = classImgData.map(classItem => {
     const selectedStyle = classTitle === classItem.classTitle ? 'border-blue-800 border-4' : 'border-2 border-gray-400';
 
     return (
-      <div key={classItem.classTitle} className={"w-40 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => dispatch(changeClassTitle(classItem.classTitle))}>
+      <div key={classItem.classTitle} className={"w-40 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => handleSelectClass(classItem)}>
         <classItem.icon className="text-xl" />
         <h5 className="font-medium mt-3">{classItem.classTitle}</h5>
       </div>
