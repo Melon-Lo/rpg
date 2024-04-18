@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import useNavigation from "../hooks/useNavigation";
+import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 export default function CreatePage() {
-  const { navigate } = useNavigation();
+  // const { navigate } = useNavigation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, classTitle } = useSelector(state => {
     return {
@@ -82,7 +84,7 @@ export default function CreatePage() {
 
         dispatch(changeStatName(name));
         dispatch(changeStatClassTitle(classTitle));
-        navigate('/main');
+        navigate('/');
       }
     });
   };

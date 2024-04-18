@@ -10,17 +10,17 @@ const basename = process.env.PUBLIC_URL;
 export default function App () {
   return (
     <div>
-      <Header />
-      <div className="mt-20">
-        <BrowserRouter basename={basename}>
-          <Routes>
-            <Route path="main" element={<MainPage />}></Route>
-            <Route path="create" element={<CreatePage />}></Route>
-            <Route path="landing" element={<LandingPage />}></Route>
-            <Route path="*" element={<Navigate to="create" />}></Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter basename={basename}>
+        <Header />
+        <div className="mt-20">
+            <Routes>
+              <Route path="/" element={<MainPage />}></Route>
+              <Route path="create" element={<CreatePage />}></Route>
+              <Route path="landing" element={<LandingPage />}></Route>
+              <Route path="*" element={<Navigate to="create" />}></Route>
+            </Routes>
+        </div>
+      </BrowserRouter>
     </div>
     // <div className="">
     //   <Header />
