@@ -82,7 +82,7 @@ export default function CreatePage() {
 
         dispatch(changeStatName(name));
         dispatch(changeStatClassTitle(classTitle));
-        navigate('main');
+        navigate('/main');
       }
     });
   };
