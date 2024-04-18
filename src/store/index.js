@@ -5,7 +5,7 @@ import {
   changeStatName,
   changeStatClassTitle,
   charStatsReducer,
-  rollDiceToDetermineStats,
+  generateStats,
   resetStats,
 } from "./slices/charStatsSlice";
 import { itemsSliceReducer } from "./slices/itemsSlice";
@@ -24,6 +24,6 @@ export {
   changeClassTitle,
   changeStatName,
   changeStatClassTitle,
-  rollDiceToDetermineStats,
+  generateStats,
   resetStats,
 };

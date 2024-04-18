@@ -1,9 +1,8 @@
 import Button from "../components/Button";
 import classImgData from "../data/class/classImgData";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, rollDiceToDetermineStats, resetStats } from "../store";
+import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats } from "../store";
 import { RiDiceFill } from "react-icons/ri";
-import { generateFighterStats, generateMagicianStats } from "../utils/generateRandomStats";
 import useNavigation from "../hooks/useNavigation";
 import Swal from 'sweetalert2';
 
@@ -96,6 +95,7 @@ export default function CreatePage() {
   // 選職業
   const handleSelectClass = (item) => {
     dispatch(changeClassTitle(item.classTitle));
+    dispatch(changeStatClassTitle(item.classTitle));
 
     // 當選擇不同的職業時，數值會重設
     if (item.classTitle === classTitle) return;
@@ -104,19 +104,7 @@ export default function CreatePage() {
 
   // 擲骰子
   const handleRollDice = () => {
-    let payload;
-    if (classTitle === '戰士') {
-      payload = generateFighterStats();
-    } else if (classTitle === '法師') {
-      payload = generateMagicianStats();
-    } else {
-      Swal.fire({
-        text: "請先選擇職業！",
-        icon: "warning"
-      });
-    }
-
-    dispatch(rollDiceToDetermineStats(payload));
+    dispatch(generateStats());
   };
 
   // 職業列表
