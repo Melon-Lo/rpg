@@ -8,7 +8,7 @@ const systemStatusSlice = createSlice({
     // DEV ONLY 為了寫 mainPage
     roleCreated: true,
 
-    currentLocation: "村莊",
+    currentScene: "村莊",
   },
   reducers: {
     changeRoleCreated(state, action) {
