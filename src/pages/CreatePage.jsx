@@ -90,7 +90,12 @@ export default function CreatePage() {
 
   // 輸入名字
   const handleInputChange = (e) => {
-    dispatch(changeName(e.target.value));
+    const value = e.target.value;
+
+    // 名字長度不得超過10個字
+    if (value.length > 10) return
+
+    dispatch(changeName(value));
   };
 
   // 選職業
@@ -105,7 +110,14 @@ export default function CreatePage() {
 
   // 擲骰子
   const handleRollDice = () => {
-
+    // 還沒選職業就擲骰子
+    if (!classTitle) {
+      Swal.fire({
+        text: "請先選擇職業！",
+        icon: "warning"
+      });
+      return
+    }
     dispatch(generateStats());
   };
 
@@ -131,7 +143,7 @@ export default function CreatePage() {
         {/* 輸入名字 */}
         <div className="flex flex-col items-start text-lg w-full py-2 px-5">
           <h2 className="m-3 font-bold text-2xl">【名字】</h2>
-          <input onChange={handleInputChange} value={name} className="p-3" type="text" placeholder="輸入角色名..." />
+          <input onChange={handleInputChange} value={name} className="p-3 w-80" type="text" placeholder="輸入角色名（10個字以內）" />
         </div>
         {/* 選擇職業 */}
         <div className="flex flex-col items-start text-lg w-full py-2 px-5">

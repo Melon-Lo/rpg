@@ -4,21 +4,39 @@ import classInitialStats from "../../data/class/classInitialStats";
 const charStats = createSlice({
   name: "charStats",
   initialState: {
-    name: "小明",
-    classTitle: "法師",
+    name: "",
+    classTitle: "",
     level: 1,
-    HP: 60,
-    maxHP: 70,
-    MP: 10,
-    maxMP: 30,
+    HP: 0,
+    maxHP: 0,
+    MP: 0,
+    maxMP: 0,
     ATK: 0,
     DEF: 0,
     MATK: 0,
     MDEF: 0,
     SPD: 0,
-    exp: 43,
+    exp: 0,
     expToNextLevel: 50,
   },
+
+  // DEV ONLY
+  // initialState: {
+  //   name: "小明",
+  //   classTitle: "法師",
+  //   level: 1,
+  //   HP: 60,
+  //   maxHP: 70,
+  //   MP: 10,
+  //   maxMP: 30,
+  //   ATK: 0,
+  //   DEF: 0,
+  //   MATK: 0,
+  //   MDEF: 0,
+  //   SPD: 0,
+  //   exp: 43,
+  //   expToNextLevel: 50,
+  // },
   reducers: {
     changeStatName(state, action) {
       state.name = action.payload;
