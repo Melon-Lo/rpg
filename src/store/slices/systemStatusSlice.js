@@ -4,6 +4,9 @@ const systemStatusSlice = createSlice({
   name: "systemStatus",
   initialState: {
     roleCreated: false,
+
+    // DEV ONLY 為了寫 mainPage
+    // roleCreated: false,
   },
   reducers: {
     changeRoleCreated(state, action) {

@@ -8,7 +8,7 @@ import {
   generateStats,
   resetStats,
 } from "./slices/charStatsSlice";
-import { itemsSliceReducer } from "./slices/itemsSlice";
+import { itemsSliceReducer, addItem } from "./slices/itemsSlice";
 import {
   systemStatusSliceReducer,
   changeRoleCreated,
@@ -25,11 +25,19 @@ const store = configureStore({
 
 export {
   store,
+  // form
   changeName,
   changeClassTitle,
+
+  // charStats
   changeStatName,
   changeStatClassTitle,
   generateStats,
   resetStats,
+
+  // systemStatus
   changeRoleCreated,
+
+  // items
+  addItem,
 };

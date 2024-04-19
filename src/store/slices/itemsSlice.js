@@ -1,12 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const itemsSlice = createSlice({
   name: "items",
   initialState: {
     money: 50,
+    data: [],
   },
-  reducers: {},
+  reducers: {
+    addItem(state, action) {
+      state.data.push({
+        id: nanoid(),
+        name: action.payload.name,
+      });
+    },
+  },
 });
 
-export const {} = itemsSlice.actions;
+export const { addItem } = itemsSlice.actions;
 export const itemsSliceReducer = itemsSlice.reducer;
