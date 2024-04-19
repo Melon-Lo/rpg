@@ -1,14 +1,12 @@
 import Button from "../components/Button";
 import classImgData from "../data/class/classImgData";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats } from "../store";
+import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated } from "../store";
 import { RiDiceFill } from "react-icons/ri";
-import useNavigation from "../hooks/useNavigation";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 
 export default function CreatePage() {
-  // const { navigate } = useNavigation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, classTitle } = useSelector(state => {
@@ -84,6 +82,7 @@ export default function CreatePage() {
 
         dispatch(changeStatName(name));
         dispatch(changeStatClassTitle(classTitle));
+        dispatch(changeRoleCreated(true));
         navigate('/');
       }
     });
@@ -106,6 +105,7 @@ export default function CreatePage() {
 
   // 擲骰子
   const handleRollDice = () => {
+
     dispatch(generateStats());
   };
 
