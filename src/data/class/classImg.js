@@ -1,7 +1,7 @@
 import { GiBroadsword } from "react-icons/gi";
 import { LiaMagicSolid } from "react-icons/lia";
 
-const classImgData = [
+const classImg = [
   {
     classTitle: "戰士",
     icon: GiBroadsword,
@@ -12,4 +12,4 @@ const classImgData = [
   },
 ];
 
-export default classImgData;
+export default classImg;

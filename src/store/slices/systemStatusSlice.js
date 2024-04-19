@@ -3,10 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const systemStatusSlice = createSlice({
   name: "systemStatus",
   initialState: {
-    roleCreated: false,
+    // roleCreated: false,
 
     // DEV ONLY 為了寫 mainPage
-    // roleCreated: false,
+    roleCreated: true,
+
+    currentLocation: "村莊",
   },
   reducers: {
     changeRoleCreated(state, action) {

@@ -2,6 +2,8 @@ import StatusSection from "../components/StatusSection";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import ScreenSection from "../components/ScreenSection";
+import Button from "../components/Button";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -25,9 +27,10 @@ export default function MainPage() {
   return (
     <div className="flex flex-col items-center">
       <StatusSection />
+      <ScreenSection />
 
       {/* DEV ONLY */}
-      <button className="border-3 border-green-500" onClick={() => navigate('create')}>to create</button>
+      <Button primary onClick={() => navigate('create')}>to create</Button>
     </div>
   );
 };

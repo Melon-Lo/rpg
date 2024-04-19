@@ -1,5 +1,5 @@
 import Button from "../components/Button";
-import classImgData from "../data/class/classImgData";
+import classImg from "../data/class/classImg";
 import { useDispatch, useSelector } from "react-redux";
 import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated } from "../store";
 import { RiDiceFill } from "react-icons/ri";
@@ -122,7 +122,7 @@ export default function CreatePage() {
   };
 
   // 職業列表
-  const renderedClassList = classImgData.map(classItem => {
+  const renderedClassList = classImg.map(classItem => {
     const selectedStyle = classTitle === classItem.classTitle ? 'border-blue-800 border-4' : 'border-2 border-gray-400';
 
     return (
