@@ -1,6 +1,10 @@
-export default function CommandItem({ command, color, Icon }) {
+export default function CommandItem({ command, color, Icon, setCurrentStep }) {
+  const handleClick = () => {
+    setCurrentStep(command);
+  };
+
   return (
-    <div className={`relative w-12 h-12 rounded-full shadow-md bg-${color}-500 m-1`}>
+    <div onClick={handleClick} className={`relative w-12 h-12 rounded-full shadow-md bg-${color}-500 m-1`}>
       <div className="absolute inset-0 flex justify-center items-center">
         <Icon className={`text-3xl opacity-50 text-${color}-400`} />
       </div>
