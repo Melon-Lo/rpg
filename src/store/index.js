@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
 import {
   changeStatName,
