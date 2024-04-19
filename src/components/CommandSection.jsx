@@ -11,6 +11,7 @@ export default function CommandSection() {
   const [textContent, setTextContent] = useState('想做什麼呢？');
 
   useEffect(() => {
+    // 上方文字內容，根據 currentStep 不同而變換
     const changeTextContent = () => {
       if (currentStep === '主頁') {
         setTextContent('想做什麼呢？');
@@ -38,6 +39,7 @@ export default function CommandSection() {
     setCurrentStep('主頁');
   }
 
+  // 主頁
   const renderedCommandItems = commandImg.map(commandItem => {
     return (
       <CommandItem
@@ -50,6 +52,7 @@ export default function CommandSection() {
     )
   });
 
+  // 移動（場景們）
   const renderedScenes = sceneList.map(sceneItem => {
     // 不能前往當前地點
     if (currentScene === sceneItem) return;
