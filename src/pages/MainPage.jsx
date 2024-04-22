@@ -1,8 +1,9 @@
 import StatusSection from "../components/StatusSection";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import ScreenSection from "../components/ScreenSection";
+import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
 import Button from "../components/Button";
 
@@ -25,6 +26,7 @@ export default function MainPage() {
     <div className="flex flex-col items-center">
       <StatusSection />
       <ScreenSection />
+      <MessageSection />
       <CommandSection />
 
       {/* DEV ONLY */}

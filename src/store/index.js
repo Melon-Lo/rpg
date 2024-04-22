@@ -12,6 +12,7 @@ import {
   systemStatusSliceReducer,
   changeRoleCreated,
 } from "./slices/systemStatusSlice";
+import { messagesSliceReducer, addMessage } from "./slices/messagesSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,11 +20,13 @@ const store = configureStore({
     charStats: charStatsReducer,
     items: itemsSliceReducer,
     systemStatus: systemStatusSliceReducer,
+    messages: messagesSliceReducer,
   },
 });
 
 export {
   store,
+
   // form
   changeName,
   changeClassTitle,
@@ -39,4 +42,7 @@ export {
 
   // items
   addItem,
+
+  // messages,
+  addMessage,
 };
