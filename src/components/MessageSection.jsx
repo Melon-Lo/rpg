@@ -6,6 +6,8 @@ export default function MessageSection() {
   const MAX_DISPLAY_MESSAGES = 10;
   const { messages } = useSelector(state => state.messages);
 
+  const { currentDialogue } = useSelector(state => state.systemStatus);
+
   const MessageItem = ({ type, content }) => {
     let textColor;
 

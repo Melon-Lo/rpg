@@ -10,18 +10,9 @@ const scenes = [
       {
         name: "村長",
         dialogue: [
-          {
-            type: "start",
-            text: [
-              "嗨，歡迎來到我們村莊～",
-              "第一次來這裡一定很緊張吧！",
-              "別擔心，有任何問題都可以問我哦～",
-            ],
-          },
-          {
-            type: "click",
-            text: ["還有什麼問題嗎？"],
-          },
+          "嗨，歡迎來到我們村莊～",
+          "第一次來這裡一定很緊張吧！",
+          "別擔心，有任何問題都可以問我哦～",
         ],
       },
     ],
@@ -32,12 +23,7 @@ const scenes = [
     characters: [
       {
         name: "精靈",
-        dialogue: [
-          {
-            time: "click",
-            text: ["哈囉！"],
-          },
-        ],
+        dialogue: ["哈囉！"],
       },
     ],
   },
@@ -47,12 +33,7 @@ const scenes = [
     characters: [
       {
         name: "山頂洞人",
-        dialogue: [
-          {
-            time: "click",
-            text: ["啊啦估？"],
-          },
-        ],
+        dialogue: ["啊啦估？"],
       },
     ],
   },

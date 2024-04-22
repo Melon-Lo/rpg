@@ -18,7 +18,8 @@ import {
   systemStatusSliceReducer,
   changeRoleCreated,
   changeCurrentScene,
-  changeCurrentTalker,
+  // changeCurrentTalker,
+  changeCurrentDialogue,
 } from "./slices/systemStatusSlice";
 
 // messages
@@ -50,7 +51,7 @@ export {
   // systemStatus
   changeRoleCreated,
   changeCurrentScene,
-  changeCurrentTalker,
+  changeCurrentDialogue,
 
   // items
   addItem,

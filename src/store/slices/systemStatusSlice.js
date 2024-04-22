@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 const systemStatusSlice = createSlice({
   name: "systemStatus",
@@ -9,7 +9,10 @@ const systemStatusSlice = createSlice({
     roleCreated: true,
 
     currentScene: "村莊",
-    currentTalker: "",
+    currentDialogue: {
+      talker: "",
+      content: "",
+    },
   },
   reducers: {
     changeRoleCreated(state, action) {
@@ -18,12 +21,16 @@ const systemStatusSlice = createSlice({
     changeCurrentScene(state, action) {
       state.currentScene = action.payload;
     },
-    changeCurrentTalker(state, action) {
-      state.currentTalker = action.payload;
+    changeCurrentDialogue(state, action) {
+      state.currentDialogue = action.payload;
     },
   },
 });
 
-export const { changeRoleCreated, changeCurrentScene, changeCurrentTalker } =
-  systemStatusSlice.actions;
+export const {
+  changeRoleCreated,
+  changeCurrentScene,
+  changeCurrentTalker,
+  changeCurrentDialogue,
+} = systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;

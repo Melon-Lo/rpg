@@ -7,7 +7,8 @@ import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharStatsList from "./CharStatsList";
 import Button from "./Button";
-import { addMessage, changeCurrentScene, changeCurrentTalker } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
+import { type } from "@testing-library/user-event/dist/type";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
@@ -15,6 +16,12 @@ export default function CommandSection() {
   const playerName = useSelector(state => state.charStats.name);
   const { currentScene } = useSelector(state => state.systemStatus);
   const dispatch = useDispatch();
+
+  // 與對話相關的變數
+  const [sentence, setSentence] = useState(0);
+  const talker = useSelector(state => state.systemStatus.currentDialogue.talker);
+  const content = useSelector(state => state.systemStatus.currentDialogue.content);
+  const contentLength = useSelector(state => state.systemStatus.currentDialogue.content.length);
 
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
@@ -59,10 +66,25 @@ export default function CommandSection() {
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
     const handleClick = () => {
-      dispatch(changeCurrentTalker(charItem.name));
-      setCurrentStep('talking');
-      console.log(charItem.name);
-    }
+      dispatch(changeCurrentDialogue({
+        talker: charItem.name,
+        content: charItem.dialogue
+      }));
+
+      // 點擊人物後顯示第一句話，剩下的交給 NextButton 處理
+      dispatch(addMessage({
+        type: 'talk',
+        content: `${charItem.name}：「${charItem.dialogue[0]}」`,
+      }));
+
+      // 如果只有一句對話，則點擊後馬上跳回主頁，不會顯示下一頁
+      if (charItem.dialogue.length === 1) {
+        setCurrentStep('主頁');
+      } else {
+        setSentence(sentence + 1);
+        setCurrentStep('talking');
+      }
+    };
 
     return <Button
       key={charItem.name}
@@ -106,9 +128,34 @@ export default function CommandSection() {
 
   // taking 下一句
   const NextButton = () => {
+    const handleClick = () => {
+      dispatch(addMessage({
+        type: 'talk',
+        content: `${talker}：「${content[sentence]}」`,
+      }))
+
+      // 每講一句，就推進一句
+      setSentence(sentence + 1);
+
+      console.log(sentence, contentLength)
+
+      // 講到最後一句時，自動退回主頁
+      if (sentence < contentLength - 1) {
+        setSentence(sentence + 1);
+      } else {
+        setCurrentStep('主頁');
+        setSentence(0);
+      }
+    }
+
     return (
       <div className="w-full flex justify-end">
-        <Button yellow>下一句</Button>
+        <Button
+          yellow
+          onClick={handleClick}
+        >
+          下一句
+        </Button>
       </div>
     );
   };
