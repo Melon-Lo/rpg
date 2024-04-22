@@ -2,7 +2,7 @@ import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import commandImg from "../data/command/commandImg";
-import sceneList from "../data/scene/sceneList";
+import scenes from "../data/scenes";
 import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharStatsList from "./CharStatsList";
@@ -55,15 +55,17 @@ export default function CommandSection() {
   });
 
   // 移動（場景們）
-  const renderedScenes = sceneList.map(sceneItem => {
+  const renderedScenes = scenes.map(sceneItem => {
+    const sceneName = sceneItem.name;
+
     // 不能前往當前地點
-    if (currentScene === sceneItem) return;
+    if (currentScene === sceneName) return;
 
     const handleClick = () => {
-      dispatch(changeCurrentScene(sceneItem));
+      dispatch(changeCurrentScene(sceneName));
       dispatch(addMessage({
         type: 'move',
-        content: `${characterName}移動到${sceneItem}了。`,
+        content: `${characterName}移動到${sceneName}了。`,
       }));
 
       // 移動完回主頁
@@ -71,7 +73,7 @@ export default function CommandSection() {
     };
 
     return (
-      <Button key={sceneItem} green className="mx-1" onClick={handleClick}>{sceneItem}</Button>
+      <Button key={sceneName} green className="mx-1" onClick={handleClick}>{sceneName}</Button>
     )
   })
 

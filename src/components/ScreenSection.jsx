@@ -1,9 +1,10 @@
-import scenesImg from '../data/scene/scenesImg';
+// import scenesImg from '../data/scene/scenesImg';
+import scenes from '../data/scenes';
 import { useSelector } from 'react-redux';
 
 export default function ScreenSection() {
   const { currentScene } = useSelector(state => state.systemStatus);
-  const currentSceneImgSrc = scenesImg.find(img => img.scene === currentScene)?.img;
+  const currentSceneImgSrc = scenes.find(scene => scene.name === currentScene)?.img;
 
   return (
     <section className="relative w-full h-48 flex justify-center my-1">
