@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import classInitialStats from "../../data/class/classInitialStats";
+import classes from "../../data/classes";
 
 const charStats = createSlice({
   name: "charStats",
@@ -45,40 +45,41 @@ const charStats = createSlice({
       state.classTitle = action.payload;
     },
     generateStats(state, action) {
-      const currentClassTitle = classInitialStats.find(
+      const currentClassTitle = classes.find(
         (item) => item.classTitle === state.classTitle
       );
+      const currentClassTitleInitialStats = currentClassTitle.initialStats;
 
       function getRandomStat(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 
       state.ATK = getRandomStat(
-        currentClassTitle.minATK,
-        currentClassTitle.maxATK
+        currentClassTitleInitialStats.minATK,
+        currentClassTitleInitialStats.maxATK
       );
       state.DEF = getRandomStat(
-        currentClassTitle.minDEF,
-        currentClassTitle.maxDEF
+        currentClassTitleInitialStats.minDEF,
+        currentClassTitleInitialStats.maxDEF
       );
       state.MATK = getRandomStat(
-        currentClassTitle.minMATK,
-        currentClassTitle.maxMATK
+        currentClassTitleInitialStats.minMATK,
+        currentClassTitleInitialStats.maxMATK
       );
       state.MDEF = getRandomStat(
-        currentClassTitle.minMDEF,
-        currentClassTitle.maxMDEF
+        currentClassTitleInitialStats.minMDEF,
+        currentClassTitleInitialStats.maxMDEF
       );
       state.SPD = getRandomStat(
-        currentClassTitle.minSPD,
-        currentClassTitle.maxSPD
+        currentClassTitleInitialStats.minSPD,
+        currentClassTitleInitialStats.maxSPD
       );
 
       // 固定數值
-      state.maxHP = currentClassTitle.maxHP;
-      state.HP = currentClassTitle.maxHP;
-      state.maxMP = currentClassTitle.maxMP;
-      state.MP = currentClassTitle.maxMP;
+      state.maxHP = currentClassTitleInitialStats.maxHP;
+      state.HP = currentClassTitleInitialStats.maxHP;
+      state.maxMP = currentClassTitleInitialStats.maxMP;
+      state.MP = currentClassTitleInitialStats.maxMP;
       state.level = 1;
 
       // 確保總和為 35
@@ -87,24 +88,24 @@ const charStats = createSlice({
         // 如果總和不為35，重新生成 ATK 和 DEF，直到總和為 35
         while (total !== 35) {
           state.ATK = getRandomStat(
-            currentClassTitle.minATK,
-            currentClassTitle.maxATK
+            currentClassTitleInitialStats.minATK,
+            currentClassTitleInitialStats.maxATK
           );
           state.DEF = getRandomStat(
-            currentClassTitle.minDEF,
-            currentClassTitle.maxDEF
+            currentClassTitleInitialStats.minDEF,
+            currentClassTitleInitialStats.maxDEF
           );
           state.MATK = getRandomStat(
-            currentClassTitle.minMATK,
-            currentClassTitle.maxMATK
+            currentClassTitleInitialStats.minMATK,
+            currentClassTitleInitialStats.maxMATK
           );
           state.MDEF = getRandomStat(
-            currentClassTitle.minMDEF,
-            currentClassTitle.maxMDEF
+            currentClassTitleInitialStats.minMDEF,
+            currentClassTitleInitialStats.maxMDEF
           );
           state.SPD = getRandomStat(
-            currentClassTitle.minSPD,
-            currentClassTitle.maxSPD
+            currentClassTitleInitialStats.minSPD,
+            currentClassTitleInitialStats.maxSPD
           );
           total = state.ATK + state.DEF + state.MATK + state.MDEF + state.SPD;
         }
