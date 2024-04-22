@@ -14,8 +14,12 @@ const systemStatusSlice = createSlice({
     changeRoleCreated(state, action) {
       state.roleCreated = action.payload;
     },
+    changeCurrentScene(state, action) {
+      state.currentScene = action.payload;
+    },
   },
 });
 
-export const { changeRoleCreated } = systemStatusSlice.actions;
+export const { changeRoleCreated, changeCurrentScene } =
+  systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;

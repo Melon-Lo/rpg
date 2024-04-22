@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+
+// form
 import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
 import {
   changeStatName,
@@ -7,11 +9,18 @@ import {
   generateStats,
   resetStats,
 } from "./slices/charStatsSlice";
+
+// items
 import { itemsSliceReducer, addItem } from "./slices/itemsSlice";
+
+// systemStatus
 import {
   systemStatusSliceReducer,
   changeRoleCreated,
+  changeCurrentScene,
 } from "./slices/systemStatusSlice";
+
+// messages
 import { messagesSliceReducer, addMessage } from "./slices/messagesSlice";
 
 const store = configureStore({
@@ -39,6 +48,7 @@ export {
 
   // systemStatus
   changeRoleCreated,
+  changeCurrentScene,
 
   // items
   addItem,

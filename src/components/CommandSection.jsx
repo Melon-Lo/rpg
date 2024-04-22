@@ -1,5 +1,5 @@
 import { TiArrowBack } from "react-icons/ti";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import commandImg from "../data/command/commandImg";
 import sceneList from "../data/scene/sceneList";
@@ -7,10 +7,14 @@ import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharStatsList from "./CharStatsList";
 import Button from "./Button";
+import { addMessage, changeCurrentScene } from "../store";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
+  const characterName = useSelector(state => state.charStats.name);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
@@ -55,8 +59,19 @@ export default function CommandSection() {
     // 不能前往當前地點
     if (currentScene === sceneItem) return;
 
+    const handleClick = () => {
+      dispatch(changeCurrentScene(sceneItem));
+      dispatch(addMessage({
+        type: 'move',
+        content: `${characterName}移動到${sceneItem}了。`,
+      }));
+
+      // 移動完回主頁
+      setCurrentStep('主頁');
+    };
+
     return (
-      <Button key={sceneItem} green className="mx-1">{sceneItem}</Button>
+      <Button key={sceneItem} green className="mx-1" onClick={handleClick}>{sceneItem}</Button>
     )
   })
 
