@@ -7,7 +7,7 @@ import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharStatsList from "./CharStatsList";
 import Button from "./Button";
-import { addMessage, changeCurrentScene } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentTalker } from "../store";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
@@ -29,6 +29,8 @@ export default function CommandSection() {
         setTextContent('物品一覽');
       } else if (currentStep === '狀態') {
         setTextContent('狀態一覽');
+      } else if (currentStep === 'talking') {
+        setTextContent('對談中⋯⋯');
       }
     }
 
@@ -40,7 +42,7 @@ export default function CommandSection() {
     setCurrentStep('主頁');
   }
 
-  // 主頁（）
+  // 主頁（指令們）
   const renderedCommandItems = commands.map(commandItem => {
     return (
       <CommandItem
@@ -56,7 +58,20 @@ export default function CommandSection() {
   // 交談（可交談對象們）
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
-    return <Button key={charItem.name} blue className="mx-1">{charItem.name}</Button>;
+    const handleClick = () => {
+      dispatch(changeCurrentTalker(charItem.name));
+      setCurrentStep('talking');
+      console.log(charItem.name);
+    }
+
+    return <Button
+      key={charItem.name}
+      blue
+      className="mx-1"
+      onClick={handleClick}
+    >
+      {charItem.name}
+    </Button>;
   })
 
   // 移動（場景們）
@@ -78,9 +93,25 @@ export default function CommandSection() {
     };
 
     return (
-      <Button key={sceneName} green className="mx-1" onClick={handleClick}>{sceneName}</Button>
+      <Button
+        key={sceneName}
+        green
+        className="mx-1"
+        onClick={handleClick}
+      >
+        {sceneName}
+      </Button>
     )
   })
+
+  // taking 下一句
+  const NextButton = () => {
+    return (
+      <div className="w-full flex justify-end">
+        <Button yellow>下一句</Button>
+      </div>
+    );
+  };
 
   return (
     <section className="w-11/12 bg-orange-100 rounded-md my-1">
@@ -90,7 +121,7 @@ export default function CommandSection() {
         <p className="text-xl text-orange-800">{textContent}</p>
 
         {/* 返回按鈕（不是主頁時才會顯示） */}
-        { currentStep !== '主頁' &&
+        { currentStep !== '主頁' || currentStep !== 'talking' &&
           <div className="flex justify-center items-center cursor-pointer" onClick={handleReturn}>
             <TiArrowBack className="text-2xl text-orange-800" />
           </div>
@@ -113,6 +144,9 @@ export default function CommandSection() {
 
         {/* 狀態 */}
         { currentStep === '狀態' && <CharStatsList /> }
+
+        {/* talking */}
+        { currentStep === 'talking' && <NextButton /> }
       </div>
     </section>
   )

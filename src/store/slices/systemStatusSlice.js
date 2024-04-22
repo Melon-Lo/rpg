@@ -9,6 +9,7 @@ const systemStatusSlice = createSlice({
     roleCreated: true,
 
     currentScene: "村莊",
+    currentTalker: "",
   },
   reducers: {
     changeRoleCreated(state, action) {
@@ -17,9 +18,12 @@ const systemStatusSlice = createSlice({
     changeCurrentScene(state, action) {
       state.currentScene = action.payload;
     },
+    changeCurrentTalker(state, action) {
+      state.currentTalker = action.payload;
+    },
   },
 });
 
-export const { changeRoleCreated, changeCurrentScene } =
+export const { changeRoleCreated, changeCurrentScene, changeCurrentTalker } =
   systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;
