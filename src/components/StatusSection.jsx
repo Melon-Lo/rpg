@@ -3,25 +3,8 @@ import { RiCoinsLine } from "react-icons/ri";
 import StatusBar from "./StatusBar";
 
 export default function StatusSection() {
-  const { name, classTitle, level, HP, maxHP, MP, maxMP, exp, expToNextLevel } = useSelector(state => {
-    return {
-      name: state.charStats.name,
-      classTitle: state.charStats.classTitle,
-      level: state.charStats.level,
-      HP: state.charStats.HP,
-      maxHP: state.charStats.maxHP,
-      MP: state.charStats.MP,
-      maxMP: state.charStats.maxMP,
-      exp: state.charStats.exp,
-      expToNextLevel: state.charStats.expToNextLevel,
-    };
-  });
-
-  const { money } = useSelector(state => {
-    return {
-      money: state.items.money,
-    };
-  });
+  const { name, classTitle, level, HP, maxHP, MP, maxMP, exp, expToNextLevel } = useSelector(state => state.systemStatus);
+  const { money } = useSelector(state => state.items);
 
   return (
     <section className="w-11/12 flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded">

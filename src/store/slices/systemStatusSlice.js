@@ -5,7 +5,7 @@ const systemStatusSlice = createSlice({
   initialState: {
     // roleCreated: false,
 
-    // DEV ONLY 為了寫 mainPage
+    // DEV ONLY 為了寫 MainPage
     roleCreated: true,
 
     currentScene: "村莊",

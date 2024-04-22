@@ -8,11 +8,7 @@ import Button from "../components/Button";
 
 export default function MainPage() {
   const navigate = useNavigate();
-  const { roleCreated } = useSelector(state => {
-    return {
-      roleCreated: state.systemStatus.roleCreated,
-    };
-  });
+  const { roleCreated } = useSelector(state => state.systemStatus);
 
   const handleNavigate = () => {
     if (!roleCreated) {

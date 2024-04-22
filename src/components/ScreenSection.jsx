@@ -2,11 +2,7 @@ import scenesImg from '../data/scene/scenesImg';
 import { useSelector } from 'react-redux';
 
 export default function ScreenSection() {
-  const { currentScene } = useSelector(state => {
-    return {
-      currentScene: state.systemStatus.currentScene,
-    }
-  });
+  const { currentScene } = useSelector(state => state.systemStatus);
   const currentSceneImgSrc = scenesImg.find(img => img.scene === currentScene)?.img;
 
   return (

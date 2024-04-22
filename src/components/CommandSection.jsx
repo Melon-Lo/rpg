@@ -29,11 +29,7 @@ export default function CommandSection() {
     changeTextContent();
   }, [currentStep])
 
-  const { currentScene } = useSelector(state => {
-    return {
-      currentScene: state.systemStatus.currentScene,
-    };
-  });
+  const { currentScene } = useSelector(state => state.systemStatus);
 
   const handleReturn = () => {
     setCurrentStep('主頁');

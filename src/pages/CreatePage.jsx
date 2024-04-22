@@ -9,23 +9,8 @@ import Swal from 'sweetalert2';
 export default function CreatePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { name, classTitle } = useSelector(state => {
-    return {
-      name: state.form.name,
-      classTitle: state.form.classTitle,
-    };
-  });
-  const { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => {
-    return {
-      maxHP: state.charStats.maxHP,
-      maxMP: state.charStats.maxMP,
-      ATK: state.charStats.ATK,
-      DEF: state.charStats.DEF,
-      MATK: state.charStats.MATK,
-      MDEF: state.charStats.MDEF,
-      SPD: state.charStats.SPD,
-    };
-  });
+  const { name, classTitle } = useSelector(state => state.form);
+  const { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.charStats);
 
   // 送出資料
   const handleSubmit = (e) => {
