@@ -12,8 +12,8 @@ import { addMessage, changeCurrentScene } from "../store";
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
-  const characterName = useSelector(state => state.charStats.name);
-
+  const playerName = useSelector(state => state.charStats.name);
+  const { currentScene } = useSelector(state => state.systemStatus);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,13 +35,12 @@ export default function CommandSection() {
     changeTextContent();
   }, [currentStep])
 
-  const { currentScene } = useSelector(state => state.systemStatus);
-
+  // 按下返回鍵，回到主頁
   const handleReturn = () => {
     setCurrentStep('主頁');
   }
 
-  // 主頁
+  // 主頁（）
   const renderedCommandItems = commands.map(commandItem => {
     return (
       <CommandItem
@@ -54,6 +53,12 @@ export default function CommandSection() {
     )
   });
 
+  // 交談（可交談對象們）
+  const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
+  const renderedCharacters = currentCharacters.map(charItem => {
+    return <Button key={charItem.name} blue className="mx-1">{charItem.name}</Button>;
+  })
+
   // 移動（場景們）
   const renderedScenes = scenes.map(sceneItem => {
     const sceneName = sceneItem.name;
@@ -65,7 +70,7 @@ export default function CommandSection() {
       dispatch(changeCurrentScene(sceneName));
       dispatch(addMessage({
         type: 'move',
-        content: `${characterName}移動到${sceneName}了。`,
+        content: `${playerName}移動到${sceneName}了。`,
       }));
 
       // 移動完回主頁
@@ -96,6 +101,9 @@ export default function CommandSection() {
       <div className="p-2 flex justify-start items-center">
         {/* 主頁 */}
         { currentStep === '主頁' && renderedCommandItems }
+
+        {/* 交談 */}
+        { currentStep === '交談' && renderedCharacters }
 
         {/* 移動 */}
         { currentStep === '移動' && renderedScenes }
