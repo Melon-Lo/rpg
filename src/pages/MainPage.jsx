@@ -28,7 +28,7 @@ export default function MainPage() {
       <CommandSection />
 
       {/* DEV ONLY */}
-      <Button primary onClick={() => navigate('create')}>to create</Button>
+      <Button blue onClick={() => navigate('create')}>to create</Button>
     </div>
   );
 };

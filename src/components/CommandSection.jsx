@@ -1,10 +1,12 @@
 import { TiArrowBack } from "react-icons/ti";
+import { useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 import commandImg from "../data/command/commandImg";
 import sceneList from "../data/scene/sceneList";
 import CommandItem from "./CommandItem";
+import ItemsList from "./ItemsList";
+import CharStatsList from "./CharStatsList";
 import Button from "./Button";
-import { useSelector } from "react-redux";
-import { useState, useEffect } from "react";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
@@ -54,36 +56,39 @@ export default function CommandSection() {
     if (currentScene === sceneItem) return;
 
     return (
-      <Button key={sceneItem} success className="mx-1">{sceneItem}</Button>
+      <Button key={sceneItem} green className="mx-1">{sceneItem}</Button>
     )
   })
 
   return (
     <section className="w-11/12 bg-orange-100 rounded-md">
+      {/* 上方 */}
       <div className="flex justify-between p-2">
+        {/* 文字敘述 */}
         <p className="text-xl text-orange-800">{textContent}</p>
 
-        {/* 不是主頁時才會顯示返回按鈕 */}
+        {/* 返回按鈕（不是主頁時才會顯示） */}
         { currentStep !== '主頁' &&
-          <div className="flex justify-center items-center" onClick={handleReturn}>
+          <div className="flex justify-center items-center cursor-pointer" onClick={handleReturn}>
             <TiArrowBack className="text-2xl text-orange-800" />
           </div>
         }
       </div>
 
-      {/* 主頁 */}
-      { currentStep === '主頁' &&
-        <div className="p-2 flex justify-start items-center">
-          {renderedCommandItems}
-        </div>
-      }
+      {/* 下方 */}
+      <div className="p-2 flex justify-start items-center">
+        {/* 主頁 */}
+        { currentStep === '主頁' && renderedCommandItems }
 
-      {/* 移動 */}
-      { currentStep === '移動' &&
-        <div className="p-2 flex text-lg">
-          {renderedScenes}
-        </div>
-      }
+        {/* 移動 */}
+        { currentStep === '移動' && renderedScenes }
+
+        {/* 物品 */}
+        { currentStep === '物品' && <ItemsList /> }
+
+        {/* 狀態 */}
+        { currentStep === '狀態' && <CharStatsList /> }
+      </div>
     </section>
   )
 };

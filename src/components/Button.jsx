@@ -1,22 +1,22 @@
 import className from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
-export default function Button({ children, primary, secondary, success, warning, danger, outline, rounded, ...rest }) {
+export default function Button({ children, blue, gray, green, yellow, red, outline, rounded, ...rest }) {
   const classes = twMerge(
     className(rest.className,
-      'flex items-center px-3 py-2 border rounded-md', {
-      'border-blue-500 bg-blue-500 text-white': primary,
-      'border-gray-900 bg-gray-900 text-white': secondary,
-      'border-green-500 bg-green-500 text-white': success,
-      'border-yellow-400 bg-yellow-400 text-white': warning,
-      'border-red-500 bg-red-500 text-white': danger,
+      'flex items-center px-3 py-2 border rounded-md cursor-pointer', {
+      'border-blue-500 bg-blue-500 text-white': blue,
+      'border-gray-900 bg-gray-900 text-white': gray,
+      'border-green-500 bg-green-500 text-white': green,
+      'border-yellow-400 bg-yellow-400 text-white': yellow,
+      'border-red-500 bg-red-500 text-white': red,
       'rounded-full': rounded,
       'bg-white': outline,
-      'text-blue-500': outline && primary,
-      'text-gray-900': outline && secondary,
-      'text-green-500': outline && success,
-      'text-yellow-400': outline && warning,
-      'text-red-500': outline && danger
+      'text-blue-500': outline && blue,
+      'text-gray-900': outline && gray,
+      'text-green-500': outline && green,
+      'text-yellow-400': outline && yellow,
+      'text-red-500': outline && red
     })
   );
 
@@ -28,15 +28,15 @@ export default function Button({ children, primary, secondary, success, warning,
 }
 
 Button.propTypes = {
-	checkVariationValue: ({ primary, secondary, success, warning, danger}) => {
-		const count = Number(!!primary) +
-			Number(!!secondary) +
-			Number(!!success) +
-			Number(!!warning) +
-			Number(!!danger);
+	checkVariationValue: ({ blue, gray, green, yellow, red}) => {
+		const count = Number(!!blue) +
+			Number(!!gray) +
+			Number(!!green) +
+			Number(!!yellow) +
+			Number(!!red);
 
 		if (count > 1) {
-			return new Error('Only one of primary, secondary, success, warning, danger can be true');
+			return new Error('Only one of blue, gray, green, yellow, red can be true');
 		}
 	}
 };
