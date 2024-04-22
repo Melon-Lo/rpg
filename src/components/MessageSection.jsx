@@ -6,8 +6,6 @@ export default function MessageSection() {
   const MAX_DISPLAY_MESSAGES = 10;
   const { messages } = useSelector(state => state.messages);
 
-  const { currentDialogue } = useSelector(state => state.systemStatus);
-
   const MessageItem = ({ type, content }) => {
     let textColor;
 
@@ -17,7 +15,7 @@ export default function MessageSection() {
     }
 
     return (
-      <p className={`text-${textColor}-600`}>{content}</p>
+      <p className="text-gray-500 first:text-gray-800 first:font-medium">{content}</p>
     );
   }
 
@@ -30,7 +28,7 @@ export default function MessageSection() {
   });
 
   return (
-    <div className="w-11/12 h-16 bg-slate-300 rounded-md overflow-scroll my-1 px-2 py-1">
+    <div className="w-11/12 h-16 bg-slate-200 rounded-md overflow-scroll my-1 px-2 py-1">
       {renderedMessages}
     </div>
   );
