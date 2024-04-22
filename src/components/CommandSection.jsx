@@ -1,7 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import commandImg from "../data/command/commandImg";
+import commands from "../data/commands";
 import scenes from "../data/scenes";
 import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
@@ -42,7 +42,7 @@ export default function CommandSection() {
   }
 
   // 主頁
-  const renderedCommandItems = commandImg.map(commandItem => {
+  const renderedCommandItems = commands.map(commandItem => {
     return (
       <CommandItem
         key={commandItem.command}

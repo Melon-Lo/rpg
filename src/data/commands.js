@@ -3,7 +3,7 @@ import { IoChatbubble } from "react-icons/io5";
 import { BsFillBackpackFill } from "react-icons/bs";
 import { FaPerson } from "react-icons/fa6";
 
-const commandImg = [
+const commands = [
   {
     command: "交談",
     color: "blue",
@@ -26,4 +26,4 @@ const commandImg = [
   },
 ];
 
-export default commandImg;
+export default commands;
