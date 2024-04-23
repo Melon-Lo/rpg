@@ -64,7 +64,10 @@ export default function CommandSection() {
   // 交談（可交談對象們）
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
+
+    // 與人交談
     const handleClick = () => {
+      // 將交談對象設定為點擊對象
       dispatch(changeCurrentDialogue({
         talker: charItem.name,
         img: charItem.img,
@@ -80,6 +83,7 @@ export default function CommandSection() {
       // 如果只有一句對話，則點擊後馬上跳回主頁，不會顯示下一頁
       if (charItem.dialogue.length === 1) {
         setCurrentStep('主頁');
+      // 如果對話不只一句，則句子往下走
       } else {
         setSentence(sentence + 1);
         setCurrentStep('talking');
@@ -94,36 +98,6 @@ export default function CommandSection() {
     >
       {charItem.name}
     </Button>;
-  })
-
-  // 移動（場景們）
-  const renderedScenes = scenes.map(sceneItem => {
-    const sceneName = sceneItem.name;
-
-    // 不能前往當前地點
-    if (currentScene === sceneName) return;
-
-    const handleClick = () => {
-      dispatch(changeCurrentScene(sceneName));
-      dispatch(addMessage({
-        type: 'move',
-        content: `${playerName}移動到${sceneName}了。`,
-      }));
-
-      // 移動完回主頁
-      setCurrentStep('主頁');
-    };
-
-    return (
-      <Button
-        key={sceneName}
-        green
-        className="mx-1"
-        onClick={handleClick}
-      >
-        {sceneName}
-      </Button>
-    )
   })
 
   // taking 下一句
@@ -157,6 +131,38 @@ export default function CommandSection() {
       </div>
     );
   };
+
+  // 移動（場景們）
+  const renderedScenes = scenes.map(sceneItem => {
+    const sceneName = sceneItem.name;
+
+    // 不能前往當前地點
+    if (currentScene === sceneName) return;
+
+    const handleClick = () => {
+      // 將場景改為點擊地點
+      dispatch(changeCurrentScene(sceneName));
+      // 系統提示
+      dispatch(addMessage({
+        type: 'move',
+        content: `${playerName}移動到${sceneName}了。`,
+      }));
+
+      // 移動完回主頁
+      setCurrentStep('主頁');
+    };
+
+    return (
+      <Button
+        key={sceneName}
+        green
+        className="mx-1"
+        onClick={handleClick}
+      >
+        {sceneName}
+      </Button>
+    )
+  })
 
   return (
     <section className="w-11/12 bg-orange-100 rounded-md my-1">

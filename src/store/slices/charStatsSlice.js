@@ -48,6 +48,10 @@ const charStats = createSlice({
       // 判別是要 增加/減少 HP/MP
 
       state.HP = action.payload;
+      // HP 不會超過最大值
+      if (state.HP >= state.maxHP) {
+        state.HP = state.maxHP;
+      }
     },
     generateStats(state, action) {
       const currentClassTitle = classes.find(
