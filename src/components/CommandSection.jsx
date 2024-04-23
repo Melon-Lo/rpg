@@ -22,8 +22,10 @@ export default function CommandSection() {
   const content = useSelector(state => state.systemStatus.currentDialogue.content);
   const contentLength = useSelector(state => state.systemStatus.currentDialogue.content.length);
 
+  // 戰鬥相關變數
   // boolean 值：如果敵人的名字不為空字串，代表為戰鬥狀態
   const battleTime = useSelector(state => state.enemies.name).length !== 0;
+  const enemyName = useSelector(state => state.enemies.name);
 
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
@@ -51,23 +53,13 @@ export default function CommandSection() {
     setCurrentStep('主頁');
   }
 
-  // 主頁（指令們，非戰鬥狀態時）
+  // --------------------------------------------
+  // 非戰鬥狀態
+  // --------------------------------------------
+
+  // 主頁（指令們）
   const mainCommands = commands.find(command => command.type === 'main').commands;
   const renderedMainCommandItems = mainCommands.map(commandItem => {
-    return (
-      <CommandItem
-        key={commandItem.command}
-        command={commandItem.command}
-        color={commandItem.color}
-        Icon={commandItem.img}
-        setCurrentStep={setCurrentStep}
-      />
-    )
-  });
-
-  // 戰鬥指令們（battleTime 為真時）
-  const battleCommands = commands.find(command => command.type === 'battle').commands;
-  const renderedBattleCommandItems = battleCommands.map(commandItem => {
     return (
       <CommandItem
         key={commandItem.command}
@@ -182,6 +174,39 @@ export default function CommandSection() {
     )
   })
 
+  // --------------------------------------------
+  // 戰鬥狀態（battleTime 為真時）
+  // --------------------------------------------
+
+  // 戰鬥指令們
+  const battleCommands = commands.find(command => command.type === 'battle').commands;
+  const renderedBattleCommandItems = battleCommands.map(commandItem => {
+    return (
+      <CommandItem
+        key={commandItem.command}
+        command={commandItem.command}
+        color={commandItem.color}
+        Icon={commandItem.img}
+        setCurrentStep={setCurrentStep}
+      />
+    )
+  });
+
+  // 攻擊對象
+  const AttackButton = () => {
+    const handleClick = () => {
+      dispatch(addMessage({
+        type: 'battle',
+        content: `${playerName}向${enemyName}發動了攻擊！`
+      }));
+      setCurrentStep('主頁');
+    };
+
+    return (
+      <Button onClick={handleClick} red>向{enemyName}發動攻擊！</Button>
+    );
+  };
+
   return (
     <section className="w-11/12 bg-orange-100 rounded-md my-1">
       {/* 上方 */}
@@ -222,7 +247,7 @@ export default function CommandSection() {
         { currentStep === '主頁' && battleTime && renderedBattleCommandItems }
 
         {/* 選擇「攻擊」對象 */}
-        { currentStep === '攻擊' && 'attack' }
+        { currentStep === '攻擊' && <AttackButton /> }
       </div>
     </section>
   )
