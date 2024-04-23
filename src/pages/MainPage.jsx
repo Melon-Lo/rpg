@@ -9,11 +9,13 @@ import Button from "../components/Button";
 
 // DEV ONLY
 import { useDispatch } from "react-redux";
-import { changeItem } from "../store";
+import { changeItem, changeEnemy } from "../store";
+import enemies from "../data/enemies";
 
 export default function MainPage() {
   // DEV ONLY
   const dispatch = useDispatch();
+  const state = useSelector(state => state.enemies);
 
   const navigate = useNavigate();
   const { roleCreated } = useSelector(state => state.systemStatus);
@@ -48,20 +50,19 @@ export default function MainPage() {
       </Button>
 
       {/* DEV ONLY */}
-      <Button blue onClick={() => dispatch(changeItem({
-        name: '魔法藥',
-        quantity: 1,
-      }))}>
-        加1個魔法藥
+      <Button blue onClick={() => {
+        const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
+
+        // 解構賦值
+        const { name, loot } = currentEnemy;
+        const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
+        dispatch(changeEnemy({ name, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
+
+        console.log(state);
+      }}>
+        出現蝙蝠
       </Button>
 
-      {/* DEV ONLY */}
-      <Button blue onClick={() => dispatch(changeItem({
-        name: '毒藥',
-        quantity: 1,
-      }))}>
-        加1個毒藥
-      </Button>
     </div>
   );
 };

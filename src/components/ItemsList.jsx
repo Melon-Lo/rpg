@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 export default function ItemsList() {
   const dispatch = useDispatch();
   const { data } = useSelector(state => state.items);
-
   const { HP, MP } = useSelector(state => state.charStats);
+  const characterName = useSelector(state => state.charStats.name);
 
   // 查看、使用物品
   const Item = ({ name, quantity }) => {
@@ -52,7 +52,7 @@ export default function ItemsList() {
           // 使用物品訊息
           dispatch(addMessage({
             type: 'useItem',
-            content: `使用了${item.name}！${item.effectMessage}`,
+            content: `${characterName}使用了${item.name}！${item.effectMessage}`,
           }));
         }
       });
