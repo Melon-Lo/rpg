@@ -16,11 +16,14 @@ export default function CommandSection() {
   const { currentScene } = useSelector(state => state.systemStatus);
   const dispatch = useDispatch();
 
-  // 與對話相關的變數
+  // 對話相關變數
   const [sentence, setSentence] = useState(0);
   const talker = useSelector(state => state.systemStatus.currentDialogue.talker);
   const content = useSelector(state => state.systemStatus.currentDialogue.content);
   const contentLength = useSelector(state => state.systemStatus.currentDialogue.content.length);
+
+  // boolean 值：如果敵人的名字不為空字串，代表為戰鬥狀態
+  const battleTime = useSelector(state => state.enemies.name).length !== 0;
 
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
@@ -48,8 +51,23 @@ export default function CommandSection() {
     setCurrentStep('主頁');
   }
 
-  // 主頁（指令們）
-  const renderedCommandItems = commands.map(commandItem => {
+  // 主頁（指令們，非戰鬥狀態時）
+  const mainCommands = commands.find(command => command.type === 'main').commands;
+  const renderedMainCommandItems = mainCommands.map(commandItem => {
+    return (
+      <CommandItem
+        key={commandItem.command}
+        command={commandItem.command}
+        color={commandItem.color}
+        Icon={commandItem.img}
+        setCurrentStep={setCurrentStep}
+      />
+    )
+  });
+
+  // 戰鬥指令們（battleTime 為真時）
+  const battleCommands = commands.find(command => command.type === 'battle').commands;
+  const renderedBattleCommandItems = battleCommands.map(commandItem => {
     return (
       <CommandItem
         key={commandItem.command}
@@ -181,8 +199,9 @@ export default function CommandSection() {
 
       {/* 下方 */}
       <div className="p-2 flex justify-start items-center">
-        {/* 主頁 */}
-        { currentStep === '主頁' && renderedCommandItems }
+
+        {/* 主頁：非戰鬥狀態 */}
+        { currentStep === '主頁' && !battleTime && renderedMainCommandItems }
 
         {/* 交談 */}
         { currentStep === '交談' && renderedCharacters }
@@ -198,6 +217,12 @@ export default function CommandSection() {
 
         {/* talking */}
         { currentStep === 'talking' && <NextButton /> }
+
+        {/* 主頁：戰鬥狀態 */}
+        { currentStep === '主頁' && battleTime && renderedBattleCommandItems }
+
+        {/* 選擇「攻擊」對象 */}
+        { currentStep === '攻擊' && 'attack' }
       </div>
     </section>
   )
