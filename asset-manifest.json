@@ -1,16 +1,20 @@
 {
   "files": {
-    "main.css": "/rpg/static/css/main.8c29b36a.css",
-    "main.js": "/rpg/static/js/main.5fec157f.js",
-    "static/media/forest.jpg": "/rpg/static/media/forest.1057fc1de0ae2268570d.jpg",
-    "static/media/cave.jpg": "/rpg/static/media/cave.ab3a38c1b2fab2941059.jpg",
+    "main.css": "/rpg/static/css/main.bb087790.css",
+    "main.js": "/rpg/static/js/main.713542fa.js",
     "static/media/village.jpg": "/rpg/static/media/village.db06608e99adc901c7a6.jpg",
+    "static/media/villager.png": "/rpg/static/media/villager.6f3ab21bf531c2957075.png",
+    "static/media/elder.png": "/rpg/static/media/elder.5d4cb9f515504a3a2b43.png",
+    "static/media/caveman.png": "/rpg/static/media/caveman.40c72db17d31cc30ecbd.png",
+    "static/media/elf.png": "/rpg/static/media/elf.894e8beba8b56900a7a9.png",
+    "static/media/forest.jpg": "/rpg/static/media/forest.c952b66564789aab9b61.jpg",
+    "static/media/cave.jpg": "/rpg/static/media/cave.5982dd2b12828047ca7d.jpg",
     "index.html": "/rpg/index.html",
-    "main.8c29b36a.css.map": "/rpg/static/css/main.8c29b36a.css.map",
-    "main.5fec157f.js.map": "/rpg/static/js/main.5fec157f.js.map"
+    "main.bb087790.css.map": "/rpg/static/css/main.bb087790.css.map",
+    "main.713542fa.js.map": "/rpg/static/js/main.713542fa.js.map"
   },
   "entrypoints": [
-    "static/css/main.8c29b36a.css",
-    "static/js/main.5fec157f.js"
+    "static/css/main.bb087790.css",
+    "static/js/main.713542fa.js"
   ]
 }
