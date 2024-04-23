@@ -1,6 +1,12 @@
+// scene imgs
 import village from "../assets/images/scenes/village.jpg";
 import forest from "../assets/images/scenes/forest.jpg";
 import cave from "../assets/images/scenes/cave.jpg";
+
+// npc imgs
+import elder from "../assets/images/npcs/elder.png";
+import elf from "../assets/images/npcs/elf.png";
+import caveman from "../assets/images/npcs/caveman.png";
 
 const scenes = [
   {
@@ -9,6 +15,7 @@ const scenes = [
     characters: [
       {
         name: "村長",
+        img: elder,
         dialogue: [
           "嗨，歡迎來到我們村莊～",
           "第一次來這裡一定很緊張吧！",
@@ -23,6 +30,7 @@ const scenes = [
     characters: [
       {
         name: "精靈",
+        img: elf,
         dialogue: ["哈囉！"],
       },
     ],
@@ -33,6 +41,7 @@ const scenes = [
     characters: [
       {
         name: "山頂洞人",
+        img: caveman,
         dialogue: ["啊啦估？"],
       },
     ],

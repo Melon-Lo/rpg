@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const systemStatusSlice = createSlice({
   name: "systemStatus",
@@ -11,6 +11,7 @@ const systemStatusSlice = createSlice({
     currentScene: "村莊",
     currentDialogue: {
       talker: "",
+      img: "",
       content: "",
     },
   },
@@ -20,6 +21,13 @@ const systemStatusSlice = createSlice({
     },
     changeCurrentScene(state, action) {
       state.currentScene = action.payload;
+
+      // 每當移動場景時，對話要清空
+      state.currentDialogue = {
+        talker: "",
+        img: "",
+        content: "",
+      };
     },
     changeCurrentDialogue(state, action) {
       state.currentDialogue = action.payload;

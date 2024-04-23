@@ -67,6 +67,7 @@ export default function CommandSection() {
     const handleClick = () => {
       dispatch(changeCurrentDialogue({
         talker: charItem.name,
+        img: charItem.img,
         content: charItem.dialogue
       }));
 
