@@ -8,7 +8,8 @@ import {
   charStatsReducer,
   generateStats,
   resetStats,
-  changeHPorMP,
+  changeHP,
+  changeMP,
 } from "./slices/charStatsSlice";
 
 // items
@@ -47,7 +48,8 @@ export {
   changeStatClassTitle,
   generateStats,
   resetStats,
-  changeHPorMP,
+  changeHP,
+  changeMP,
 
   // systemStatus
   changeRoleCreated,

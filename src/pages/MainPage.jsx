@@ -49,18 +49,18 @@ export default function MainPage() {
 
       {/* DEV ONLY */}
       <Button blue onClick={() => dispatch(changeItem({
-        name: '藥草',
+        name: '魔法藥',
         quantity: 1,
       }))}>
-        加1個藥草
+        加1個魔法藥
       </Button>
 
       {/* DEV ONLY */}
       <Button blue onClick={() => dispatch(changeItem({
-        name: '補藥',
-        quantity: -3,
+        name: '毒藥',
+        quantity: 1,
       }))}>
-        減3個補藥
+        加1個毒藥
       </Button>
     </div>
   );

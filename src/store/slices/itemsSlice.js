@@ -9,6 +9,10 @@ const itemsSlice = createSlice({
         name: "補藥",
         quantity: 3,
       },
+      {
+        name: "魔法藥",
+        quantity: 2,
+      },
     ],
   },
   reducers: {

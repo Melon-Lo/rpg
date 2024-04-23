@@ -44,13 +44,28 @@ const charStats = createSlice({
     changeStatClassTitle(state, action) {
       state.classTitle = action.payload;
     },
-    changeHPorMP(state, action) {
-      // 判別是要 增加/減少 HP/MP
-
+    changeHP(state, action) {
       state.HP = action.payload;
       // HP 不會超過最大值
       if (state.HP >= state.maxHP) {
         state.HP = state.maxHP;
+      }
+
+      // HP 不會低於 0
+      if (state.HP < 0) {
+        state.HP = 0;
+      }
+    },
+    changeMP(state, action) {
+      state.MP = action.payload;
+      // MP 不會超過最大值
+      if (state.MP >= state.maxMP) {
+        state.MP = state.maxMP;
+      }
+
+      // MP 不會低於 0
+      if (state.MP < 0) {
+        state.MP = 0;
       }
     },
     generateStats(state, action) {
@@ -137,6 +152,7 @@ export const {
   changeStatClassTitle,
   generateStats,
   resetStats,
-  changeHPorMP,
+  changeHP,
+  changeMP,
 } = charStats.actions;
 export const charStatsReducer = charStats.reducer;

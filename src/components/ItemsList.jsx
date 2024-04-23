@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeHPorMP } from "../store";
+import { changeHP, changeMP, addMessage, changeItem } from "../store";
 import items from "../data/items";
+import Swal from "sweetalert2";
 
 export default function ItemsList() {
   const dispatch = useDispatch();
@@ -8,14 +9,54 @@ export default function ItemsList() {
 
   const { HP, MP } = useSelector(state => state.charStats);
 
-  console.log(HP, MP)
-
+  // 查看、使用物品
   const Item = ({ name, quantity }) => {
-    const itemEffect = items.find(item => item.name === name)?.effect;
+    // 先抓到 items 列表中的該物件，取得該 item 的屬性
+    const item = items.find(item => item.name === name);
     const handleClick = () => {
-      dispatch(changeHPorMP(itemEffect(HP)));
-      // console.log(result);
-    }
+      Swal.fire({
+        title: `要使用「${item.name}」嗎？`,
+        html: `
+          <div>
+            <h5>${item.effectDescription}</h5>
+            <h5>${item.description}</h5>
+          <div>
+        `,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消'
+      }).then((result) => {
+        // 如果用戶點擊了確認按鈕，則繼續執行後續操作
+        if (result.isConfirmed) {
+          // 運算完的值
+          let valueAfterEffect;
+
+          // 根據類別做不同運算
+          if (item.type === 'healHP' || item.type === 'damageHP') {
+            valueAfterEffect = item.effect(HP);
+            dispatch(changeHP(valueAfterEffect));
+          } else if (item.type === 'healMP' || item.type === 'damageMP') {
+            valueAfterEffect = item.effect(MP);
+            dispatch(changeMP(valueAfterEffect));
+          }
+
+          // 使用完物品後數量要 -1
+          dispatch(changeItem({
+            name: item.name,
+            quantity: -1,
+          }));
+
+          // 使用物品訊息
+          dispatch(addMessage({
+            type: 'useItem',
+            content: `使用了${item.name}！${item.effectMessage}`,
+          }));
+        }
+      });
+    };
 
     return (
       <div className="w-3/6 flex justify-between" onClick={handleClick}>
