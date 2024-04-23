@@ -44,6 +44,11 @@ const charStats = createSlice({
     changeStatClassTitle(state, action) {
       state.classTitle = action.payload;
     },
+    changeHPorMP(state, action) {
+      // 判別是要 增加/減少 HP/MP
+
+      state.HP = action.payload;
+    },
     generateStats(state, action) {
       const currentClassTitle = classes.find(
         (item) => item.classTitle === state.classTitle
@@ -128,5 +133,6 @@ export const {
   changeStatClassTitle,
   generateStats,
   resetStats,
+  changeHPorMP,
 } = charStats.actions;
 export const charStatsReducer = charStats.reducer;

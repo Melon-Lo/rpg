@@ -7,7 +7,14 @@ import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
 import Button from "../components/Button";
 
+// DEV ONLY
+import { useDispatch } from "react-redux";
+import { changeItem } from "../store";
+
 export default function MainPage() {
+  // DEV ONLY
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const { roleCreated } = useSelector(state => state.systemStatus);
 
@@ -31,6 +38,30 @@ export default function MainPage() {
 
       {/* DEV ONLY */}
       <Button blue onClick={() => navigate('create')}>to create</Button>
+
+      {/* DEV ONLY */}
+      <Button blue onClick={() => dispatch(changeItem({
+        name: '補藥',
+        quantity: 1,
+      }))}>
+        加1個補藥
+      </Button>
+
+      {/* DEV ONLY */}
+      <Button blue onClick={() => dispatch(changeItem({
+        name: '藥草',
+        quantity: 1,
+      }))}>
+        加1個藥草
+      </Button>
+
+      {/* DEV ONLY */}
+      <Button blue onClick={() => dispatch(changeItem({
+        name: '補藥',
+        quantity: -3,
+      }))}>
+        減3個補藥
+      </Button>
     </div>
   );
 };

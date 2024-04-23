@@ -7,6 +7,7 @@ import cave from "../assets/images/scenes/cave.jpg";
 import elder from "../assets/images/npcs/elder.png";
 import elf from "../assets/images/npcs/elf.png";
 import caveman from "../assets/images/npcs/caveman.png";
+import villager from "../assets/images/npcs/villager.png";
 
 const scenes = [
   {
@@ -24,7 +25,7 @@ const scenes = [
       },
       {
         name: "村民",
-        img: "",
+        img: villager,
         dialogue: ["嘿！"],
       },
     ],

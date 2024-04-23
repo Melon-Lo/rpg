@@ -8,17 +8,17 @@ import {
   charStatsReducer,
   generateStats,
   resetStats,
+  changeHPorMP,
 } from "./slices/charStatsSlice";
 
 // items
-import { itemsSliceReducer, addItem } from "./slices/itemsSlice";
+import { itemsSliceReducer, changeItem } from "./slices/itemsSlice";
 
 // systemStatus
 import {
   systemStatusSliceReducer,
   changeRoleCreated,
   changeCurrentScene,
-  // changeCurrentTalker,
   changeCurrentDialogue,
 } from "./slices/systemStatusSlice";
 
@@ -47,6 +47,7 @@ export {
   changeStatClassTitle,
   generateStats,
   resetStats,
+  changeHPorMP,
 
   // systemStatus
   changeRoleCreated,
@@ -54,7 +55,7 @@ export {
   changeCurrentDialogue,
 
   // items
-  addItem,
+  changeItem,
 
   // messages,
   addMessage,
