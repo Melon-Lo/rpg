@@ -6,6 +6,7 @@ export default function ScreenSection() {
   const { currentScene } = useSelector(state => state.systemStatus);
   const currentSceneImgSrc = scenes.find(scene => scene.name === currentScene)?.img;
   const currentNPCImgSrc = useSelector(state => state.systemStatus.currentDialogue?.img);
+  const currentEnemyImgSrc = useSelector(state => state.enemies.img);
 
   return (
     <section className="relative w-full h-48 flex justify-center my-1">

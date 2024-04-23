@@ -13,6 +13,7 @@ const enemies = [
       MDEF: 2,
       SPD: 3,
     },
+    money: 10,
     loot: [
       {
         name: "補藥",

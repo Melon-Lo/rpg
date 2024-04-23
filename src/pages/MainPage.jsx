@@ -54,9 +54,9 @@ export default function MainPage() {
         const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
 
         // 解構賦值
-        const { name, loot } = currentEnemy;
+        const { name, img, loot, money } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
-        dispatch(changeEnemy({ name, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
+        dispatch(changeEnemy({ name, img, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
 
         console.log(state);
       }}>
