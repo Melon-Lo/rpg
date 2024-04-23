@@ -8,7 +8,6 @@ import ItemsList from "./ItemsList";
 import CharStatsList from "./CharStatsList";
 import Button from "./Button";
 import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
-import { type } from "@testing-library/user-event/dist/type";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
@@ -136,8 +135,6 @@ export default function CommandSection() {
 
       // 每講一句，就推進一句
       setSentence(sentence + 1);
-
-      console.log(sentence, contentLength)
 
       // 講到最後一句時，自動退回主頁
       if (sentence < contentLength - 1) {

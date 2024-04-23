@@ -6,15 +6,7 @@ const messagesSlice = createSlice({
     messages: [
       {
         type: "system",
-        content: "test1",
-      },
-      {
-        type: "system",
-        content: "test2",
-      },
-      {
-        type: "system",
-        content: "test3",
+        content: "歡迎來到好玩的RPG～祝你有個驚險刺激的冒險！",
       },
     ],
   },
