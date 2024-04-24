@@ -7,7 +7,7 @@ const enemies = [
     stats: {
       HP: 100,
       maxHP: 100,
-      ATK: 25,
+      ATK: 325,
       DEF: 5,
       MATK: 30,
       MDEF: 2,

@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP, changeHP } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene } from "../store";
+import Swal from "sweetalert2";
 
 // components
 import StatusSection from "../components/StatusSection";
@@ -70,6 +71,37 @@ export default function MainPage() {
     handleEnemyDeath();
   }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP])
 
+  // 當角色死亡時
+  useEffect(() => {
+    const handlePlayerDeath = () => {
+      if (selfHP <= 0) {
+        dispatch(addMessage({
+          type: 'battle',
+          content: '被對方打倒了⋯⋯'
+        }))
+
+        // 等待 1.5s
+        setTimeout(() => {
+          // HP 留下 1
+          // dispatch(changeHP(1));
+          // 經驗值減少一半
+          // dispatch(changeEXP(selfEXP / 2));
+          // 回到村莊
+          dispatch(changeCurrentScene('村莊'));
+          // 狀態重置至非戰鬥狀態
+          dispatch(changeInBattle(false));
+
+          Swal.fire({
+            title: '戰鬥失敗！',
+            text: '損失50%經驗值，已被送往村莊',
+            icon: 'info',
+          });
+        }, 1500)
+      }
+    }
+
+    handlePlayerDeath();
+  }, [dispatch, selfHP, selfEXP])
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -99,16 +131,22 @@ export default function MainPage() {
           }))
         }, 1500)
 
-        // 等待 1.5s
+        // 等待 3s
         setTimeout(() => {
           const damage = decideDamage(enemyATK, selfDEF);
           dispatch(changeHP(selfHP - damage));
           dispatch(addMessage({
             type: 'battle',
             content: `${selfName}受到了 ${damage} 點傷害！`
-          }))
-          dispatch(changeTurn('self'));
+          }));
         }, 3000)
+
+        // 如果角色未死亡，換到自己的回合
+        setTimeout(() => {
+          if (selfHP > 0) {
+            dispatch(changeTurn('self'));
+          };
+        }, 4500)
 
         // 對方發動技能
       } else if (nextEnemyAction.actionType === 'skill') {
@@ -134,7 +172,7 @@ export default function MainPage() {
         }, 3000)
       }
     }
-  }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP]);
+  }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP, enemyMATK, selfMDEF]);
 
   return (
     <div className="flex flex-col items-center">

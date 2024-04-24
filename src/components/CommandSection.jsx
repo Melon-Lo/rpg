@@ -265,7 +265,7 @@ export default function CommandSection() {
         <p className="text-xl text-orange-800">{textContent}</p>
 
         {/* 返回按鈕（主頁或對談中不會顯示） */}
-        { currentStep !== '主頁' && currentStep !== 'talking' && !executingCommand && turn !== 'self' &&
+        { currentStep !== '主頁' && currentStep !== 'talking' && !executingCommand &&
           <div className="flex justify-center items-center cursor-pointer" onClick={handleReturn}>
             <TiArrowBack className="text-2xl text-orange-800" />
           </div>

@@ -145,7 +145,8 @@ const characterStats = createSlice({
       state.SPD = 0;
     },
     changeEXP(state, action) {
-      state.exp = action.payload;
+      // 不會有小數
+      state.exp = Math.floor(action.payload);
     },
   },
 });
