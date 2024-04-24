@@ -2,6 +2,7 @@ import scenes from '../data/scenes';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMessage } from '../store';
+import StatusBar from './StatusBar';
 
 export default function ScreenSection() {
   const dispatch = useDispatch();
@@ -11,6 +12,8 @@ export default function ScreenSection() {
   const currentNPCImgSrc = useSelector(state => state.systemStatus.currentDialogue?.img);
   const currentEnemyImgSrc = useSelector(state => state.enemies.img);
   const currentEnemyName = useSelector(state => state.enemies.name);
+  const currentEnemyHP = useSelector(state => state.enemies.HP);
+  const currentEnemyMaxHP = useSelector(state => state.enemies.maxHP);
 
   // 是否在戰鬥中的變數
   const { inBattle } = useSelector(state => state.battle);
@@ -43,7 +46,12 @@ export default function ScreenSection() {
 
             {/* 戰鬥狀態時，顯示敵人 */}
             { inBattle &&
-              <img className="w-full h-full object-contain" src={currentEnemyImgSrc} alt="npc-img" />
+              <>
+                <img className="w-full h-full object-contain" src={currentEnemyImgSrc} alt="npc-img" />
+                <div className='absolute bottom-2 w-full px-3'>
+                  <StatusBar type="HP" color="red" currentValue={currentEnemyHP} maxValue={currentEnemyMaxHP} />
+                </div>
+              </>
             }
           </div>
       </div>

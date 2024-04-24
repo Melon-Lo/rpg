@@ -29,7 +29,7 @@ const characterStats = createSlice({
     maxHP: 70,
     MP: 10,
     maxMP: 30,
-    ATK: 10,
+    ATK: 30,
     DEF: 10,
     MATK: 20,
     MDEF: 20,

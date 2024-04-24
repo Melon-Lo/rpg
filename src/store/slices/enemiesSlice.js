@@ -34,8 +34,11 @@ const enemiesSlice = createSlice({
         img,
       };
     },
+    changeEnemyHP(state, action) {
+      state.HP = action.payload;
+    },
   },
 });
 
-export const { changeEnemy } = enemiesSlice.actions;
+export const { changeEnemy, changeEnemyHP } = enemiesSlice.actions;
 export const enemiesSliceReducer = enemiesSlice.reducer;

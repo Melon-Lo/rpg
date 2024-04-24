@@ -27,10 +27,19 @@ import {
 import { messagesSliceReducer, addMessage } from "./slices/messagesSlice";
 
 // battle
-import { battleSliceReducer, changeInBattle } from "./slices/battleSlice";
+import {
+  battleSliceReducer,
+  changeInBattle,
+  changeExecutingCommand,
+  changeTurn,
+} from "./slices/battleSlice";
 
 // enemies
-import { enemiesSliceReducer, changeEnemy } from "./slices/enemiesSlice";
+import {
+  enemiesSliceReducer,
+  changeEnemy,
+  changeEnemyHP,
+} from "./slices/enemiesSlice";
 
 const store = configureStore({
   reducer: {
@@ -72,7 +81,10 @@ export {
 
   // battle
   changeInBattle,
+  changeExecutingCommand,
+  changeTurn,
 
   // enemies
   changeEnemy,
+  changeEnemyHP,
 };

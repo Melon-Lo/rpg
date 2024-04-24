@@ -7,7 +7,8 @@ import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharacterStatsList from "./CharacterStatsList";
 import Button from "./Button";
-import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeTurn, changeEnemyHP } from "../store";
+import decideDamage from "../utils/battle/decideDamage";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
@@ -25,11 +26,19 @@ export default function CommandSection() {
   // 戰鬥相關變數
   const { inBattle } = useSelector(state => state.battle);
   const enemyName = useSelector(state => state.enemies.name);
+  const enemyHP = useSelector(state => state.enemies.HP);
+  const enemyDEF = useSelector(state => state.enemies.DEF);
+  const { turn } = useSelector(state => state.battle);
+  const playerATK = useSelector(state => state.characterStats.ATK);
 
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
     const changeTextContent = () => {
-      if (currentStep === '主頁') {
+      if (currentStep === '主頁' && inBattle && turn === 'self') {
+        setTextContent('我方回合，對敵人採取行動！');
+      } else if (currentStep === '主頁' && inBattle && turn === 'enemy') {
+        setTextContent('敵方行動中⋯⋯');
+      } else if (currentStep === '主頁') {
         setTextContent('想做什麼呢？');
       } else if (currentStep === '交談') {
         setTextContent('要跟誰交談呢？')
@@ -45,7 +54,7 @@ export default function CommandSection() {
     }
 
     changeTextContent();
-  }, [currentStep])
+  }, [currentStep, inBattle, turn])
 
   // 按下返回鍵，回到主頁
   const handleReturn = () => {
@@ -198,7 +207,19 @@ export default function CommandSection() {
         type: 'battle',
         content: `${playerName}向${enemyName}發動了攻擊！`
       }));
+
+      setTimeout(() => {
+        const damage = decideDamage(playerATK, enemyDEF);
+        dispatch(changeEnemyHP(enemyHP - damage));
+        dispatch(addMessage({
+          type: 'battle',
+          content: `${enemyName}受到了 ${damage} 點的傷害！`
+        }));
+      }, 1500);
+
+      // 攻擊完畢，回到主頁、回合變成對方的
       setCurrentStep('主頁');
+      dispatch(changeTurn('enemy'));
     };
 
     return (

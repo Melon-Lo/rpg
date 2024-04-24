@@ -9,13 +9,15 @@ import Button from "../components/Button";
 
 // DEV ONLY
 import { useDispatch } from "react-redux";
-import { changeItem, changeEnemy, addMessage, changeInBattle } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn } from "../store";
 import enemies from "../data/enemies";
+import decideTurnOrder from "../utils/battle/decideTurnOrder";
 
 export default function MainPage() {
   // DEV ONLY
   const dispatch = useDispatch();
-  const state = useSelector(state => state.enemies);
+  const selfSPD = useSelector(state => state.characterStats.SPD);
+  const enemySPD = useSelector(state => state.enemies.SPD);
 
   const navigate = useNavigate();
   const { roleCreated } = useSelector(state => state.systemStatus);
@@ -29,6 +31,8 @@ export default function MainPage() {
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
     handleNavigate();
+
+    // DEV ONLY
   }, [])
 
   return (
@@ -52,8 +56,6 @@ export default function MainPage() {
       {/* DEV ONLY */}
       <Button blue onClick={() => {
         const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
-
-        // 解構賦值
         const { name, img, loot, money } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
         dispatch(changeEnemy({ name, img, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
@@ -62,6 +64,9 @@ export default function MainPage() {
           content: `${name}出現了！`
         }));
         dispatch(changeInBattle(true));
+
+        const firstTurn = decideTurnOrder(selfSPD, enemySPD);
+        dispatch(changeTurn(firstTurn));
       }}>
         出現蝙蝠
       </Button>
