@@ -1,15 +1,29 @@
-// import scenesImg from '../data/scene/scenesImg';
 import scenes from '../data/scenes';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addMessage } from '../store';
 
 export default function ScreenSection() {
+  const dispatch = useDispatch();
+
   const { currentScene } = useSelector(state => state.systemStatus);
   const currentSceneImgSrc = scenes.find(scene => scene.name === currentScene)?.img;
   const currentNPCImgSrc = useSelector(state => state.systemStatus.currentDialogue?.img);
   const currentEnemyImgSrc = useSelector(state => state.enemies.img);
+  const currentEnemyName = useSelector(state => state.enemies.name);
 
   // boolean 值：如果敵人的名字不為空字串，代表為戰鬥狀態
   const battleTime = useSelector(state => state.enemies.name).length !== 0;
+
+  useEffect(() => {
+    if (battleTime) {
+      dispatch(addMessage({
+        type: 'battle',
+        content: `${currentEnemyName}出現了！`
+      }));
+      console.log('test')
+    }
+  }, [battleTime, currentEnemyName, dispatch]);
 
   return (
     <section className="relative w-full h-48 flex justify-center my-1">
