@@ -18,22 +18,28 @@ export default function MainPage() {
   const dispatch = useDispatch();
   const selfSPD = useSelector(state => state.characterStats.SPD);
   const enemySPD = useSelector(state => state.enemies.SPD);
+  const { turn } = useSelector(state => state.battle);
+
+  // useEffect(() => {
+  //   const handleBattle = () => {
+  //   }
+
+  //   handleBattle();
+  // }, [dispatch, selfSPD, enemySPD, turn])
 
   const navigate = useNavigate();
   const { roleCreated } = useSelector(state => state.systemStatus);
 
-  const handleNavigate = () => {
-    if (!roleCreated) {
-      navigate('/create');
-    }
-  };
-
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
-    handleNavigate();
+    const handleNavigate = () => {
+      if (!roleCreated) {
+        navigate('/create');
+      }
+    };
 
-    // DEV ONLY
-  }, [])
+    handleNavigate();
+  }, [navigate, roleCreated])
 
   return (
     <div className="flex flex-col items-center">

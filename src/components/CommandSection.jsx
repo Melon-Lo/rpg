@@ -34,7 +34,7 @@ export default function CommandSection() {
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
     const changeTextContent = () => {
-      // 戰鬥情況相關
+      // 戰鬥狀態相關
       if (currentStep === '主頁' && inBattle && turn === 'self') {
         setTextContent('我方回合，對敵人採取行動');
         return
@@ -48,7 +48,7 @@ export default function CommandSection() {
         setTextContent('敵方行動中⋯⋯');
         return
 
-      // 非戰鬥情況相關
+      // 非戰鬥狀態相關
       } else if (currentStep === '主頁') {
         setTextContent('想做什麼呢？');
         return
@@ -226,6 +226,7 @@ export default function CommandSection() {
       }));
       dispatch(changeExecutingCommand(true));
 
+      // 等待 1.5s
       setTimeout(() => {
         const damage = decideDamage(playerATK, enemyDEF);
         dispatch(changeEnemyHP(enemyHP - damage));
@@ -233,14 +234,12 @@ export default function CommandSection() {
           type: 'battle',
           content: `${enemyName}受到了 ${damage} 點的傷害！`
         }));
-      }, 1500); // 等待 1.5s
 
-      // 攻擊完畢，回到主頁、回合變成對方的
-      setTimeout(() => {
+        // 攻擊完畢後，回歸攻擊前狀態
         dispatch(changeExecutingCommand(false));
         setCurrentStep('主頁');
         dispatch(changeTurn('enemy'));
-      }, 1501)
+      }, 1500);
     };
 
     return (
@@ -256,7 +255,7 @@ export default function CommandSection() {
         <p className="text-xl text-orange-800">{textContent}</p>
 
         {/* 返回按鈕（主頁或對談中不會顯示） */}
-        { currentStep !== '主頁' && currentStep !== 'talking' &&
+        { currentStep !== '主頁' && currentStep !== 'talking' && !executingCommand && turn !== 'self' &&
           <div className="flex justify-center items-center cursor-pointer" onClick={handleReturn}>
             <TiArrowBack className="text-2xl text-orange-800" />
           </div>
@@ -284,8 +283,8 @@ export default function CommandSection() {
         {/* talking */}
         { currentStep === 'talking' && <NextButton /> }
 
-        {/* 主頁：戰鬥狀態 */}
-        { currentStep === '主頁' && inBattle && !executingCommand && renderedBattleCommandItems }
+        {/* 主頁：戰鬥指令 */}
+        { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }
 
         {/* 選擇「攻擊」對象 */}
         { currentStep === '攻擊' && !executingCommand && <AttackButton /> }
