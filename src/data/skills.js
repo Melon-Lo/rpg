@@ -7,6 +7,14 @@ const skills = [
       return damage;
     },
   },
+  {
+    name: "聲波",
+    effect: (attackerMATK, defenderMDEF) => {
+      let damage;
+      damage = attackerMATK - defenderMDEF;
+      return damage;
+    },
+  },
 ];
 
 export default skills;

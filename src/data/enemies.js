@@ -5,11 +5,11 @@ const enemies = [
     name: "蝙蝠",
     img: bat,
     stats: {
-      HP: 500,
-      maxHP: 500,
+      HP: 100,
+      maxHP: 100,
       ATK: 25,
       DEF: 5,
-      MATK: 2,
+      MATK: 30,
       MDEF: 2,
       SPD: 3,
     },
@@ -21,18 +21,13 @@ const enemies = [
         quantity: 2,
       },
     ],
-    // actions: [
-    //   { name: "attack" },
-    //   { name: "useSkill", skill: ["火焰", "聲波"] },
-    //   { name: "flee" },
-    // ],
     ai: (percentHP) => {
       let actionType;
       let action;
 
       if (percentHP > 0.6) {
         actionType = "attack";
-      } else if (percentHP <= 0.6 && percentHP > 0.1) {
+      } else {
         const randomNum = Math.random();
         if (randomNum < 0.5) {
           actionType = "skill";
@@ -41,8 +36,6 @@ const enemies = [
           actionType = "skill";
           action = "聲波";
         }
-      } else {
-        actionType = "flee";
       }
 
       return {

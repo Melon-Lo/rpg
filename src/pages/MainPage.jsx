@@ -1,16 +1,20 @@
-import StatusSection from "../components/StatusSection";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP, changeHP } from "../store";
+
+// components
+import StatusSection from "../components/StatusSection";
 import ScreenSection from "../components/ScreenSection";
 import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
 import Button from "../components/Button";
 
-// DEV ONLY
-import { useDispatch } from "react-redux";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP, changeHP } from "../store";
+// data
 import enemies from "../data/enemies";
+import skills from "../data/skills";
+
+// utils
 import decideTurnOrder from "../utils/battle/decideTurnOrder";
 import decideDamage from "../utils/battle/decideDamage";
 
@@ -25,11 +29,13 @@ export default function MainPage() {
   const selfSPD = useSelector(state => state.characterStats.SPD);
   const selfHP = useSelector(state => state.characterStats.HP);
   const selfDEF = useSelector(state => state.characterStats.DEF);
+  const selfMDEF = useSelector(state => state.characterStats.MDEF);
   const selfEXP = useSelector(state => state.characterStats.exp);
   const enemyName = useSelector(state => state.enemies.name);
   const enemyMaxHP = useSelector(state => state.enemies.maxHP);
   const enemyHP = useSelector(state => state.enemies.HP);
   const enemyATK = useSelector(state => state.enemies.ATK);
+  const enemyMATK = useSelector(state => state.enemies.MATK);
   const enemySPD = useSelector(state => state.enemies.SPD);
   const enemyEXP = useSelector(state => state.enemies.exp);
   const { enemyDefeated } = useSelector(state => state.battle);
@@ -83,9 +89,8 @@ export default function MainPage() {
       // 先拿到對方的行為 AI
       const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
       const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
-      console.log(nextEnemyAction);
 
-      // 對方攻擊
+      // 對方發動一般攻擊
       if (nextEnemyAction.actionType === 'attack') {
         setTimeout(() => {
           dispatch(addMessage({
@@ -97,6 +102,29 @@ export default function MainPage() {
         // 等待 1.5s
         setTimeout(() => {
           const damage = decideDamage(enemyATK, selfDEF);
+          dispatch(changeHP(selfHP - damage));
+          dispatch(addMessage({
+            type: 'battle',
+            content: `${selfName}受到了 ${damage} 點傷害！`
+          }))
+          dispatch(changeTurn('self'));
+        }, 3000)
+
+        // 對方發動技能
+      } else if (nextEnemyAction.actionType === 'skill') {
+        const skillName = nextEnemyAction.action;
+        const skillEffect = skills.find(skill => skill.name === skillName).effect;
+
+        setTimeout(() => {
+          dispatch(addMessage({
+            type: 'battle',
+            content: `${enemyName}發動了${skillName}！`
+          }))
+        }, 1500)
+
+        // 等待 1.5s
+        setTimeout(() => {
+          const damage = skillEffect(enemyMATK, selfMDEF);
           dispatch(changeHP(selfHP - damage));
           dispatch(addMessage({
             type: 'battle',
