@@ -12,13 +12,26 @@ const enemiesSlice = createSlice({
     MATK: 0,
     MDEF: 0,
     SPD: 0,
+    exp: 0,
     money: 0,
     loot: [],
   },
   reducers: {
     changeEnemy(state, action) {
-      const { name, HP, maxHP, ATK, DEF, MATK, MDEF, SPD, money, loot, img } =
-        action.payload;
+      const {
+        name,
+        HP,
+        maxHP,
+        ATK,
+        DEF,
+        MATK,
+        MDEF,
+        SPD,
+        exp,
+        money,
+        loot,
+        img,
+      } = action.payload;
       return {
         ...state,
         name,
@@ -29,6 +42,7 @@ const enemiesSlice = createSlice({
         MATK,
         MDEF,
         SPD,
+        exp,
         money,
         loot,
         img,

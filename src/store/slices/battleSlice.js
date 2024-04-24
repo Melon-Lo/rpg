@@ -5,6 +5,7 @@ const battleSlice = createSlice({
   initialState: {
     inBattle: false,
     executingCommand: false,
+    enemyDefeated: false,
     turn: "",
   },
   reducers: {
@@ -17,9 +18,16 @@ const battleSlice = createSlice({
     changeTurn(state, action) {
       state.turn = action.payload;
     },
+    changeEnemyDefeated(state, action) {
+      state.enemyDefeated = action.payload;
+    },
   },
 });
 
-export const { changeInBattle, changeExecutingCommand, changeTurn } =
-  battleSlice.actions;
+export const {
+  changeInBattle,
+  changeExecutingCommand,
+  changeTurn,
+  changeEnemyDefeated,
+} = battleSlice.actions;
 export const battleSliceReducer = battleSlice.reducer;

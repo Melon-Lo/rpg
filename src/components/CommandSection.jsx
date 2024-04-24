@@ -7,7 +7,7 @@ import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharacterStatsList from "./CharacterStatsList";
 import Button from "./Button";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeTurn, changeEnemyHP, changeExecutingCommand } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn } from "../store";
 import decideDamage from "../utils/battle/decideDamage";
 
 export default function CommandSection() {
@@ -35,7 +35,9 @@ export default function CommandSection() {
     // 上方文字內容，根據 currentStep 不同而變換
     const changeTextContent = () => {
       // 戰鬥狀態相關
-      if (currentStep === '主頁' && inBattle && turn === 'self') {
+      if (currentStep === '主頁' && inBattle && turn === 'self' && executingCommand) {
+        setTextContent('執行行動中⋯⋯')
+      } else if (currentStep === '主頁' && inBattle && turn === 'self') {
         setTextContent('我方回合，對敵人採取行動');
         return
       } else if (currentStep === '攻擊' && inBattle && !executingCommand) {
@@ -228,6 +230,7 @@ export default function CommandSection() {
 
       // 等待 1.5s
       setTimeout(() => {
+        // 對敵人造成傷害
         const damage = decideDamage(playerATK, enemyDEF);
         dispatch(changeEnemyHP(enemyHP - damage));
         dispatch(addMessage({
@@ -235,10 +238,17 @@ export default function CommandSection() {
           content: `${enemyName}受到了 ${damage} 點的傷害！`
         }));
 
-        // 攻擊完畢後，回歸攻擊前狀態
-        dispatch(changeExecutingCommand(false));
+        // 如果擊敗敵人，剩下的交給 MainPage 處理
+        if (damage >= enemyHP) {
+          dispatch(changeEnemyDefeated(true));
+        } else {
+          // 如果還沒擊敗敵人，則換成對方的回合
+          dispatch(changeExecutingCommand(false));
+          dispatch(changeTurn('enemy'));
+        }
+
+        // 無論如何都回到主頁
         setCurrentStep('主頁');
-        dispatch(changeTurn('enemy'));
       }, 1500);
     };
 

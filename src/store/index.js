@@ -2,6 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 
 // form
 import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
+
+// characterStats
 import {
   changeStatName,
   changeStatClassTitle,
@@ -10,6 +12,7 @@ import {
   resetStats,
   changeHP,
   changeMP,
+  changeEXP,
 } from "./slices/characterStatsSlice";
 
 // items
@@ -32,6 +35,7 @@ import {
   changeInBattle,
   changeExecutingCommand,
   changeTurn,
+  changeEnemyDefeated,
 } from "./slices/battleSlice";
 
 // enemies
@@ -67,6 +71,7 @@ export {
   resetStats,
   changeHP,
   changeMP,
+  changeEXP,
 
   // systemStatus
   changeRoleCreated,
@@ -83,6 +88,7 @@ export {
   changeInBattle,
   changeExecutingCommand,
   changeTurn,
+  changeEnemyDefeated,
 
   // enemies
   changeEnemy,

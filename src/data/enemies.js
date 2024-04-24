@@ -13,6 +13,7 @@ const enemies = [
       MDEF: 2,
       SPD: 3,
     },
+    exp: 10,
     money: 10,
     loot: [
       {

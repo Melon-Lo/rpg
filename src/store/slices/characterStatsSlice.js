@@ -35,7 +35,7 @@ const characterStats = createSlice({
     MDEF: 20,
     SPD: 3,
     exp: 43,
-    expToNextLevel: 50,
+    expToNextLevel: 100,
   },
   reducers: {
     changeStatName(state, action) {
@@ -144,6 +144,9 @@ const characterStats = createSlice({
       state.MDEF = 0;
       state.SPD = 0;
     },
+    changeEXP(state, action) {
+      state.exp = action.payload;
+    },
   },
 });
 
@@ -154,5 +157,6 @@ export const {
   resetStats,
   changeHP,
   changeMP,
+  changeEXP,
 } = characterStats.actions;
 export const characterStatsReducer = characterStats.reducer;
