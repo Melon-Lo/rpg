@@ -23,8 +23,7 @@ export default function CommandSection() {
   const contentLength = useSelector(state => state.systemStatus.currentDialogue.content.length);
 
   // 戰鬥相關變數
-  // boolean 值：如果敵人的名字不為空字串，代表為戰鬥狀態
-  const battleTime = useSelector(state => state.enemies.name).length !== 0;
+  const { inBattle } = useSelector(state => state.battle);
   const enemyName = useSelector(state => state.enemies.name);
 
   useEffect(() => {
@@ -226,7 +225,7 @@ export default function CommandSection() {
       <div className="p-2 flex justify-start items-center">
 
         {/* 主頁：非戰鬥狀態 */}
-        { currentStep === '主頁' && !battleTime && renderedMainCommandItems }
+        { currentStep === '主頁' && !inBattle && renderedMainCommandItems }
 
         {/* 交談 */}
         { currentStep === '交談' && renderedCharacters }
@@ -244,7 +243,7 @@ export default function CommandSection() {
         { currentStep === 'talking' && <NextButton /> }
 
         {/* 主頁：戰鬥狀態 */}
-        { currentStep === '主頁' && battleTime && renderedBattleCommandItems }
+        { currentStep === '主頁' && inBattle && renderedBattleCommandItems }
 
         {/* 選擇「攻擊」對象 */}
         { currentStep === '攻擊' && <AttackButton /> }

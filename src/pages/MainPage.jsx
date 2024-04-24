@@ -9,7 +9,7 @@ import Button from "../components/Button";
 
 // DEV ONLY
 import { useDispatch } from "react-redux";
-import { changeItem, changeEnemy, addMessage } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle } from "../store";
 import enemies from "../data/enemies";
 
 export default function MainPage() {
@@ -61,6 +61,7 @@ export default function MainPage() {
           type: 'system',
           content: `${name}出現了！`
         }));
+        dispatch(changeInBattle(true));
       }}>
         出現蝙蝠
       </Button>

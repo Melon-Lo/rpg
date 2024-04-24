@@ -13,17 +13,22 @@ export default function ScreenSection() {
   const currentEnemyName = useSelector(state => state.enemies.name);
 
   // boolean 值：如果敵人的名字不為空字串，代表為戰鬥狀態
-  const battleTime = useSelector(state => state.enemies.name).length !== 0;
+  // const battleTime = useSelector(state => state.enemies.name).length !== 0;
+  const { inBattle } = useSelector(state => state.battle);
 
   useEffect(() => {
-    if (battleTime) {
-      dispatch(addMessage({
-        type: 'battle',
-        content: `${currentEnemyName}出現了！`
-      }));
-      console.log('test')
+    // 每當出現敵人時，顯示訊息
+    const addEnemyMessage = () => {
+      if (inBattle) {
+        dispatch(addMessage({
+          type: 'battle',
+          content: `${currentEnemyName}出現了！`
+        }));
+      }
     }
-  }, [battleTime, currentEnemyName, dispatch]);
+
+    addEnemyMessage();
+  }, [inBattle, currentEnemyName, dispatch]);
 
   return (
     <section className="relative w-full h-48 flex justify-center my-1">
@@ -33,12 +38,12 @@ export default function ScreenSection() {
 
           <div className="absolute inset-0">
             {/* 對話中，且非戰鬥狀態時，顯示NPC */}
-            { currentNPCImgSrc && !battleTime &&
+            { currentNPCImgSrc && !inBattle &&
               <img className="w-full h-full object-contain" src={currentNPCImgSrc} alt="npc-img" />
             }
 
             {/* 戰鬥狀態時，顯示敵人 */}
-            { battleTime &&
+            { inBattle &&
               <img className="w-full h-full object-contain" src={currentEnemyImgSrc} alt="npc-img" />
             }
           </div>

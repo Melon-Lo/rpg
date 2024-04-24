@@ -26,6 +26,9 @@ import {
 // messages
 import { messagesSliceReducer, addMessage } from "./slices/messagesSlice";
 
+// battle
+import { battleSliceReducer, changeInBattle } from "./slices/battleSlice";
+
 // enemies
 import { enemiesSliceReducer, changeEnemy } from "./slices/enemiesSlice";
 
@@ -36,6 +39,7 @@ const store = configureStore({
     items: itemsSliceReducer,
     systemStatus: systemStatusSliceReducer,
     messages: messagesSliceReducer,
+    battle: battleSliceReducer,
     enemies: enemiesSliceReducer,
   },
 });
@@ -65,6 +69,9 @@ export {
 
   // messages,
   addMessage,
+
+  // battle
+  changeInBattle,
 
   // enemies
   changeEnemy,
