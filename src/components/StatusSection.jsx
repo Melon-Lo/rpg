@@ -19,13 +19,13 @@ export default function StatusSection() {
           </div>
         </div>
         <div className="w-8/12 max-w-80">
-          <StatusBar type="HP" color="red" currentValue={HP} maxValue={maxHP} />
-          <StatusBar type="MP" color="blue" currentValue={MP} maxValue={maxMP} />
+          <StatusBar selfStatus type="HP" color="red" currentValue={HP} maxValue={maxHP} />
+          <StatusBar selfStatus type="MP" color="blue" currentValue={MP} maxValue={maxMP} />
         </div>
       </div>
       <div className="flex items-center justify-between w-full">
         <div className="w-8/12">
-          <StatusBar type="EXP" color="green" currentValue={exp} maxValue={expToNextLevel} />
+          <StatusBar selfStatus type="EXP" color="green" currentValue={exp} maxValue={expToNextLevel} />
         </div>
         <div className="w-3/12 flex justify-end items-center text-xl my-1">
           <div className="bg-yellow-300 rounded-full p-1">

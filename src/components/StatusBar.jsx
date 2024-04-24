@@ -1,12 +1,20 @@
-export default function StatusBar({ type, color, currentValue, maxValue }) {
+export default function StatusBar({ type, color, currentValue, maxValue, selfStatus }) {
   const currentRatio = currentValue / maxValue;
 
-  return (
-    <div className="flex justify-between py-2">
+  const ValueNumbers = () => {
+    return (
       <div>
         {type}：{currentValue} / {maxValue}
       </div>
-      <div className="w-5/12 md:w-7/12 bg-gray-300 rounded-md relative overflow-hidden">
+    );
+  };
+
+  const barStyle = selfStatus ? 'w-5/12 md:w-7/12' : 'w-full';
+
+  return (
+    <div className="flex justify-between items-center py-2">
+      { selfStatus && <ValueNumbers /> }
+      <div className={`${barStyle} bg-gray-300 rounded-md relative overflow-hidden h-4`}>
         {/* 依照比例顯示長度 */}
         <div id="hpBar" className={"absolute inset-0 bg-" + color + "-500"} style={{ width: currentRatio * 100 + '%' }}></div>
       </div>
