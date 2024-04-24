@@ -9,23 +9,34 @@ import Button from "../components/Button";
 
 // DEV ONLY
 import { useDispatch } from "react-redux";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP, changeHP } from "../store";
 import enemies from "../data/enemies";
 import decideTurnOrder from "../utils/battle/decideTurnOrder";
+import decideDamage from "../utils/battle/decideDamage";
 
 export default function MainPage() {
-  // DEV ONLY
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { roleCreated } = useSelector(state => state.systemStatus);
+
+  // 戰鬥相關數據
+  const selfName = useSelector(state => state.characterStats.name);
   const selfSPD = useSelector(state => state.characterStats.SPD);
   const selfHP = useSelector(state => state.characterStats.HP);
+  const selfDEF = useSelector(state => state.characterStats.DEF);
   const selfEXP = useSelector(state => state.characterStats.exp);
   const enemyName = useSelector(state => state.enemies.name);
+  const enemyMaxHP = useSelector(state => state.enemies.maxHP);
+  const enemyHP = useSelector(state => state.enemies.HP);
+  const enemyATK = useSelector(state => state.enemies.ATK);
   const enemySPD = useSelector(state => state.enemies.SPD);
   const enemyEXP = useSelector(state => state.enemies.exp);
   const { enemyDefeated } = useSelector(state => state.battle);
+  const { turn } = useSelector(state => state.battle);
 
+  // 當敵人被擊敗時
   useEffect(() => {
-    // 當敵人被擊敗時
     const handleEnemyDeath = () => {
       if (enemyDefeated) {
         dispatch(addMessage({
@@ -53,8 +64,6 @@ export default function MainPage() {
     handleEnemyDeath();
   }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP])
 
-  const navigate = useNavigate();
-  const { roleCreated } = useSelector(state => state.systemStatus);
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -66,6 +75,38 @@ export default function MainPage() {
 
     handleNavigate();
   }, [navigate, roleCreated])
+
+  // 敵方戰鬥回合
+  useEffect(() => {
+    // 若對方未被擊敗，則輪到對方回合
+    if (turn === 'enemy') {
+      // 先拿到對方的行為 AI
+      const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
+      const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
+      console.log(nextEnemyAction);
+
+      // 對方攻擊
+      if (nextEnemyAction.actionType === 'attack') {
+        setTimeout(() => {
+          dispatch(addMessage({
+            type: 'battle',
+            content: `${enemyName}發動了攻擊！`
+          }))
+        }, 1500)
+
+        // 等待 1.5s
+        setTimeout(() => {
+          const damage = decideDamage(enemyATK, selfDEF);
+          dispatch(changeHP(selfHP - damage));
+          dispatch(addMessage({
+            type: 'battle',
+            content: `${selfName}受到了 ${damage} 點傷害！`
+          }))
+          dispatch(changeTurn('self'));
+        }, 3000)
+      }
+    }
+  }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP]);
 
   return (
     <div className="flex flex-col items-center">
@@ -88,7 +129,7 @@ export default function MainPage() {
       {/* DEV ONLY */}
       <Button blue onClick={() => {
         const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
-        const { name, img, loot, exp, money } = currentEnemy;
+        const { name, img, loot, exp, money, ai } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
         dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
         dispatch(addMessage({

@@ -22,7 +22,7 @@ const items = [
   {
     name: "毒藥",
     type: "damageHP",
-    description: "殺人利器，一滴即致命。",
+    description: "殺人利器，一滴致命。",
     effectDescription: "損失 HP 50 點",
     effectMessage: "HP 減少了 50 點！",
     effect: (hp) => {
