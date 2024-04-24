@@ -7,7 +7,7 @@ import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import CharacterStatsList from "./CharacterStatsList";
 import Button from "./Button";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeTurn, changeEnemyHP } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeTurn, changeEnemyHP, changeExecutingCommand } from "../store";
 import decideDamage from "../utils/battle/decideDamage";
 
 export default function CommandSection() {
@@ -28,33 +28,50 @@ export default function CommandSection() {
   const enemyName = useSelector(state => state.enemies.name);
   const enemyHP = useSelector(state => state.enemies.HP);
   const enemyDEF = useSelector(state => state.enemies.DEF);
-  const { turn } = useSelector(state => state.battle);
   const playerATK = useSelector(state => state.characterStats.ATK);
+  const { turn, executingCommand } = useSelector(state => state.battle);
 
   useEffect(() => {
     // 上方文字內容，根據 currentStep 不同而變換
     const changeTextContent = () => {
+      // 戰鬥情況相關
       if (currentStep === '主頁' && inBattle && turn === 'self') {
-        setTextContent('我方回合，對敵人採取行動！');
+        setTextContent('我方回合，對敵人採取行動');
+        return
+      } else if (currentStep === '攻擊' && inBattle && !executingCommand) {
+        setTextContent('一般攻擊');
+        return
+      } else if (currentStep === '攻擊' && inBattle && executingCommand) {
+        setTextContent('執行行動中⋯⋯');
+        return
       } else if (currentStep === '主頁' && inBattle && turn === 'enemy') {
         setTextContent('敵方行動中⋯⋯');
+        return
+
+      // 非戰鬥情況相關
       } else if (currentStep === '主頁') {
         setTextContent('想做什麼呢？');
+        return
       } else if (currentStep === '交談') {
         setTextContent('要跟誰交談呢？')
+        return
       } else if (currentStep === '移動') {
         setTextContent('要去哪裡呢？')
+        return
       } else if (currentStep === '物品') {
         setTextContent('物品一覽');
+        return
       } else if (currentStep === '狀態') {
         setTextContent('狀態一覽');
+        return
       } else if (currentStep === 'talking') {
         setTextContent('對談中⋯⋯');
+        return
       }
     }
 
     changeTextContent();
-  }, [currentStep, inBattle, turn])
+  }, [currentStep, inBattle, turn, executingCommand])
 
   // 按下返回鍵，回到主頁
   const handleReturn = () => {
@@ -200,13 +217,14 @@ export default function CommandSection() {
     )
   });
 
-  // 攻擊對象
+  // 攻擊敵人
   const AttackButton = () => {
     const handleClick = () => {
       dispatch(addMessage({
         type: 'battle',
         content: `${playerName}向${enemyName}發動了攻擊！`
       }));
+      dispatch(changeExecutingCommand(true));
 
       setTimeout(() => {
         const damage = decideDamage(playerATK, enemyDEF);
@@ -215,11 +233,14 @@ export default function CommandSection() {
           type: 'battle',
           content: `${enemyName}受到了 ${damage} 點的傷害！`
         }));
-      }, 1500);
+      }, 1500); // 等待 1.5s
 
       // 攻擊完畢，回到主頁、回合變成對方的
-      setCurrentStep('主頁');
-      dispatch(changeTurn('enemy'));
+      setTimeout(() => {
+        dispatch(changeExecutingCommand(false));
+        setCurrentStep('主頁');
+        dispatch(changeTurn('enemy'));
+      }, 1501)
     };
 
     return (
@@ -264,10 +285,10 @@ export default function CommandSection() {
         { currentStep === 'talking' && <NextButton /> }
 
         {/* 主頁：戰鬥狀態 */}
-        { currentStep === '主頁' && inBattle && renderedBattleCommandItems }
+        { currentStep === '主頁' && inBattle && !executingCommand && renderedBattleCommandItems }
 
         {/* 選擇「攻擊」對象 */}
-        { currentStep === '攻擊' && <AttackButton /> }
+        { currentStep === '攻擊' && !executingCommand && <AttackButton /> }
       </div>
     </section>
   )
