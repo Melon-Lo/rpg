@@ -12,8 +12,7 @@ export default function ScreenSection() {
   const currentEnemyImgSrc = useSelector(state => state.enemies.img);
   const currentEnemyName = useSelector(state => state.enemies.name);
 
-  // boolean 值：如果敵人的名字不為空字串，代表為戰鬥狀態
-  // const battleTime = useSelector(state => state.enemies.name).length !== 0;
+  // 是否在戰鬥中的變數
   const { inBattle } = useSelector(state => state.battle);
 
   useEffect(() => {

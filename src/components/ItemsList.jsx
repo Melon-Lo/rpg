@@ -6,8 +6,8 @@ import Swal from "sweetalert2";
 export default function ItemsList() {
   const dispatch = useDispatch();
   const { data } = useSelector(state => state.items);
-  const { HP, MP } = useSelector(state => state.charStats);
-  const characterName = useSelector(state => state.charStats.name);
+  const { HP, MP } = useSelector(state => state.characterStats);
+  const characterName = useSelector(state => state.characterStats.name);
 
   // 查看、使用物品
   const Item = ({ name, quantity }) => {

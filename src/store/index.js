@@ -5,12 +5,12 @@ import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
 import {
   changeStatName,
   changeStatClassTitle,
-  charStatsReducer,
+  characterStatsReducer,
   generateStats,
   resetStats,
   changeHP,
   changeMP,
-} from "./slices/charStatsSlice";
+} from "./slices/characterStatsSlice";
 
 // items
 import { itemsSliceReducer, changeItem } from "./slices/itemsSlice";
@@ -35,7 +35,7 @@ import { enemiesSliceReducer, changeEnemy } from "./slices/enemiesSlice";
 const store = configureStore({
   reducer: {
     form: formReducer,
-    charStats: charStatsReducer,
+    characterStats: characterStatsReducer,
     items: itemsSliceReducer,
     systemStatus: systemStatusSliceReducer,
     messages: messagesSliceReducer,
@@ -51,7 +51,7 @@ export {
   changeName,
   changeClassTitle,
 
-  // charStats
+  // characterStats
   changeStatName,
   changeStatClassTitle,
   generateStats,

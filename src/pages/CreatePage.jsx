@@ -10,7 +10,7 @@ export default function CreatePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, classTitle } = useSelector(state => state.form);
-  const { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.charStats);
+  const { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
 
   // 送出資料
   const handleSubmit = (e) => {

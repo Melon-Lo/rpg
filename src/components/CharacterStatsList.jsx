@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
-export default function CharStatsList() {
-  const { name, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD, level } = useSelector(state => state.charStats);
+export default function CharacterStatsList() {
+  const { name, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD, level } = useSelector(state => state.characterStats);
 
   return (
     <div className="bg-slate-50/75 p-3 text-gray-800 rounded-md">

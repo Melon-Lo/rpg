@@ -5,14 +5,14 @@ import commands from "../data/commands";
 import scenes from "../data/scenes";
 import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
-import CharStatsList from "./CharStatsList";
+import CharacterStatsList from "./CharacterStatsList";
 import Button from "./Button";
 import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
 
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
-  const playerName = useSelector(state => state.charStats.name);
+  const playerName = useSelector(state => state.characterStats.name);
   const { currentScene } = useSelector(state => state.systemStatus);
   const dispatch = useDispatch();
 
@@ -237,7 +237,7 @@ export default function CommandSection() {
         { currentStep === '物品' && <ItemsList /> }
 
         {/* 狀態 */}
-        { currentStep === '狀態' && <CharStatsList /> }
+        { currentStep === '狀態' && <CharacterStatsList /> }
 
         {/* talking */}
         { currentStep === 'talking' && <NextButton /> }

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import classes from "../../data/classes";
 
-const charStats = createSlice({
-  name: "charStats",
+const characterStats = createSlice({
+  name: "characterStats",
   // initialState: {
   //   name: "",
   //   classTitle: "",
@@ -154,5 +154,5 @@ export const {
   resetStats,
   changeHP,
   changeMP,
-} = charStats.actions;
-export const charStatsReducer = charStats.reducer;
+} = characterStats.actions;
+export const characterStatsReducer = characterStats.reducer;
