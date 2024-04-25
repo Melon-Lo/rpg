@@ -74,11 +74,11 @@ export default function ItemsList({ setCurrentStep }) {
     );
   };
 
-  const renderItems = data.map(item => <Item key={item.name} name={item.name} quantity={item.quantity} />);
+  const renderedItems = data.map(item => <Item key={item.name} name={item.name} quantity={item.quantity} />);
 
   return (
     <div className="w-full flex flex-wrap bg-slate-50/75 p-3">
-      {renderItems}
+      {renderedItems}
     </div>
   );
 };

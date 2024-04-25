@@ -1,13 +1,20 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import commands from "../data/commands";
-import scenes from "../data/scenes";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn } from "../store";
+
+// components
 import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
-import CharacterStatsList from "./CharacterStatsList";
+import SkillsList from "./SkillsList";
 import Button from "./Button";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn } from "../store";
+import CharacterStatsList from "./CharacterStatsList";
+
+// data
+import commands from "../data/commands";
+import scenes from "../data/scenes";
+
+// utils
 import decideDamage from "../utils/battle/decideDamage";
 
 export default function CommandSection() {
@@ -286,6 +293,9 @@ export default function CommandSection() {
 
         {/* 物品 */}
         { currentStep === '物品' && <ItemsList setCurrentStep={setCurrentStep} /> }
+
+        {/* 技能 */}
+        { currentStep === '技能' && <SkillsList setCurrentStep={setCurrentStep} /> }
 
         {/* 狀態 */}
         { currentStep === '狀態' && <CharacterStatsList /> }

@@ -18,6 +18,7 @@ const characterStats = createSlice({
   //   SPD: 0,
   //   exp: 0,
   //   expToNextLevel: 50,
+  //   skills: [],
   // },
 
   // DEV ONLY
@@ -36,6 +37,7 @@ const characterStats = createSlice({
     SPD: 30,
     exp: 43,
     expToNextLevel: 100,
+    skills: ["火焰"],
   },
   reducers: {
     changeStatName(state, action) {
@@ -148,6 +150,9 @@ const characterStats = createSlice({
       // 不會有小數
       state.exp = Math.floor(action.payload);
     },
+    addSkill(state, action) {
+      state.skills = action.payload;
+    },
   },
 });
 
@@ -159,5 +164,6 @@ export const {
   changeHP,
   changeMP,
   changeEXP,
+  addSkill,
 } = characterStats.actions;
 export const characterStatsReducer = characterStats.reducer;
