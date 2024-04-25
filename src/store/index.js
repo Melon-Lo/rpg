@@ -35,6 +35,7 @@ import {
   changeInBattle,
   changeExecutingCommand,
   changeTurn,
+  changeSelfDefeated,
   changeEnemyDefeated,
 } from "./slices/battleSlice";
 
@@ -88,6 +89,7 @@ export {
   changeInBattle,
   changeExecutingCommand,
   changeTurn,
+  changeSelfDefeated,
   changeEnemyDefeated,
 
   // enemies

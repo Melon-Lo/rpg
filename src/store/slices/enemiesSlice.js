@@ -50,6 +50,9 @@ const enemiesSlice = createSlice({
     },
     changeEnemyHP(state, action) {
       state.HP = action.payload;
+      if (state.HP < 0) {
+        state.HP = 0;
+      }
     },
   },
 });

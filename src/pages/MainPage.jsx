@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -39,69 +39,8 @@ export default function MainPage() {
   const enemyMATK = useSelector(state => state.enemies.MATK);
   const enemySPD = useSelector(state => state.enemies.SPD);
   const enemyEXP = useSelector(state => state.enemies.exp);
-  const { enemyDefeated } = useSelector(state => state.battle);
+  const { selfDefeated, enemyDefeated } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
-
-  // 當敵人被擊敗時
-  useEffect(() => {
-    const handleEnemyDeath = () => {
-      if (enemyDefeated) {
-        dispatch(addMessage({
-          type: 'battle',
-          content: `${enemyName}被擊敗了！`
-        }))
-
-        // 等待 1.5s
-        setTimeout(() => {
-          // 增加經驗值
-          dispatch(changeEXP(selfEXP + enemyEXP));
-          dispatch(addMessage({
-            type: 'battle',
-            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值`
-          }));
-
-          // 回到初始狀態：沒在執行動作、沒在戰鬥中、敵人沒被擊敗
-          dispatch(changeExecutingCommand(false));
-          dispatch(changeInBattle(false));
-          dispatch(changeEnemyDefeated(false));
-        }, 1500)
-      }
-    }
-
-    handleEnemyDeath();
-  }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP])
-
-  // 當角色死亡時
-  useEffect(() => {
-    const handlePlayerDeath = () => {
-      if (selfHP <= 0) {
-        dispatch(addMessage({
-          type: 'battle',
-          content: '被對方打倒了⋯⋯'
-        }))
-
-        // 等待 1.5s
-        setTimeout(() => {
-          // HP 留下 1
-          // dispatch(changeHP(1));
-          // 經驗值減少一半
-          // dispatch(changeEXP(selfEXP / 2));
-          // 回到村莊
-          dispatch(changeCurrentScene('村莊'));
-          // 狀態重置至非戰鬥狀態
-          dispatch(changeInBattle(false));
-
-          Swal.fire({
-            title: '戰鬥失敗！',
-            text: '損失50%經驗值，已被送往村莊',
-            icon: 'info',
-          });
-        }, 1500)
-      }
-    }
-
-    handlePlayerDeath();
-  }, [dispatch, selfHP, selfEXP])
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -114,64 +53,138 @@ export default function MainPage() {
     handleNavigate();
   }, [navigate, roleCreated])
 
-  // 敵方戰鬥回合
+  // 當敵人被擊敗時
   useEffect(() => {
-    // 若對方未被擊敗，則輪到對方回合
-    if (turn === 'enemy') {
-      // 先拿到對方的行為 AI
-      const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
-      const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
-
-      // 對方發動一般攻擊
-      if (nextEnemyAction.actionType === 'attack') {
+    const handleEnemyDeath = () => {
+      if (enemyDefeated) {
+        // 等待 1.5s
         setTimeout(() => {
           dispatch(addMessage({
             type: 'battle',
-            content: `${enemyName}發動了攻擊！`
+            content: `${enemyName}被擊敗了！`
           }))
         }, 1500)
 
         // 等待 3s
         setTimeout(() => {
-          const damage = decideDamage(enemyATK, selfDEF);
-          dispatch(changeHP(selfHP - damage));
+          // 增加經驗值
+          dispatch(changeEXP(selfEXP + enemyEXP));
           dispatch(addMessage({
             type: 'battle',
-            content: `${selfName}受到了 ${damage} 點傷害！`
+            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值`
           }));
-        }, 3000)
 
-        // 如果角色未死亡，換到自己的回合
-        setTimeout(() => {
-          if (selfHP > 0) {
-            dispatch(changeTurn('self'));
-          };
-        }, 4500)
-
-        // 對方發動技能
-      } else if (nextEnemyAction.actionType === 'skill') {
-        const skillName = nextEnemyAction.action;
-        const skillEffect = skills.find(skill => skill.name === skillName).effect;
-
-        setTimeout(() => {
-          dispatch(addMessage({
-            type: 'battle',
-            content: `${enemyName}發動了${skillName}！`
-          }))
-        }, 1500)
-
-        // 等待 1.5s
-        setTimeout(() => {
-          const damage = skillEffect(enemyMATK, selfMDEF);
-          dispatch(changeHP(selfHP - damage));
-          dispatch(addMessage({
-            type: 'battle',
-            content: `${selfName}受到了 ${damage} 點傷害！`
-          }))
-          dispatch(changeTurn('self'));
+          // 回到初始狀態：沒在執行動作、沒在戰鬥中、敵人沒被擊敗
+          dispatch(changeExecutingCommand(false));
+          dispatch(changeInBattle(false));
+          dispatch(changeEnemyDefeated(false));
         }, 3000)
       }
     }
+
+    handleEnemyDeath();
+  }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP])
+
+  // 當角色死亡時
+  useEffect(() => {
+    const handlePlayerDeath = () => {
+      if (selfDefeated) {
+        dispatch(addMessage({
+          type: 'battle',
+          content: '被對方打倒了⋯⋯'
+        }))
+
+        // 等待 1.5s
+        setTimeout(() => {
+          // HP 留下 1
+          dispatch(changeHP(1));
+          // 經驗值減少一半
+          dispatch(changeEXP(selfEXP / 2));
+          // 回到村莊
+          dispatch(changeCurrentScene('村莊'));
+          // 狀態重置至非戰鬥狀態
+          dispatch(changeInBattle(false));
+
+          Swal.fire({
+            title: '戰鬥失敗！',
+            text: '損失50%經驗值，已被送往村莊',
+            icon: 'info',
+          });
+        }, 1500)
+      }
+
+      changeSelfDefeated(false);
+    }
+
+    handlePlayerDeath();
+  }, [dispatch, selfDefeated, selfHP, selfEXP])
+
+  // 敵方戰鬥回合
+  useEffect(() => {
+    const handleEnemyTurn = () => {
+      // 若對方未被擊敗，則輪到對方回合
+      if (turn === 'enemy') {
+        // 先拿到對方的行為 AI
+        const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
+        const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
+        const damage = decideDamage(enemyATK, selfDEF);
+
+        // 對方發動一般攻擊
+        if (nextEnemyAction.actionType === 'attack') {
+          setTimeout(() => {
+            dispatch(addMessage({
+              type: 'battle',
+              content: `${enemyName}發動了攻擊！`
+            }))
+          }, 1500)
+  
+          // 等待 3s
+          setTimeout(() => {
+            dispatch(changeHP(selfHP - damage));
+            dispatch(addMessage({
+              type: 'battle',
+              content: `${selfName}受到了 ${damage} 點傷害！`
+            }));
+          }, 3000)
+  
+          // 對方發動技能
+        } else if (nextEnemyAction.actionType === 'skill') {
+          const skillName = nextEnemyAction.action;
+          const skillEffect = skills.find(skill => skill.name === skillName).effect;
+          const damage = skillEffect(enemyMATK, selfMDEF);
+  
+          setTimeout(() => {
+            dispatch(addMessage({
+              type: 'battle',
+              content: `${enemyName}發動了${skillName}！`
+            }))
+          }, 1500)
+  
+          // 等待 3s
+          setTimeout(() => {
+            dispatch(changeHP(selfHP - damage));
+            dispatch(addMessage({
+              type: 'battle',
+              content: `${selfName}受到了 ${damage} 點傷害！`
+            }))
+          }, 3000)
+        }
+  
+        setTimeout(() => {
+          // 角色被打死
+          if (damage >= selfHP) {
+            dispatch(changeSelfDefeated(true));
+          // 如果角色未死亡，換到自己的回合
+          } else {
+            dispatch(changeTurn('self'));
+          }
+        }, 4500)
+  
+        dispatch(changeTurn(''));
+      }
+    }
+
+    handleEnemyTurn();
   }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP, enemyMATK, selfMDEF]);
 
   return (

@@ -221,7 +221,7 @@ export default function CommandSection() {
 
   // 攻擊敵人
   const AttackButton = () => {
-    const handleClick = () => {
+    const handleAttack = () => {
       dispatch(addMessage({
         type: 'battle',
         content: `${playerName}向${enemyName}發動了攻擊！`
@@ -253,7 +253,7 @@ export default function CommandSection() {
     };
 
     return (
-      <Button onClick={handleClick} red>向{enemyName}發動攻擊！</Button>
+      <Button onClick={handleAttack} red>向{enemyName}發動攻擊！</Button>
     );
   };
 
