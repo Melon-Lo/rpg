@@ -33,7 +33,7 @@ const characterStats = createSlice({
     DEF: 10,
     MATK: 20,
     MDEF: 20,
-    SPD: 3,
+    SPD: 30,
     exp: 43,
     expToNextLevel: 100,
   },

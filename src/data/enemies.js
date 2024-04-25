@@ -11,7 +11,7 @@ const enemies = [
       DEF: 5,
       MATK: 30,
       MDEF: 2,
-      SPD: 100,
+      SPD: 1,
     },
     exp: 10,
     money: 10,

@@ -66,14 +66,21 @@ export default function MainPage() {
     if (inBattle && turn === '') {
       const firstTurn = decideTurnOrder(selfSPD, enemySPD);
       setTimeout(() => {
+        if (firstTurn === 'self') {
+          dispatch(addMessage({
+            type: 'battle',
+            content: `${selfName}速度較快，我方先攻！`
+          }))
+        } else if (firstTurn === 'enemy') {
+          dispatch(addMessage({
+            type: 'battle',
+            content: '敵人速度較快，敵人先攻！'
+          }));
+        };
         dispatch(changeTurn(firstTurn));
-        dispatch(addMessage({
-          type: 'battle',
-          content: '敵人速度較快，敵人先攻！'
-        }))
       }, 1500)
-    }
-  }, [dispatch, selfSPD, enemySPD, inBattle, turn])
+    };
+  }, [dispatch, selfSPD, enemySPD, inBattle, turn, selfName])
 
   // 敵方戰鬥回合
   useEffect(() => {
@@ -167,13 +174,13 @@ export default function MainPage() {
           const loot = getRandomLoot(enemyLoot);
           // 如果有獲得戰利品（一半機率）
           if (loot) {
-            lootText = `${loot.name} * ${loot.quantity}`;
+            lootText = `、${loot.name} * ${loot.quantity}`;
             dispatch(changeItem(loot));
           }
 
           dispatch(addMessage({
             type: 'battle',
-            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值、金錢 ${enemyMoney} 元！${lootText}`
+            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值、金錢 ${enemyMoney} 元${lootText}`
           }));
 
           // 回到初始狀態：沒在執行動作、沒在戰鬥中、敵人沒被擊敗
