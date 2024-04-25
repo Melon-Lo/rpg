@@ -55,7 +55,7 @@ export default function MainPage() {
 
   // 當敵人被擊敗時
   useEffect(() => {
-    const handleEnemyDeath = () => {
+    const handleEnemyDefeated = () => {
       if (enemyDefeated) {
         // 等待 1.5s
         setTimeout(() => {
@@ -82,16 +82,16 @@ export default function MainPage() {
       }
     }
 
-    handleEnemyDeath();
+    handleEnemyDefeated();
   }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP])
 
-  // 當角色死亡時
+  // 當角色被擊敗時
   useEffect(() => {
-    const handlePlayerDeath = () => {
+    const handlePlayerDefeated = () => {
       if (selfDefeated) {
         dispatch(addMessage({
           type: 'battle',
-          content: '被對方打倒了⋯⋯'
+          content: '被敵人打倒了⋯⋯'
         }))
 
         // 等待 1.5s
@@ -104,6 +104,7 @@ export default function MainPage() {
           dispatch(changeCurrentScene('村莊'));
           // 狀態重置至非戰鬥狀態
           dispatch(changeInBattle(false));
+          dispatch(changeSelfDefeated(false));
 
           Swal.fire({
             title: '戰鬥失敗！',
@@ -112,11 +113,9 @@ export default function MainPage() {
           });
         }, 1500)
       }
-
-      changeSelfDefeated(false);
     }
 
-    handlePlayerDeath();
+    handlePlayerDefeated();
   }, [dispatch, selfDefeated, selfHP, selfEXP])
 
   // 敵方戰鬥回合

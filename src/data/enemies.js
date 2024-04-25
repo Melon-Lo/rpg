@@ -5,7 +5,7 @@ const enemies = [
     name: "蝙蝠",
     img: bat,
     stats: {
-      HP: 10,
+      HP: 100,
       maxHP: 100,
       ATK: 520,
       DEF: 5,
