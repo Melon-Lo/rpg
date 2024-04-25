@@ -13,7 +13,7 @@ import decideDamage from "../utils/battle/decideDamage";
 export default function CommandSection() {
   const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
-  const playerName = useSelector(state => state.characterStats.name);
+  const selfName = useSelector(state => state.characterStats.name);
   const { currentScene } = useSelector(state => state.systemStatus);
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ export default function CommandSection() {
   const enemyName = useSelector(state => state.enemies.name);
   const enemyHP = useSelector(state => state.enemies.HP);
   const enemyDEF = useSelector(state => state.enemies.DEF);
-  const playerATK = useSelector(state => state.characterStats.ATK);
+  const selfATK = useSelector(state => state.characterStats.ATK);
   const { turn, executingCommand } = useSelector(state => state.battle);
 
   useEffect(() => {
@@ -46,12 +46,12 @@ export default function CommandSection() {
       } else if (currentStep === '攻擊' && inBattle && executingCommand) {
         setTextContent('執行行動中⋯⋯');
         return
-      } else if (currentStep === '主頁' && inBattle && turn === 'enemy') {
+      } else if (currentStep === '主頁' && inBattle && turn === 'enemyExecuting') {
         setTextContent('敵方行動中⋯⋯');
         return
 
       // 非戰鬥狀態相關
-      } else if (currentStep === '主頁') {
+      } else if (currentStep === '主頁' && !inBattle) {
         setTextContent('想做什麼呢？');
         return
       } else if (currentStep === '交談') {
@@ -182,7 +182,7 @@ export default function CommandSection() {
       // 系統提示
       dispatch(addMessage({
         type: 'move',
-        content: `${playerName}移動到${sceneName}了。`,
+        content: `${selfName}移動到${sceneName}了。`,
       }));
 
       // 移動完回主頁
@@ -224,14 +224,14 @@ export default function CommandSection() {
     const handleAttack = () => {
       dispatch(addMessage({
         type: 'battle',
-        content: `${playerName}向${enemyName}發動了攻擊！`
+        content: `${selfName}向${enemyName}發動了攻擊！`
       }));
       dispatch(changeExecutingCommand(true));
 
       // 等待 1.5s
       setTimeout(() => {
         // 對敵人造成傷害
-        const damage = decideDamage(playerATK, enemyDEF);
+        const damage = decideDamage(selfATK, enemyDEF);
         dispatch(changeEnemyHP(enemyHP - damage));
         dispatch(addMessage({
           type: 'battle',
@@ -285,7 +285,7 @@ export default function CommandSection() {
         { currentStep === '移動' && renderedScenes }
 
         {/* 物品 */}
-        { currentStep === '物品' && <ItemsList /> }
+        { currentStep === '物品' && <ItemsList setCurrentStep={setCurrentStep} /> }
 
         {/* 狀態 */}
         { currentStep === '狀態' && <CharacterStatsList /> }

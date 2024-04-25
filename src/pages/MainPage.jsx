@@ -29,7 +29,7 @@ export default function MainPage() {
   // 戰鬥相關數據
   const { name: selfName, SPD: selfSPD, HP: selfHP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP } = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot } = useSelector(state => state.enemies);
-  const { selfDefeated, enemyDefeated } = useSelector(state => state.battle);
+  const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
   const { money } = useSelector(state => state.items);
 
@@ -48,11 +48,38 @@ export default function MainPage() {
   // 戰鬥狀態
   // --------------------------------------------
 
+  // 敵人出現後，將該敵人的數值傳給 enemiesSlice
+  const handleShowEnemy = () => {
+    const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
+    const { name, img, loot, exp, money } = currentEnemy;
+    const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
+    dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
+    dispatch(addMessage({
+      type: 'system',
+      content: `${name}出現了！`
+    }));
+    dispatch(changeInBattle(true));
+  };
+
+  // 敵人出現後，由敵我雙方的 SPD 決定先攻
+  useEffect(() => {
+    if (inBattle && turn === '') {
+      const firstTurn = decideTurnOrder(selfSPD, enemySPD);
+      setTimeout(() => {
+        dispatch(changeTurn(firstTurn));
+        dispatch(addMessage({
+          type: 'battle',
+          content: '敵人速度較快，敵人先攻！'
+        }))
+      }, 1500)
+    }
+  }, [dispatch, selfSPD, enemySPD, inBattle, turn])
+
   // 敵方戰鬥回合
   useEffect(() => {
     const handleEnemyTurn = () => {
       // 若對方未被擊敗，則輪到對方回合
-      if (turn === 'enemy') {
+      if (inBattle && turn === 'enemy') {
         // 先拿到對方的行為 AI
         const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
         const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
@@ -66,7 +93,7 @@ export default function MainPage() {
               content: `${enemyName}發動了攻擊！`
             }))
           }, 1500)
-  
+
           // 等待 3s
           setTimeout(() => {
             dispatch(changeHP(selfHP - damage));
@@ -75,20 +102,20 @@ export default function MainPage() {
               content: `${selfName}受到了 ${damage} 點傷害！`
             }));
           }, 3000)
-  
+
           // 對方發動技能
         } else if (nextEnemyAction.actionType === 'skill') {
           const skillName = nextEnemyAction.action;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
           const damage = skillEffect(enemyMATK, selfMDEF);
-  
+
           setTimeout(() => {
             dispatch(addMessage({
               type: 'battle',
               content: `${enemyName}發動了${skillName}！`
             }))
           }, 1500)
-  
+
           // 等待 3s
           setTimeout(() => {
             dispatch(changeHP(selfHP - damage));
@@ -98,7 +125,7 @@ export default function MainPage() {
             }))
           }, 3000)
         }
-  
+
         setTimeout(() => {
           // 角色被打死
           if (damage >= selfHP) {
@@ -108,13 +135,13 @@ export default function MainPage() {
             dispatch(changeTurn('self'));
           }
         }, 4500)
-  
-        dispatch(changeTurn(''));
+
+        dispatch(changeTurn('enemyExecuting'));
       }
     }
 
     handleEnemyTurn();
-  }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP, enemyMATK, selfMDEF]);
+  }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP, enemyMATK, selfMDEF, inBattle]);
 
   // 戰鬥勝利：當敵人被擊敗時
   useEffect(() => {
@@ -212,21 +239,7 @@ export default function MainPage() {
       </Button>
 
       {/* DEV ONLY */}
-      <Button blue onClick={() => {
-        const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
-        const { name, img, loot, exp, money, ai } = currentEnemy;
-        const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
-        dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
-        dispatch(addMessage({
-          type: 'system',
-          content: `${name}出現了！`
-        }));
-        dispatch(changeInBattle(true));
-
-        // 由雙方的 SPD 決定先攻
-        const firstTurn = decideTurnOrder(selfSPD, enemySPD);
-        dispatch(changeTurn(firstTurn));
-      }}>
+      <Button blue onClick={handleShowEnemy}>
         出現蝙蝠
       </Button>
 

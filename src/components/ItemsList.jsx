@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeHP, changeMP, addMessage, changeItem } from "../store";
+import { changeHP, changeMP, addMessage, changeItem, changeTurn } from "../store";
 import items from "../data/items";
 import Swal from "sweetalert2";
 
-export default function ItemsList() {
+export default function ItemsList({ setCurrentStep }) {
   const dispatch = useDispatch();
   const { data } = useSelector(state => state.items);
   const { HP, MP } = useSelector(state => state.characterStats);
+  const { inBattle } = useSelector(state => state.battle);
   const characterName = useSelector(state => state.characterStats.name);
 
   // 查看、使用物品
@@ -54,7 +55,14 @@ export default function ItemsList() {
             type: 'useItem',
             content: `${characterName}使用了${item.name}！${item.effectMessage}`,
           }));
-        }
+
+          // 如果是在戰鬥狀態，則換成對方的回合
+          if (inBattle) {
+            dispatch(changeTurn('enemy'));
+            // 使用完回主頁
+            setCurrentStep('主頁');
+          };
+        };
       });
     };
 
