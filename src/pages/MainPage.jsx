@@ -180,6 +180,7 @@ export default function MainPage() {
           dispatch(changeExecutingCommand(false));
           dispatch(changeInBattle(false));
           dispatch(changeEnemyDefeated(false));
+          dispatch(changeTurn(''));
         }, 3000)
       }
     }
@@ -207,6 +208,7 @@ export default function MainPage() {
           // 狀態重置至非戰鬥狀態
           dispatch(changeInBattle(false));
           dispatch(changeSelfDefeated(false));
+          dispatch(changeTurn(''));
 
           Swal.fire({
             title: '戰鬥失敗！',
