@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -18,6 +18,7 @@ import skills from "../data/skills";
 // utils
 import decideTurnOrder from "../utils/battle/decideTurnOrder";
 import decideDamage from "../utils/battle/decideDamage";
+import getRandomLoot from "../utils/battle/getRandomLoot";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -26,21 +27,11 @@ export default function MainPage() {
   const { roleCreated } = useSelector(state => state.systemStatus);
 
   // 戰鬥相關數據
-  const selfName = useSelector(state => state.characterStats.name);
-  const selfSPD = useSelector(state => state.characterStats.SPD);
-  const selfHP = useSelector(state => state.characterStats.HP);
-  const selfDEF = useSelector(state => state.characterStats.DEF);
-  const selfMDEF = useSelector(state => state.characterStats.MDEF);
-  const selfEXP = useSelector(state => state.characterStats.exp);
-  const enemyName = useSelector(state => state.enemies.name);
-  const enemyMaxHP = useSelector(state => state.enemies.maxHP);
-  const enemyHP = useSelector(state => state.enemies.HP);
-  const enemyATK = useSelector(state => state.enemies.ATK);
-  const enemyMATK = useSelector(state => state.enemies.MATK);
-  const enemySPD = useSelector(state => state.enemies.SPD);
-  const enemyEXP = useSelector(state => state.enemies.exp);
+  const { name: selfName, SPD: selfSPD, HP: selfHP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP } = useSelector(state => state.characterStats);
+  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
+  const { money } = useSelector(state => state.items);
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -53,70 +44,9 @@ export default function MainPage() {
     handleNavigate();
   }, [navigate, roleCreated])
 
-  // 當敵人被擊敗時
-  useEffect(() => {
-    const handleEnemyDefeated = () => {
-      if (enemyDefeated) {
-        // 等待 1.5s
-        setTimeout(() => {
-          dispatch(addMessage({
-            type: 'battle',
-            content: `${enemyName}被擊敗了！`
-          }))
-        }, 1500)
-
-        // 等待 3s
-        setTimeout(() => {
-          // 增加經驗值
-          dispatch(changeEXP(selfEXP + enemyEXP));
-          dispatch(addMessage({
-            type: 'battle',
-            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值`
-          }));
-
-          // 回到初始狀態：沒在執行動作、沒在戰鬥中、敵人沒被擊敗
-          dispatch(changeExecutingCommand(false));
-          dispatch(changeInBattle(false));
-          dispatch(changeEnemyDefeated(false));
-        }, 3000)
-      }
-    }
-
-    handleEnemyDefeated();
-  }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP])
-
-  // 當角色被擊敗時
-  useEffect(() => {
-    const handlePlayerDefeated = () => {
-      if (selfDefeated) {
-        dispatch(addMessage({
-          type: 'battle',
-          content: '被敵人打倒了⋯⋯'
-        }))
-
-        // 等待 1.5s
-        setTimeout(() => {
-          // HP 留下 1
-          dispatch(changeHP(1));
-          // 經驗值減少一半
-          dispatch(changeEXP(selfEXP / 2));
-          // 回到村莊
-          dispatch(changeCurrentScene('村莊'));
-          // 狀態重置至非戰鬥狀態
-          dispatch(changeInBattle(false));
-          dispatch(changeSelfDefeated(false));
-
-          Swal.fire({
-            title: '戰鬥失敗！',
-            text: '損失50%經驗值，已被送往村莊',
-            icon: 'info',
-          });
-        }, 1500)
-      }
-    }
-
-    handlePlayerDefeated();
-  }, [dispatch, selfDefeated, selfHP, selfEXP])
+  // --------------------------------------------
+  // 戰鬥狀態
+  // --------------------------------------------
 
   // 敵方戰鬥回合
   useEffect(() => {
@@ -185,6 +115,83 @@ export default function MainPage() {
 
     handleEnemyTurn();
   }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP, enemyMATK, selfMDEF]);
+
+  // 戰鬥勝利：當敵人被擊敗時
+  useEffect(() => {
+    const handleEnemyDefeated = () => {
+      if (enemyDefeated) {
+        // 等待 1.5s
+        setTimeout(() => {
+          dispatch(addMessage({
+            type: 'battle',
+            content: `${enemyName}被擊敗了！`
+          }))
+        }, 1500)
+
+        // 等待 3s
+        setTimeout(() => {
+          let lootText = '';
+
+          // 增加經驗值和金錢
+          dispatch(changeEXP(selfEXP + enemyEXP));
+          dispatch(changeMoney(money + enemyMoney));
+
+          // 隨機獲得戰利品
+          const loot = getRandomLoot(enemyLoot);
+          // 如果有獲得戰利品（一半機率）
+          if (loot) {
+            lootText = `${loot.name} * ${loot.quantity}`;
+            dispatch(changeItem(loot));
+          }
+
+          dispatch(addMessage({
+            type: 'battle',
+            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值、金錢 ${enemyMoney} 元！${lootText}`
+          }));
+
+          // 回到初始狀態：沒在執行動作、沒在戰鬥中、敵人沒被擊敗
+          dispatch(changeExecutingCommand(false));
+          dispatch(changeInBattle(false));
+          dispatch(changeEnemyDefeated(false));
+        }, 3000)
+      }
+    }
+
+    handleEnemyDefeated();
+  }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP, enemyLoot, enemyMoney, money])
+
+  // 戰鬥失敗：當角色被擊敗時
+  useEffect(() => {
+    const handlePlayerDefeated = () => {
+      if (selfDefeated) {
+        dispatch(addMessage({
+          type: 'battle',
+          content: '被敵人打倒了⋯⋯'
+        }))
+
+        // 等待 1.5s
+        setTimeout(() => {
+          // HP 留下 1
+          dispatch(changeHP(1));
+          // 經驗值減少一半
+          dispatch(changeEXP(selfEXP / 2));
+          // 回到村莊
+          dispatch(changeCurrentScene('村莊'));
+          // 狀態重置至非戰鬥狀態
+          dispatch(changeInBattle(false));
+          dispatch(changeSelfDefeated(false));
+
+          Swal.fire({
+            title: '戰鬥失敗！',
+            text: '損失50%經驗值，已被送往村莊',
+            icon: 'info',
+          });
+        }, 1500)
+      }
+    }
+
+    handlePlayerDefeated();
+  }, [dispatch, selfDefeated, selfHP, selfEXP])
 
   return (
     <div className="flex flex-col items-center">

@@ -5,9 +5,9 @@ const enemies = [
     name: "蝙蝠",
     img: bat,
     stats: {
-      HP: 100,
-      maxHP: 100,
-      ATK: 520,
+      HP: 20,
+      maxHP: 20,
+      ATK: 20,
       DEF: 5,
       MATK: 30,
       MDEF: 2,
@@ -19,6 +19,10 @@ const enemies = [
       {
         name: "補藥",
         quantity: 2,
+      },
+      {
+        name: "毒藥",
+        quantity: 3,
       },
     ],
     ai: (percentHP) => {

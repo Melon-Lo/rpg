@@ -16,7 +16,11 @@ import {
 } from "./slices/characterStatsSlice";
 
 // items
-import { itemsSliceReducer, changeItem } from "./slices/itemsSlice";
+import {
+  itemsSliceReducer,
+  changeItem,
+  changeMoney,
+} from "./slices/itemsSlice";
 
 // systemStatus
 import {
@@ -81,6 +85,7 @@ export {
 
   // items
   changeItem,
+  changeMoney,
 
   // messages,
   addMessage,

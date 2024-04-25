@@ -31,8 +31,11 @@ const itemsSlice = createSlice({
       // 如果物品用完了，從陣列中刪除
       state.data = state.data.filter((item) => item.quantity > 0);
     },
+    changeMoney(state, action) {
+      state.money = action.payload;
+    },
   },
 });
 
-export const { changeItem } = itemsSlice.actions;
+export const { changeItem, changeMoney } = itemsSlice.actions;
 export const itemsSliceReducer = itemsSlice.reducer;
