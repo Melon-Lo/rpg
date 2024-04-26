@@ -14,6 +14,7 @@ import Button from "../components/Button";
 // data
 import enemies from "../data/enemies";
 import skills from "../data/skills";
+import classeslevelsStats from "../data/classeslevelsStats";
 
 // utils
 import decideTurnOrder from "../utils/battle/decideTurnOrder";
@@ -246,16 +247,15 @@ export default function MainPage() {
   useEffect(() => {
     const handleLevelUp = () => {
       if (selfEXP >= selfEXPtoNextLevel) {
-        const updatedLevelStats = levelUp(selfLevel, selfStats, selfClassTitle);
+        const updatedLevelStats = levelUp(selfLevel, selfStats, selfClassTitle, classeslevelsStats);
         dispatch(changeCharacterStats(updatedLevelStats));
-
         dispatch(addMessage({
           type: 'system',
-          content: '等級提升！HP 和 MP 恢復至全滿！'
+          content: `等級提升！HP 和 MP 恢復至全滿！`
         }));
 
         Swal.fire({
-          title: '等級提升！',
+          title: `等級提升至${updatedLevelStats.level}級！`,
           html: `
             <div>
               <h5>最大HP：${selfMaxHP} -> ${updatedLevelStats.maxHP}</h5>
@@ -273,7 +273,7 @@ export default function MainPage() {
     };
 
     handleLevelUp();
-  }, [dispatch, selfEXP, selfEXPtoNextLevel, selfStats, selfClassTitle, selfLevel])
+  }, [dispatch, selfEXP, selfEXPtoNextLevel, selfStats, selfClassTitle, selfLevel, selfATK, selfDEF, selfMATK, selfMDEF, selfSPD, selfMaxHP, selfMaxMP])
 
   return (
     <div className="flex flex-col items-center">
@@ -281,6 +281,11 @@ export default function MainPage() {
       <ScreenSection />
       <MessageSection />
       <CommandSection />
+
+      {/* DEV ONLY */}
+      <Button blue onClick={handleShowEnemy}>
+        出現蝙蝠
+      </Button>
 
       {/* DEV ONLY */}
       <Button blue onClick={() => navigate('create')}>to create</Button>
@@ -291,11 +296,6 @@ export default function MainPage() {
         quantity: 1,
       }))}>
         加1個補藥
-      </Button>
-
-      {/* DEV ONLY */}
-      <Button blue onClick={handleShowEnemy}>
-        出現蝙蝠
       </Button>
 
     </div>

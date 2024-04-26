@@ -1,49 +1,35 @@
-function levelUp(currentLevel, stats, classTitle) {
-  let updatedStats = {
-    level: 0,
-    maxHP: 0,
-    maxMP: 0,
-    ATK: 0,
-    DEF: 0,
-    MATK: 0,
-    MDEF: 0,
-    SPD: 0,
-    exp: 0,
-    expToNextLevel: 0,
-  };
+// 處理升級時的各項素質提升
+function levelUp(currentLevel, stats, classTitle, classeslevelsStats) {
+  // 取得 stats 的副本
+  const updatedStats = { ...stats };
 
-  if (classTitle === "戰士") {
-    if (currentLevel <= 3) {
-      updatedStats.HP = stats.maxHP + 20;
-      updatedStats.maxHP = stats.maxHP + 20;
-      updatedStats.MP = stats.maxMP + 20;
-      updatedStats.maxMP = stats.maxMP + 20;
-      updatedStats.ATK = stats.ATK + 3;
-      updatedStats.DEF = stats.DEF + 3;
-      updatedStats.MATK = stats.MATK + 1;
-      updatedStats.MDEF = stats.MDEF + 1;
-      updatedStats.SPD = stats.SPD + 1;
-      updatedStats.expToNextLevel = 120;
-    }
-  }
+  // 抓到該等級該提升的各項素質
+  const levelStatsCollection = classeslevelsStats.find(
+    (item) => item.classTitle === classTitle
+  ).levelsStats;
 
-  if (classTitle === "法師") {
-    if (currentLevel <= 3) {
-      updatedStats.HP = stats.maxHP + 10;
-      updatedStats.maxHP = stats.maxHP + 10;
-      updatedStats.MP = stats.maxMP + 10;
-      updatedStats.maxMP = stats.maxMP + 10;
-      updatedStats.ATK = stats.ATK + 1;
-      updatedStats.DEF = stats.DEF + 1;
-      updatedStats.MATK = stats.MATK + 3;
-      updatedStats.MDEF = stats.MDEF + 3;
-      updatedStats.SPD = stats.SPD + 1;
-      updatedStats.expToNextLevel = 120;
-    }
-  }
+  // 「+1」是因為「目前等級 + 1」才會等於「要提升到的等級」
+  const levelStats = levelStatsCollection.find(
+    (item) => item.level === currentLevel + 1
+  ).stats;
 
-  updatedStats.level = stats.level + 1;
-  updatedStats.exp = stats.exp - stats.expToNextLevel;
+  // 升級後的屬性值 = 原屬性值 + 升級後的屬性提升
+  updatedStats.maxHP += levelStats.maxHP;
+  updatedStats.maxMP += levelStats.maxMP;
+  updatedStats.ATK += levelStats.ATK;
+  updatedStats.DEF += levelStats.DEF;
+  updatedStats.MATK += levelStats.MATK;
+  updatedStats.MDEF += levelStats.MDEF;
+  updatedStats.SPD += levelStats.SPD;
+
+  // 等級固定 +1
+  updatedStats.level += 1;
+
+  // 更新當前經驗值，扣除當前等級所需經驗值
+  updatedStats.exp -= stats.expToNextLevel;
+
+  // 更新當前等級所需經驗值
+  updatedStats.expToNextLevel = levelStats.expToNextLevel;
 
   return updatedStats;
 }
