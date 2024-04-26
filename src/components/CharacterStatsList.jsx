@@ -1,11 +1,18 @@
 import { useSelector } from "react-redux";
+import skillsData from '../data/skills';
 
 export default function CharacterStatsList() {
   const { name, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD, level, skills } = useSelector(state => state.characterStats);
 
   const renderedSkills = skills.map(skill => {
+    const skillName = skillsData.find(skillItem => skillItem.name === skill).name;
+    const skillCostMP = skillsData.find(skillItem => skillItem.name === skill).costMP;
+
     return (
-      <li key={skill}>{skill}</li>
+      <div key={skill} className="flex">
+        <h5>{skillName}</h5>
+        <h5 className="ml-3">{skillCostMP}</h5>
+      </div>
     );
   });
 
@@ -25,9 +32,9 @@ export default function CharacterStatsList() {
       </ul>
       <div className="w-2/4 p-3">
         <h5>【技能】</h5>
-        <ul>
+        <div>
           {renderedSkills}
-        </ul>
+        </div>
       </div>
     </div>
   );

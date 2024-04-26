@@ -5,10 +5,9 @@ import Swal from "sweetalert2";
 
 export default function ItemsList({ setCurrentStep }) {
   const dispatch = useDispatch();
-  const { data } = useSelector(state => state.items);
-  const { HP, MP } = useSelector(state => state.characterStats);
+  const { data: itemsData } = useSelector(state => state.items);
+  const { HP: selfHP, MP: selfMP, name: selfName } = useSelector(state => state.characterStats);
   const { inBattle } = useSelector(state => state.battle);
-  const characterName = useSelector(state => state.characterStats.name);
 
   // 查看、使用物品
   const Item = ({ name, quantity }) => {
@@ -37,10 +36,10 @@ export default function ItemsList({ setCurrentStep }) {
 
           // 根據類別做不同運算
           if (item.type === 'healHP' || item.type === 'damageHP') {
-            valueAfterEffect = item.effect(HP);
+            valueAfterEffect = item.effect(selfHP);
             dispatch(changeHP(valueAfterEffect));
           } else if (item.type === 'healMP' || item.type === 'damageMP') {
-            valueAfterEffect = item.effect(MP);
+            valueAfterEffect = item.effect(selfMP);
             dispatch(changeMP(valueAfterEffect));
           }
 
@@ -53,7 +52,7 @@ export default function ItemsList({ setCurrentStep }) {
           // 使用物品訊息
           dispatch(addMessage({
             type: 'useItem',
-            content: `${characterName}使用了${item.name}！${item.effectMessage}`,
+            content: `${selfName}使用了${item.name}！${item.effectMessage}`,
           }));
 
           // 如果是在戰鬥狀態，則換成對方的回合
@@ -74,7 +73,7 @@ export default function ItemsList({ setCurrentStep }) {
     );
   };
 
-  const renderedItems = data.map(item => <Item key={item.name} name={item.name} quantity={item.quantity} />);
+  const renderedItems = itemsData.map(item => <Item key={item.name} name={item.name} quantity={item.quantity} />);
 
   return (
     <div className="w-full flex flex-wrap bg-slate-50/75 p-3">
