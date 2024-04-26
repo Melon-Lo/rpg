@@ -28,7 +28,7 @@ export default function MainPage() {
   const { roleCreated } = useSelector(state => state.systemStatus);
 
   // 戰鬥相關數據
-  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, SPD: selfSPD, HP: selfHP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
   const selfStats = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
@@ -251,8 +251,24 @@ export default function MainPage() {
 
         dispatch(addMessage({
           type: 'system',
-          content: '等級提升！'
+          content: '等級提升！HP 和 MP 恢復至全滿！'
         }));
+
+        Swal.fire({
+          title: '等級提升！',
+          html: `
+            <div>
+              <h5>最大HP：${selfMaxHP} -> ${updatedLevelStats.maxHP}</h5>
+              <h5>最大MP：${selfMaxMP} -> ${updatedLevelStats.maxMP}</h5>
+              <h5>攻擊力：${selfATK} -> ${updatedLevelStats.ATK}</h5>
+              <h5>防禦力：${selfDEF} -> ${updatedLevelStats.DEF}</h5>
+              <h5>魔法攻擊力：${selfMATK} -> ${updatedLevelStats.MATK}</h5>
+              <h5>魔法防禦力：${selfMDEF} -> ${updatedLevelStats.MDEF}</h5>
+              <h5>速度：${selfSPD} -> ${updatedLevelStats.SPD}</h5>
+            <div>
+          `,
+          icon: 'success',
+        })
       };
     };
 
