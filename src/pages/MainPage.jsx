@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -19,6 +19,7 @@ import skills from "../data/skills";
 import decideTurnOrder from "../utils/battle/decideTurnOrder";
 import decideDamage from "../utils/battle/decideDamage";
 import getRandomLoot from "../utils/battle/getRandomLoot";
+import levelUp from "../utils/characterStats/levelUp";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -27,7 +28,8 @@ export default function MainPage() {
   const { roleCreated } = useSelector(state => state.systemStatus);
 
   // 戰鬥相關數據
-  const { name: selfName, SPD: selfSPD, HP: selfHP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP } = useSelector(state => state.characterStats);
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, SPD: selfSPD, HP: selfHP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
+  const selfStats = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
@@ -239,6 +241,23 @@ export default function MainPage() {
 
     handlePlayerDefeated();
   }, [dispatch, selfDefeated, selfHP, selfEXP])
+
+  // 升級
+  useEffect(() => {
+    const handleLevelUp = () => {
+      if (selfEXP >= selfEXPtoNextLevel) {
+        const updatedLevelStats = levelUp(selfLevel, selfStats, selfClassTitle);
+        dispatch(changeCharacterStats(updatedLevelStats));
+
+        dispatch(addMessage({
+          type: 'system',
+          content: '等級提升！'
+        }));
+      };
+    };
+
+    handleLevelUp();
+  }, [dispatch, selfEXP, selfEXPtoNextLevel, selfStats, selfClassTitle, selfLevel])
 
   return (
     <div className="flex flex-col items-center">

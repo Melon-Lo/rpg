@@ -14,6 +14,7 @@ import {
   changeMP,
   changeEXP,
   addSkill,
+  changeCharacterStats,
 } from "./slices/characterStatsSlice";
 
 // items
@@ -79,6 +80,7 @@ export {
   changeMP,
   changeEXP,
   addSkill,
+  changeCharacterStats,
 
   // systemStatus
   changeRoleCreated,

@@ -34,22 +34,20 @@ const enemiesSlice = createSlice({
         loot,
         img,
       } = action.payload;
-      return {
-        ...state,
-        name,
-        HP,
-        maxHP,
-        ATK,
-        DEF,
-        MATK,
-        MDEF,
-        SPD,
-        weakness,
-        exp,
-        money,
-        loot,
-        img,
-      };
+
+      state.name = name;
+      state.HP = HP;
+      state.maxHP = maxHP;
+      state.ATK = ATK;
+      state.DEF = DEF;
+      state.MATK = MATK;
+      state.MDEF = MDEF;
+      state.SPD = SPD;
+      state.weakness = weakness;
+      state.exp = exp;
+      state.money = money;
+      state.loot = loot;
+      state.img = img;
     },
     changeEnemyHP(state, action) {
       state.HP = Math.floor(action.payload);

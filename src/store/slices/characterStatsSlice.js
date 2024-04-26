@@ -34,7 +34,7 @@ const characterStats = createSlice({
     DEF: 10,
     MATK: 30,
     MDEF: 20,
-    SPD: 30,
+    SPD: 3,
     exp: 43,
     expToNextLevel: 100,
     skills: ["治療", "火焰", "下雨", "聲波", "地獄鬼火"],
@@ -152,6 +152,34 @@ const characterStats = createSlice({
     addSkill(state, action) {
       state.skills = action.payload;
     },
+    changeCharacterStats(state, action) {
+      const {
+        level,
+        HP,
+        maxHP,
+        MP,
+        maxMP,
+        ATK,
+        DEF,
+        MATK,
+        MDEF,
+        SPD,
+        exp,
+        expToNextLevel,
+      } = action.payload;
+      state.level = level;
+      state.HP = HP;
+      state.maxHP = maxHP;
+      state.MP = MP;
+      state.maxMP = maxMP;
+      state.ATK = ATK;
+      state.DEF = DEF;
+      state.MATK = MATK;
+      state.MDEF = MDEF;
+      state.SPD = SPD;
+      state.exp = exp;
+      state.expToNextLevel = expToNextLevel;
+    },
   },
 });
 
@@ -164,5 +192,6 @@ export const {
   changeMP,
   changeEXP,
   addSkill,
+  changeCharacterStats,
 } = characterStats.actions;
 export const characterStatsReducer = characterStats.reducer;
