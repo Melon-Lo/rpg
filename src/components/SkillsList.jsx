@@ -64,7 +64,6 @@ export default function SkillsList({ setCurrentStep }) {
             // 如果打到弱點，則出現「擊中弱點！」
             const effectiveText = skill.attributes === enemyWeakness ? '擊中弱點！' : '';
 
-            console.log(skill.attributes, enemyWeakness)
             dispatch(addMessage({
               type: 'useSkill',
               content: `${selfName}施展了${skill.name}！${effectiveText}${enemyName} 受到了 ${damage} 點傷害！`,

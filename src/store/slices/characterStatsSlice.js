@@ -26,10 +26,10 @@ const characterStats = createSlice({
     name: "小明",
     classTitle: "法師",
     level: 1,
-    HP: 60,
-    maxHP: 70,
-    MP: 10,
-    maxMP: 30,
+    HP: 100,
+    maxHP: 100,
+    MP: 50,
+    maxMP: 50,
     ATK: 30,
     DEF: 10,
     MATK: 30,
@@ -37,7 +37,7 @@ const characterStats = createSlice({
     SPD: 30,
     exp: 43,
     expToNextLevel: 100,
-    skills: ["治療", "火焰"],
+    skills: ["治療", "火焰", "下雨", "聲波", "地獄鬼火"],
   },
   reducers: {
     changeStatName(state, action) {

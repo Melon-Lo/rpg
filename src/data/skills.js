@@ -8,8 +8,19 @@ const skills = [
     attributes: "fire",
     canUseOutsideBattle: false,
     type: "attack",
-    description: "發出火焰",
     effectDescription: "火屬性攻擊，傷害低",
+    effectMessage: "",
+    effect: decideSkillDamage,
+  },
+  {
+    name: "地獄鬼火",
+    basicValue: 50,
+    costMP: 30,
+    attributes: "fire",
+    canUseOutsideBattle: false,
+    type: "attack",
+    description: "發出火焰",
+    effectDescription: "火屬性攻擊，傷害高",
     effect: decideSkillDamage,
   },
   {
@@ -19,8 +30,8 @@ const skills = [
     attributes: "water",
     canUseOutsideBattle: false,
     type: "attack",
-    description: "發出火焰",
     effectDescription: "水屬性攻擊，傷害低",
+    effectMessage: "",
     effect: decideSkillDamage,
   },
   {
@@ -31,6 +42,7 @@ const skills = [
     canUseOutsideBattle: false,
     type: "attack",
     effectDescription: "無屬性攻擊，傷害低",
+    effectMessage: "",
     effect: decideSkillDamage,
   },
   {
