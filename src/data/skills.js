@@ -6,7 +6,7 @@ const skills = [
     type: "attack",
     description: "發出火焰",
     effectDescription: "對一名敵人發出魔法攻擊",
-    effectMessage: "使出了火焰！",
+    effectMessage: "大火燃燒吧！",
     effect: (attackerMATK, defenderMDEF) => {
       let damage;
       damage = attackerMATK - defenderMDEF;
@@ -19,7 +19,7 @@ const skills = [
     canUseOutsideBattle: false,
     type: "attack",
     effectDescription: "對一名敵人發出魔法攻擊",
-    effectMessage: "使出了聲波！",
+    effectMessage: "震耳欲聾！",
     effect: (attackerMATK, defenderMDEF) => {
       let damage;
       damage = attackerMATK - defenderMDEF;

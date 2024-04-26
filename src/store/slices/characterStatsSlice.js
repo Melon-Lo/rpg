@@ -32,12 +32,12 @@ const characterStats = createSlice({
     maxMP: 30,
     ATK: 30,
     DEF: 10,
-    MATK: 20,
+    MATK: 30,
     MDEF: 20,
     SPD: 30,
     exp: 43,
     expToNextLevel: 100,
-    skills: ["治療"],
+    skills: ["治療", "火焰"],
   },
   reducers: {
     changeStatName(state, action) {

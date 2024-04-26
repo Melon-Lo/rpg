@@ -1,29 +1,43 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeHP, changeMP, addMessage, changeItem, changeTurn } from "../store";
+import { changeHP, changeMP, addMessage, changeTurn, changeEnemyHP, changeEnemyDefeated, changeExecutingCommand } from "../store";
 import skillsData from "../data/skills";
 import Swal from "sweetalert2";
 
 export default function SkillsList({ setCurrentStep }) {
   const dispatch = useDispatch();
-  const { skills } = useSelector(state => state.characterStats);
-  const { HP, MP } = useSelector(state => state.characterStats);
+  const { HP: selfHP, MP: selfMP, skills: selfSkills, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
+  const { MDEF: enemyMDEF, HP: enemyHP, name: enemyName } = useSelector(state => state.enemies);
   const { inBattle } = useSelector(state => state.battle);
-  const characterName = useSelector(state => state.characterStats.name);
 
   // 查看、使用技能
-  const Skill = ({ name }) => {
+  const Skill = ({ name, costMP }) => {
     // 先抓到 skills 列表中的該物件，取得該 skill 的屬性
     const skill = skillsData.find(skill => skill.name === name);
+
+    // 判別該技能當前可否使用
+    const canUse = selfMP >= costMP && (inBattle || skill.canUseOutsideBattle);
+    const canUseStyle = canUse ? 'font-bold' : 'text-gray-500';
+
     const handleClick = () => {
-      console.log(skill);
+      // 如果 MP 不足，則提早 return
+      if (!canUse) {
+        // 無法使用的原因
+        const reason = selfMP >= costMP && !skill.canUseOutsideBattle ? '此技能只能在戰鬥中使用' : selfMP < costMP ? 'MP不足' : '目前無法使用';
+
+        Swal.fire({
+          title: `${reason}`,
+          icon: 'info',
+        })
+
+        return;
+      }
 
       Swal.fire({
         title: `要施展「${skill.name}」嗎？`,
         html: `
           <div>
             <h5>${skill.effectDescription}</h5>
-            <h5>花費MP：${skill.cost}</h5>
-            <h5>${skill.description}</h5>
+            <h5>花費MP：${skill.costMP} 點</h5>
           <div>
         `,
         icon: 'question',
@@ -34,30 +48,58 @@ export default function SkillsList({ setCurrentStep }) {
         cancelButtonText: '取消'
       }).then((result) => {
         if (result.isConfirmed) {
-          let valueAfterEffect;
+          dispatch(changeExecutingCommand(true));
 
+          // 治療技能
           if (skill.type === 'healHP') {
-            valueAfterEffect = skill.effect(HP);
+            const valueAfterEffect = skill.effect(selfHP);
             dispatch(changeHP(valueAfterEffect));
-            dispatch(changeMP(MP - skill.costMP));
+            dispatch(addMessage({
+              type: 'useSkill',
+              content: `${selfName}使用了${skill.name}！${skill.effectMessage}`,
+            }));
+          // 攻擊技能
+          } else if (skill.type === 'attack') {
+            const damage = skill.effect(selfMATK, enemyMDEF);
+            dispatch(addMessage({
+              type: 'useSkill',
+              content: `${selfName}施展了${skill.name}！${enemyName} 受到了 ${damage} 點傷害！`,
+            }));
+            dispatch(changeEnemyHP(enemyHP - damage));
+
+            // 如果擊敗敵人，剩下的交給 MainPage 處理
+            if (damage >= enemyHP) {
+              dispatch(changeEnemyDefeated(true));
+            // 如果還沒擊敗敵人，則換成對方的回合
+            } else {
+              dispatch(changeExecutingCommand(false));
+              dispatch(changeTurn('enemy'));
+            }
           };
 
-          dispatch(addMessage({
-            type: 'useSkill',
-            content: `${characterName}使用了${skill.name}！${skill.effectMessage}`,
-          }));
+          // 無論如何都回到主頁和減少 costHP
+          setCurrentStep('主頁');
+          dispatch(changeMP(selfMP - skill.costMP));
         };
       })
     }
 
     return (
       <div className="w-3/6 flex justify-between" onClick={handleClick}>
-        <h5 className="px-2 py-1 font-bold">{name}</h5>
+        <h5 className={`px-2 py-1 ${canUseStyle}`}>{name}</h5>
+        <h5 className={`px-2 py-1 ${canUseStyle}`}>{costMP}</h5>
       </div>
     );
   };
 
-  const renderedSkills = skills.map(skill => <Skill key={skill} name={skill} />)
+  const renderedSkills = selfSkills.map(skillItem => {
+    const skillName = skillsData.find(skill => skill.name === skillItem).name;
+    const skillCostMP = skillsData.find(skill => skill.name === skillItem).costMP;
+
+    return (
+      <Skill key={skillName} name={skillName} costMP={skillCostMP} />
+    );
+  });
 
   return (
     <div className="w-full flex flex-wrap bg-slate-50/75 p-3">
