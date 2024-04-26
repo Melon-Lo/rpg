@@ -12,6 +12,7 @@ const enemiesSlice = createSlice({
     MATK: 0,
     MDEF: 0,
     SPD: 0,
+    weakness: "",
     exp: 0,
     money: 0,
     loot: [],
@@ -27,6 +28,7 @@ const enemiesSlice = createSlice({
         MATK,
         MDEF,
         SPD,
+        weakness,
         exp,
         money,
         loot,
@@ -42,6 +44,7 @@ const enemiesSlice = createSlice({
         MATK,
         MDEF,
         SPD,
+        weakness,
         exp,
         money,
         loot,
@@ -49,7 +52,7 @@ const enemiesSlice = createSlice({
       };
     },
     changeEnemyHP(state, action) {
-      state.HP = action.payload;
+      state.HP = Math.floor(action.payload);
       if (state.HP < 0) {
         state.HP = 0;
       }

@@ -1,8 +1,7 @@
-// 決定傷害值
-// 如果我方的速度值大於或等於敵方，則我方先行動
+// 決定普通攻擊傷害值
 function decideDamage(attackerATK, defenderDEF) {
-  let damage;
-  damage = attackerATK - defenderDEF;
+  const randomNumber = Math.random() * (1.1 - 0.9) + 0.9;
+  const damage = Math.floor(randomNumber * (attackerATK - defenderDEF));
 
   return damage;
 }

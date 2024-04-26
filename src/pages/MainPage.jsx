@@ -51,9 +51,9 @@ export default function MainPage() {
   // 敵人出現後，將該敵人的數值傳給 enemiesSlice
   const handleShowEnemy = () => {
     const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
-    const { name, img, loot, exp, money } = currentEnemy;
+    const { name, img, loot, exp, money, weakness } = currentEnemy;
     const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
-    dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD }));
+    dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
     dispatch(addMessage({
       type: 'system',
       content: `${name}出現了！`
@@ -90,10 +90,10 @@ export default function MainPage() {
         // 先拿到對方的行為 AI
         const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
         const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
-        const damage = decideDamage(enemyATK, selfDEF);
 
         // 對方發動一般攻擊
         if (nextEnemyAction.actionType === 'attack') {
+          const damage = decideDamage(enemyATK, selfDEF);
           setTimeout(() => {
             dispatch(addMessage({
               type: 'battle',
@@ -110,11 +110,22 @@ export default function MainPage() {
             }));
           }, 3000)
 
+          setTimeout(() => {
+            // 角色被打死
+            if (damage >= selfHP) {
+              dispatch(changeSelfDefeated(true));
+            // 如果角色未死亡，換到自己的回合
+            } else {
+              dispatch(changeTurn('self'));
+            }
+          }, 4500)
+
           // 對方發動技能
         } else if (nextEnemyAction.actionType === 'skill') {
           const skillName = nextEnemyAction.action;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
-          const damage = skillEffect(enemyMATK, selfMDEF);
+          const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;
+          const damage = skillEffect(enemyMATK, selfMDEF, skillBasicValue);
 
           setTimeout(() => {
             dispatch(addMessage({
@@ -131,17 +142,17 @@ export default function MainPage() {
               content: `${selfName}受到了 ${damage} 點傷害！`
             }))
           }, 3000)
-        }
 
-        setTimeout(() => {
-          // 角色被打死
-          if (damage >= selfHP) {
-            dispatch(changeSelfDefeated(true));
-          // 如果角色未死亡，換到自己的回合
-          } else {
-            dispatch(changeTurn('self'));
-          }
-        }, 4500)
+          setTimeout(() => {
+            // 角色被打死
+            if (damage >= selfHP) {
+              dispatch(changeSelfDefeated(true));
+            // 如果角色未死亡，換到自己的回合
+            } else {
+              dispatch(changeTurn('self'));
+            }
+          }, 4500)
+        }
 
         dispatch(changeTurn('enemyExecuting'));
       }

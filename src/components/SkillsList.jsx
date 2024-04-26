@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 export default function SkillsList({ setCurrentStep }) {
   const dispatch = useDispatch();
   const { HP: selfHP, MP: selfMP, skills: selfSkills, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
-  const { MDEF: enemyMDEF, HP: enemyHP, name: enemyName } = useSelector(state => state.enemies);
+  const { MDEF: enemyMDEF, HP: enemyHP, name: enemyName, weakness: enemyWeakness } = useSelector(state => state.enemies);
   const { inBattle } = useSelector(state => state.battle);
 
   // 查看、使用技能
@@ -60,10 +60,14 @@ export default function SkillsList({ setCurrentStep }) {
             }));
           // 攻擊技能
           } else if (skill.type === 'attack') {
-            const damage = skill.effect(selfMATK, enemyMDEF);
+            const damage = skill.effect(selfMATK, enemyMDEF, skill.basicValue, skill.attributes, enemyWeakness);
+            // 如果打到弱點，則出現「擊中弱點！」
+            const effectiveText = skill.attributes === enemyWeakness ? '擊中弱點！' : '';
+
+            console.log(skill.attributes, enemyWeakness)
             dispatch(addMessage({
               type: 'useSkill',
-              content: `${selfName}施展了${skill.name}！${enemyName} 受到了 ${damage} 點傷害！`,
+              content: `${selfName}施展了${skill.name}！${effectiveText}${enemyName} 受到了 ${damage} 點傷害！`,
             }));
             dispatch(changeEnemyHP(enemyHP - damage));
 
