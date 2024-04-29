@@ -3,17 +3,18 @@ const classeslevelsStats = [
   {
     classTitle: "戰士",
     levelsStats: [
+      // 1~20級
       ...Array.from({ length: 20 }, (_, index) => {
         const level = index + 1;
         const baseStats = {
-          maxHP: 10 + Math.floor(index / 3) + Math.ceil(Math.random() * 2), // 每隔三級增加 1 到 2
-          maxMP: 3 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          ATK: 3 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          DEF: 3 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          MATK: 1 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          MDEF: 1 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          SPD: index % 3 === 0 ? 1 + Math.floor(index / 3) : 1, // 每隔三級提升 1
-          expToNextLevel: 110 + index * 10, // 每級增加 10
+          maxHP: 22,
+          maxMP: 6,
+          ATK: 3,
+          DEF: 3,
+          MATK: 1,
+          MDEF: 1,
+          SPD: index % 3 === 0 ? 1 : 0,
+          expToNextLevel: 100 + index * 50,
         };
         return {
           level,
@@ -28,14 +29,14 @@ const classeslevelsStats = [
       ...Array.from({ length: 20 }, (_, index) => {
         const level = index + 1;
         const baseStats = {
-          maxHP: 10 + Math.floor(index / 3) + Math.ceil(Math.random() * 2), // 每隔三級增加 1 到 2
-          maxMP: 3 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          ATK: 3 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          DEF: 3 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          MATK: 1 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          MDEF: 1 + Math.floor(index / 3) + Math.ceil(Math.random() * 2),
-          SPD: index % 3 === 0 ? 1 + Math.floor(index / 3) : 1, // 每隔三級提升 1
-          expToNextLevel: 110 + index * 10, // 每級增加 10
+          maxHP: 12,
+          maxMP: 12,
+          ATK: 1,
+          DEF: 1,
+          MATK: 3,
+          MDEF: 3,
+          SPD: index % 3 === 0 ? 1 : 0,
+          expToNextLevel: 100 + index * 50,
         };
         return {
           level,

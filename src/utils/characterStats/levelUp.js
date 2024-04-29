@@ -23,8 +23,8 @@ function levelUp(currentLevel, stats, classTitle, classeslevelsStats) {
   updatedStats.SPD += levelStats.SPD;
 
   // 補滿 HP 和 MP
-  updatedStats.HP = updatedStats.maxHP + levelStats.maxHP;
-  updatedStats.MP = updatedStats.maxMP + levelStats.maxMP;
+  updatedStats.HP = updatedStats.maxHP;
+  updatedStats.MP = updatedStats.maxMP;
 
   // 等級固定 +1
   updatedStats.level += 1;
