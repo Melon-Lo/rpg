@@ -4,6 +4,7 @@ import { BsFillBackpackFill } from "react-icons/bs";
 import { FaPerson } from "react-icons/fa6";
 import { LuSwords } from "react-icons/lu";
 import { GiMagicPortal } from "react-icons/gi";
+import { FaRunning } from "react-icons/fa";
 
 const commands = [
   {
@@ -53,6 +54,11 @@ const commands = [
         command: "物品",
         color: "yellow",
         img: BsFillBackpackFill,
+      },
+      {
+        command: "逃跑",
+        color: "gray",
+        img: FaRunning,
       },
     ],
   },

@@ -8,10 +8,8 @@ module.exports = {
   // 確保這些樣式可以正常顯示
   safelist: [
     {
-      pattern: /bg-(yellow|red|blue|teal|brown|cyan)-500/,
-    },
-    {
-      pattern: /text-(yellow|red|teal|brown|cyan)-800/,
+      pattern:
+        /(bg|text)-(yellow|red|blue|teal|brown|cyan|orange|gray)-(100|500|800)/,
     },
   ],
 };

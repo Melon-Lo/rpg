@@ -1,7 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -50,6 +50,9 @@ export default function CommandSection() {
       } else if (currentStep === '攻擊' && inBattle && !executingCommand) {
         setTextContent('一般攻擊');
         return
+      } else if (currentStep === '逃跑' && inBattle && !executingCommand) {
+        setTextContent('走為上策！');
+        return
       } else if (currentStep === '攻擊' && inBattle && executingCommand) {
         setTextContent('執行行動中⋯⋯');
         return
@@ -67,8 +70,11 @@ export default function CommandSection() {
       } else if (currentStep === '移動') {
         setTextContent('要去哪裡呢？')
         return
+      } else if (currentStep === '技能') {
+        setTextContent('施展技能');
+        return
       } else if (currentStep === '物品') {
-        setTextContent('物品一覽');
+        setTextContent('使用物品');
         return
       } else if (currentStep === '狀態') {
         setTextContent('狀態一覽');
@@ -226,7 +232,7 @@ export default function CommandSection() {
     )
   });
 
-  // 攻擊敵人
+  // 攻擊敵人按鈕
   const AttackButton = () => {
     const handleAttack = () => {
       dispatch(addMessage({
@@ -261,6 +267,47 @@ export default function CommandSection() {
 
     return (
       <Button onClick={handleAttack} red>向{enemyName}發動攻擊！</Button>
+    );
+  };
+
+  // 逃跑按鈕
+  const EscapeButton = () => {
+    const handleAttack = () => {
+      dispatch(addMessage({
+        type: 'battle',
+        content: `逃跑中⋯⋯`
+      }));
+      dispatch(changeExecutingCommand(true));
+
+      // 等待 1.5s
+      setTimeout(() => {
+        const escapeSuccess = Math.random() > 0.5;
+
+        // 逃跑成功
+        if (escapeSuccess) {
+          dispatch(addMessage({
+            type: 'battle',
+            content: '成功逃跑了！'
+          }));
+          dispatch(changeInBattle(false));
+          dispatch(changeExecutingCommand(false));
+        // 逃跑失敗
+        } else {
+          dispatch(addMessage({
+            type: 'battle',
+            content: '逃跑失敗⋯⋯'
+          }));
+          dispatch(changeExecutingCommand(false));
+          dispatch(changeTurn('enemy'));
+        }
+
+        // 無論如何都回到主頁
+        setCurrentStep('主頁');
+      }, 1500);
+    };
+
+    return (
+      <Button onClick={handleAttack} gray>確定逃跑</Button>
     );
   };
 
@@ -306,8 +353,11 @@ export default function CommandSection() {
         {/* 主頁：戰鬥指令 */}
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }
 
-        {/* 選擇「攻擊」對象 */}
+        {/* 確定「攻擊」 */}
         { currentStep === '攻擊' && !executingCommand && <AttackButton /> }
+
+        {/* 確定「逃跑」 */}
+        { currentStep === '逃跑' && !executingCommand && <EscapeButton /> }
       </div>
     </section>
   )
