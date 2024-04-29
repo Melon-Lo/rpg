@@ -11,7 +11,7 @@ const commands = [
     commands: [
       {
         command: "交談",
-        color: "yellow",
+        color: "blue",
         img: IoChatbubble,
       },
       {
@@ -21,12 +21,12 @@ const commands = [
       },
       {
         command: "技能",
-        color: "blue",
+        color: "cyan",
         img: GiMagicPortal,
       },
       {
         command: "物品",
-        color: "brown",
+        color: "yellow",
         img: BsFillBackpackFill,
       },
       {
