@@ -9,7 +9,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /(bg|text)-(yellow|red|blue|teal|brown|cyan|orange|gray)-(100|500|800)/,
+        /(bg|text)-(yellow|red|blue|teal|brown|cyan|orange|gray|slate)-(50|100|200|300|400|500|600|700|800|900)/,
     },
   ],
 };

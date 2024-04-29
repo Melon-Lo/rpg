@@ -47,7 +47,7 @@ const commands = [
       },
       {
         command: "技能",
-        color: "blue",
+        color: "teal",
         img: GiMagicPortal,
       },
       {
