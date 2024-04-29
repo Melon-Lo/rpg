@@ -272,7 +272,7 @@ export default function CommandSection() {
 
   // 逃跑按鈕
   const EscapeButton = () => {
-    const handleAttack = () => {
+    const handleEscape = () => {
       dispatch(addMessage({
         type: 'battle',
         content: `逃跑中⋯⋯`
@@ -281,6 +281,7 @@ export default function CommandSection() {
 
       // 等待 1.5s
       setTimeout(() => {
+        // 逃跑成功機率 50%
         const escapeSuccess = Math.random() > 0.5;
 
         // 逃跑成功
@@ -289,8 +290,11 @@ export default function CommandSection() {
             type: 'battle',
             content: '成功逃跑了！'
           }));
+
+          // 回到非戰鬥狀態
           dispatch(changeInBattle(false));
           dispatch(changeExecutingCommand(false));
+          dispatch(changeTurn(''));
         // 逃跑失敗
         } else {
           dispatch(addMessage({
@@ -307,7 +311,7 @@ export default function CommandSection() {
     };
 
     return (
-      <Button onClick={handleAttack} gray>確定逃跑</Button>
+      <Button onClick={handleEscape} gray>確定逃跑</Button>
     );
   };
 
