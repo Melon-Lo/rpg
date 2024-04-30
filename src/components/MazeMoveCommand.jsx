@@ -6,10 +6,10 @@ import { FaArrowRight } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemiesPosition, changeChestsPosition, changeItem } from "../store";
+import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemies, changeChests, changeItem } from "../store";
 
 // data
-import enemies from "../data/enemies";
+import enemiesData from "../data/enemies";
 
 const moves = [
   {
@@ -32,18 +32,18 @@ const moves = [
 
 export default function MazeMoveCommand() {
   const dispatch = useDispatch();
-  const { playerPosition, bossPosition, enemiesPosition, chestsPosition } = useSelector(state => state.maze);
+  const { playerPosition, boss, enemies, chests } = useSelector(state => state.maze);
 
   // 遭遇敵人
   // 之後可能要移到別的 MainPage 裡
   useEffect(() => {
     const handleEncounter = () => {
       // 如果我方的位置等同於任何一個敵人位置
-      const touchingEnemy = JSON.stringify(enemiesPosition.find(enemy => enemy.position.x === playerPosition.x && enemy.position.y === playerPosition.y));
+      const touchingEnemy = JSON.stringify(enemies.find(enemy => enemy.position.x === playerPosition.x && enemy.position.y === playerPosition.y));
 
       if (touchingEnemy) {
         const enemyName = JSON.parse(touchingEnemy).enemy;
-        const currentEnemy = enemies.find(enemy => enemy.name === enemyName);
+        const currentEnemy = enemiesData.find(enemy => enemy.name === enemyName);
         const { name, img, loot, exp, money, weakness } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
@@ -55,24 +55,24 @@ export default function MazeMoveCommand() {
         dispatch(changeInBattle(true));
 
         // 同一個地點不會再出現敵人
-        const filteredEnemies = enemiesPosition.filter(enemy => enemy.position.x !== playerPosition.x && enemy.position.y !== playerPosition.y);
-        dispatch(changeEnemiesPosition(filteredEnemies));
+        const filteredEnemies = enemies.filter(enemy => enemy.position.x !== playerPosition.x && enemy.position.y !== playerPosition.y);
+        dispatch(changeEnemies(filteredEnemies));
       }
     };
 
     handleEncounter();
-  }, [dispatch, enemiesPosition, playerPosition])
+  }, [dispatch, enemies, playerPosition])
 
   // 打王
   // 之後可能要移到別的 MainPage 裡
   useEffect(() => {
     const handleBossEncounter = () => {
       // 如果我方的位置等同於魔王位置
-      const touchingBoss = bossPosition.position.x === playerPosition.x && bossPosition.position.y === playerPosition.y
+      const touchingBoss = boss.position.x === playerPosition.x && boss.position.y === playerPosition.y
 
       if (touchingBoss) {
-        const bossName = bossPosition.boss;
-        const currentEnemy = enemies.find(enemy => enemy.name === bossName);
+        const bossName = boss.boss;
+        const currentEnemy = enemiesData.find(enemy => enemy.name === bossName);
         const { name, img, loot, exp, money, weakness } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
@@ -86,13 +86,13 @@ export default function MazeMoveCommand() {
     };
 
     handleBossEncounter();
-  }, [dispatch, playerPosition, bossPosition])
+  }, [dispatch, playerPosition, boss])
 
   // 得到寶箱
   useEffect(() => {
     const handleGetChest = () => {
       // 我方位置等於任何一個寶箱位置
-      const touchingChest = JSON.stringify(chestsPosition.find(chest => chest.position.x === playerPosition.x && chest.position.y === playerPosition.y));
+      const touchingChest = JSON.stringify(chests.find(chest => chest.position.x === playerPosition.x && chest.position.y === playerPosition.y));
 
       if (touchingChest) {
         const chestName = JSON.parse(touchingChest).chest;
@@ -108,13 +108,13 @@ export default function MazeMoveCommand() {
         }));
 
         // 同一個地點不會再出現寶箱
-        const filteredChests = chestsPosition.filter(chest => chest.position.x !== playerPosition.x && chest.position.y !== playerPosition.y);
-        dispatch(changeChestsPosition(filteredChests));
+        const filteredChests = chests.filter(chest => chest.position.x !== playerPosition.x && chest.position.y !== playerPosition.y);
+        dispatch(changeChests(filteredChests));
       }
     };
 
     handleGetChest();
-  }, [dispatch, chestsPosition, playerPosition])
+  }, [dispatch, chests, playerPosition])
 
   // 移動
   const handleMove = (direction) => {

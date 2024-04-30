@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
 
 export default function Maze() {
-  const { mazeName, playerPosition, bossPosition } = useSelector(state => state.maze);
+  const { mazeName, playerPosition, boss } = useSelector(state => state.maze);
   const mazeData = mazes.find(maze => maze.mazeName === mazeName);
 
   // 各種圖示：玩家、魔王、一般格
@@ -15,7 +15,7 @@ export default function Maze() {
   const DotPosition = () => <GoDotFill className="text-gray-500 m-2" />
 
   const Box = ({ x, y }) => {
-    const isBossPosition = bossPosition.position.x === x && bossPosition.position.y === y;
+    const isBossPosition = boss.position.x === x && boss.position.y === y;
     const isPlayerPosition = playerPosition.x === x && playerPosition.y === y;
 
     return (

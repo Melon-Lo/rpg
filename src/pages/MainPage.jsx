@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemiesPosition, changeChestsPosition, changeBossPosition } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemies, changeChests, changeBoss } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -12,7 +12,7 @@ import CommandSection from "../components/CommandSection";
 import Button from "../components/Button";
 
 // data
-import enemies from "../data/enemies";
+import enemiesData from "../data/enemies";
 import skills from "../data/skills";
 import classeslevelsStats from "../data/classeslevelsStats";
 import mazes from "../data/mazes";
@@ -54,7 +54,7 @@ export default function MainPage() {
 
   // 敵人出現後，將該敵人的數值傳給 enemiesSlice
   const handleShowEnemy = () => {
-    const currentEnemy = enemies.find(enemy => enemy.name === '蝙蝠');
+    const currentEnemy = enemiesData.find(enemy => enemy.name === '蝙蝠');
     const { name, img, loot, exp, money, weakness } = currentEnemy;
     const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
     dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
@@ -92,7 +92,7 @@ export default function MainPage() {
       // 若對方未被擊敗，則輪到對方回合
       if (inBattle && turn === 'enemy') {
         // 先拿到對方的行為 AI
-        const currentEnemyAi = enemies.find(enemy => enemy.name === '蝙蝠').ai;
+        const currentEnemyAi = enemiesData.find(enemy => enemy.name === '蝙蝠').ai;
         const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
 
         // 對方發動一般攻擊
@@ -302,14 +302,14 @@ export default function MainPage() {
 
       {/* DEV ONLY */}
       <Button blue onClick={() => {
-        const { initialPlayerPosition: playerPosition, enemiesPosition, chestsPosition } = mazes.find(maze => maze.mazeName === '洞穴');
-        const bossPosition = mazes.find(maze => maze.mazeName === '洞穴').bossPosition;
+        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === '洞穴');
+        const boss = mazes.find(maze => maze.mazeName === '洞穴').boss;
         dispatch(changeInMaze(true));
         dispatch(changeMazeName('洞穴'));
         dispatch(changePlayerPosition(playerPosition));
-        dispatch(changeEnemiesPosition(enemiesPosition));
-        dispatch(changeChestsPosition(chestsPosition));
-        dispatch(changeBossPosition(bossPosition));
+        dispatch(changeEnemies(enemies));
+        dispatch(changeChests(chests));
+        dispatch(changeBoss(boss));
       }}>
         進入洞穴迷宮
       </Button>

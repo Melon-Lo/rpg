@@ -58,9 +58,9 @@ import {
   changeInMaze,
   changeMazeName,
   changePlayerPosition,
-  changeEnemiesPosition,
-  changeChestsPosition,
-  changeBossPosition,
+  changeEnemies,
+  changeChests,
+  changeBoss,
 } from "./slices/mazeSlice";
 
 const store = configureStore({
@@ -121,7 +121,7 @@ export {
   changeInMaze,
   changeMazeName,
   changePlayerPosition,
-  changeEnemiesPosition,
-  changeChestsPosition,
-  changeBossPosition,
+  changeEnemies,
+  changeChests,
+  changeBoss,
 };

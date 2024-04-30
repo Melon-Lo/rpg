@@ -7,9 +7,9 @@ const mazeSlice = createSlice({
     inMaze: false,
     mazeName: "",
     playerPosition: {},
-    enemiesPosition: [],
-    chestsPosition: [],
-    bossPosition: {},
+    enemies: [],
+    chests: [],
+    boss: {},
   },
   reducers: {
     changeInMaze(state, action) {
@@ -21,14 +21,14 @@ const mazeSlice = createSlice({
     changePlayerPosition(state, action) {
       state.playerPosition = action.payload;
     },
-    changeEnemiesPosition(state, action) {
-      state.enemiesPosition = action.payload;
+    changeEnemies(state, action) {
+      state.enemies = action.payload;
     },
-    changeChestsPosition(state, action) {
-      state.chestsPosition = action.payload;
+    changeChests(state, action) {
+      state.chests = action.payload;
     },
-    changeBossPosition(state, action) {
-      state.bossPosition = action.payload;
+    changeBoss(state, action) {
+      state.boss = action.payload;
     },
   },
 });
@@ -37,8 +37,8 @@ export const {
   changeInMaze,
   changeMazeName,
   changePlayerPosition,
-  changeEnemiesPosition,
-  changeChestsPosition,
-  changeBossPosition,
+  changeEnemies,
+  changeChests,
+  changeBoss,
 } = mazeSlice.actions;
 export const mazeSliceReducer = mazeSlice.reducer;
