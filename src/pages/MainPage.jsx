@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -291,11 +291,19 @@ export default function MainPage() {
       <Button blue onClick={() => navigate('create')}>to create</Button>
 
       {/* DEV ONLY */}
-      <Button blue onClick={() => dispatch(changeItem({
+      {/* <Button blue onClick={() => dispatch(changeItem({
         name: '補藥',
         quantity: 1,
       }))}>
         加1個補藥
+      </Button> */}
+
+      {/* DEV ONLY */}
+      <Button blue onClick={() => {
+        dispatch(changeInMaze(true));
+        dispatch(changeMazeName('洞穴'));
+      }}>
+        進入洞穴迷宮
       </Button>
 
     </div>

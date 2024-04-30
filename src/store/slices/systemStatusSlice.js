@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const systemStatusSlice = createSlice({
   name: "systemStatus",
   initialState: {
-    // roleCreated: false,
-
-    // DEV ONLY 為了寫 MainPage
+    // 創立角色
+    // DEV ONLY 為了寫 MainPage 才設為 true，不然預設是 false
     roleCreated: true,
 
+    // 一般狀況
     currentScene: "村莊",
     currentDialogue: {
       talker: "",

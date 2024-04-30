@@ -52,6 +52,14 @@ import {
   changeEnemyHP,
 } from "./slices/enemiesSlice";
 
+// maze
+import {
+  mazeSliceReducer,
+  changeInMaze,
+  changeMazeName,
+  changePlayerPosition,
+} from "./slices/mazeSlice";
+
 const store = configureStore({
   reducer: {
     form: formReducer,
@@ -61,6 +69,7 @@ const store = configureStore({
     messages: messagesSliceReducer,
     battle: battleSliceReducer,
     enemies: enemiesSliceReducer,
+    maze: mazeSliceReducer,
   },
 });
 
@@ -104,4 +113,9 @@ export {
   // enemies
   changeEnemy,
   changeEnemyHP,
+
+  // maze
+  changeInMaze,
+  changeMazeName,
+  changePlayerPosition,
 };
