@@ -71,7 +71,7 @@ export default function MazeMoveCommand() {
       const touchingBoss = boss.position.x === playerPosition.x && boss.position.y === playerPosition.y
 
       if (touchingBoss) {
-        const bossName = boss.boss;
+        const bossName = boss.name;
         const currentEnemy = enemiesData.find(enemy => enemy.name === bossName);
         const { name, img, loot, exp, money, weakness } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;

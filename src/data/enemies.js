@@ -15,7 +15,7 @@ const enemies = [
       MDEF: 2,
       SPD: 1,
     },
-    exp: 100,
+    exp: 10,
     money: 10,
     loot: [
       {
@@ -55,15 +55,15 @@ const enemies = [
     img: devil,
     weakness: "water",
     stats: {
-      HP: 150,
-      maxHP: 150,
+      HP: 300,
+      maxHP: 300,
       ATK: 40,
       DEF: 20,
       MATK: 30,
       MDEF: 2,
-      SPD: 1,
+      SPD: 4,
     },
-    exp: 300,
+    exp: 100,
     money: 100,
     loot: [
       {

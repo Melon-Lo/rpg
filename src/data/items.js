@@ -3,10 +3,10 @@ const items = [
     name: "補藥",
     type: "healHP",
     description: "大家常備的藥品，冒險的好幫手。",
-    effectDescription: "恢復 HP 50 點",
-    effectMessage: "HP 恢復了 50 點",
+    effectDescription: "恢復 HP 80 點",
+    effectMessage: "HP 恢復了 80 點",
     effect: (hp) => {
-      return hp + 50;
+      return hp + 80;
     },
   },
   {
