@@ -4,7 +4,13 @@ import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 
 import { useSelector, useDispatch } from "react-redux";
-import { changePlayerPosition, addMessage } from "../store";
+import { useEffect } from "react";
+
+import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemiesPosition } from "../store";
+
+// data
+import mazes from "../data/mazes";
+import enemies from "../data/enemies";
 
 const moves = [
   {
@@ -27,8 +33,33 @@ const moves = [
 
 export default function MazeMoveCommand() {
   const dispatch = useDispatch();
+  const { mazeName, playerPosition, enemiesPosition } = useSelector(state => state.maze);
 
-  const { playerPosition } = useSelector(state => state.maze);
+  useEffect(() => {
+    const handleEncounter = () => {
+      // 如果我方的位置等同於任何一個敵人所在
+      const touchingEnemy = JSON.stringify(enemiesPosition.find(enemy => enemy.position.x === playerPosition.x && enemy.position.y === playerPosition.y));
+
+      if (touchingEnemy) {
+        const enemyName = JSON.parse(touchingEnemy).enemy;
+        const currentEnemy = enemies.find(enemy => enemy.name === enemyName);
+        const { name, img, loot, exp, money, weakness } = currentEnemy;
+        const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
+        dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
+        dispatch(addMessage({
+          type: 'system',
+          content: `${name}出現了！`
+        }));
+        dispatch(changeInBattle(true));
+
+        // 同一個地點不會再出現敵人
+        const filteredEnemies = enemiesPosition.filter(enemy => enemy.position.x !== playerPosition.x && enemy.position.y !== playerPosition.y);
+        dispatch(changeEnemiesPosition(filteredEnemies));
+      }
+    }
+
+    handleEncounter();
+  }, [dispatch, enemiesPosition, playerPosition])
 
   const isMoveOutOfBounds = (newPosition) => {
     return newPosition.x < 1 || newPosition.x > 5 || newPosition.y < 1 || newPosition.y > 5;
@@ -57,6 +88,8 @@ export default function MazeMoveCommand() {
 
     dispatch(changePlayerPosition(newPosition));
   };
+
+  // 得到寶箱
 
   const renderedMoves = moves.map(move => {
     return (

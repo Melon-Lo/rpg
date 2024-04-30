@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemiesPosition, changeChestsPosition } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -301,10 +301,12 @@ export default function MainPage() {
 
       {/* DEV ONLY */}
       <Button blue onClick={() => {
+        const { initialPlayerPosition: playerPosition, enemiesPosition, chestsPosition } = mazes.find(maze => maze.mazeName === '洞穴');
         dispatch(changeInMaze(true));
         dispatch(changeMazeName('洞穴'));
-        const playerPosition = mazes.find(maze => maze.mazeName === '洞穴').initialPlayerPosition;
         dispatch(changePlayerPosition(playerPosition));
+        dispatch(changeEnemiesPosition(enemiesPosition));
+        dispatch(changeChestsPosition(chestsPosition));
       }}>
         進入洞穴迷宮
       </Button>

@@ -4,12 +4,12 @@ const mazes = [
     initialPlayerPosition: { x: 1, y: 1 },
     bossPosition: { x: 5, y: 5 },
     enemiesPosition: [
-      { x: 1, y: 1 },
-      { x: 2, y: 2 },
+      { enemy: "蝙蝠", position: { x: 2, y: 2 } },
+      { enemy: "蝙蝠", position: { x: 3, y: 3 } },
     ],
     chestsPosition: [
-      { x: 2, y: 3 },
-      { x: 1, y: 2 },
+      { chest: "補藥", quantity: 1, position: { x: 2, y: 1 } },
+      { chest: "補藥", quantity: 1, position: { x: 1, y: 2 } },
     ],
   },
 ];
