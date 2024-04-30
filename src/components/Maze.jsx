@@ -8,7 +8,7 @@ import { useEffect } from "react";
 export default function Maze() {
   const dispatch = useDispatch();
 
-  const { mazeName } = useSelector(state => state.maze);
+  const { mazeName, playerPosition } = useSelector(state => state.maze);
   const mazeData = mazes.find(maze => maze.mazeName === mazeName);
 
   const BossPosition = () => <SiNodemon className="text-red-500" />;
@@ -16,13 +16,13 @@ export default function Maze() {
 
   const Box = ({ x, y }) => {
     const bossPosition = mazeData.bossPosition.x === x && mazeData.bossPosition.y === y;
-    const playerPosition = mazeData.initialPlayerPosition.x === x && mazeData.initialPlayerPosition.y === y;
+    const nowPlayerPosition = playerPosition.x === x && playerPosition.y === y;
 
     return (
-      <div className="bg-gray-600/75 m-1 rounded flex justify-center items-center">
+      <div className="bg-gray-600/50 m-1 rounded flex justify-center items-center">
         {bossPosition && <BossPosition />}
-        {playerPosition && <PlayerPosition />}
-        {!bossPosition && !playerPosition && `${x}${y}`}
+        {nowPlayerPosition && <PlayerPosition />}
+        {!bossPosition && !nowPlayerPosition && `${x}${y}`}
       </div>
     );
   };
@@ -36,7 +36,7 @@ export default function Maze() {
   }
 
   return (
-    <div className="absolute inset-0 flex justify-center items-center">
+    <div className="absolute inset-0 flex justify-center items-center z-10">
       <div className="absolute inset-0 bg-slate-200 z-1 opacity-30"></div>
       <div className="grid gap-0 grid-cols-5 w-10/12 max-w-sm z-10">
         {renderedBoxes}

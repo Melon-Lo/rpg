@@ -9,6 +9,7 @@ import ItemsList from "./ItemsList";
 import SkillsList from "./SkillsList";
 import Button from "./Button";
 import CharacterStatsList from "./CharacterStatsList";
+import MazeMoveCommand from "./MazeMoveCommand";
 
 // data
 import commands from "../data/commands";
@@ -331,7 +332,7 @@ export default function CommandSection() {
       </div>
 
       {/* 下方 */}
-      <div className="p-2 flex justify-start items-center">
+      <div className="p-2 flex flex-wrap justify-start items-center">
 
         {/* 主頁：非戰鬥狀態 */}
         { currentStep === '主頁' && !inBattle && renderedMainCommandItems }
@@ -350,6 +351,9 @@ export default function CommandSection() {
 
         {/* 狀態 */}
         { currentStep === '狀態' && <CharacterStatsList /> }
+
+        {/* 迷宮 */}
+        { currentStep === '迷宮' && <MazeMoveCommand /> }
 
         {/* talking */}
         { currentStep === 'talking' && <NextButton /> }

@@ -47,8 +47,8 @@ export default function ScreenSection() {
 
         <img src={currentSceneImgSrc} alt="scene-img" className="absolute w-full h-full object-cover" />
 
-          {/* 如果在迷宮中，顯示迷宮 */}
-          { inMaze && <Maze />}
+          {/* 如果在迷宮中，且非戰鬥中，顯示迷宮 */}
+          { inMaze && !inBattle && <Maze />}
 
           {/* 根據戰鬥狀態決定顯示內容 */}
           <div className="absolute inset-0">
@@ -61,7 +61,7 @@ export default function ScreenSection() {
             { inBattle &&
               <>
                 <img className="w-full h-full object-contain" src={currentEnemyImgSrc} alt="npc-img" />
-                <div className='absolute bottom-2 w-full px-3'>
+                <div className="absolute bottom-2 w-full px-3">
                   <StatusBar type="HP" color="red" currentValue={currentEnemyHP} maxValue={currentEnemyMaxHP} />
                 </div>
               </>
