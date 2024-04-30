@@ -2,7 +2,7 @@ const mazes = [
   {
     mazeName: "洞穴",
     initialPlayerPosition: { x: 1, y: 1 },
-    bossPosition: { x: 5, y: 5 },
+    bossPosition: { boss: "魔王", position: { x: 5, y: 5 } },
     enemiesPosition: [
       { enemy: "蝙蝠", position: { x: 2, y: 2 } },
       { enemy: "蝙蝠", position: { x: 3, y: 3 } },

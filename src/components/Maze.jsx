@@ -2,29 +2,27 @@ import mazes from "../data/mazes";
 import { nanoid } from "nanoid";
 import { SiNodemon } from "react-icons/si";
 import { FaPerson } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
-import { useEffect } from "react";
 
 export default function Maze() {
-  const dispatch = useDispatch();
-
-  const { mazeName, playerPosition } = useSelector(state => state.maze);
+  const { mazeName, playerPosition, bossPosition } = useSelector(state => state.maze);
   const mazeData = mazes.find(maze => maze.mazeName === mazeName);
 
-  const BossPosition = () => <SiNodemon className="text-red-500 text-2xl" />;
+  // 各種圖示：玩家、魔王、一般格
   const PlayerPosition = () => <FaPerson className="text-blue-500 text-2xl" />;
+  const BossPosition = () => <SiNodemon className="text-red-500 text-2xl" />;
   const DotPosition = () => <GoDotFill className="text-gray-500 m-2" />
 
   const Box = ({ x, y }) => {
-    const bossPosition = mazeData.bossPosition.x === x && mazeData.bossPosition.y === y;
-    const nowPlayerPosition = playerPosition.x === x && playerPosition.y === y;
+    const isBossPosition = bossPosition.position.x === x && bossPosition.position.y === y;
+    const isPlayerPosition = playerPosition.x === x && playerPosition.y === y;
 
     return (
       <div className="bg-gray-400/50 m-0.5 rounded flex justify-center items-center">
-        {bossPosition && <BossPosition />}
-        {nowPlayerPosition && <PlayerPosition />}
-        {!bossPosition && !nowPlayerPosition && <DotPosition />}
+        {isBossPosition && <BossPosition />}
+        {isPlayerPosition && <PlayerPosition />}
+        {!isBossPosition && !isPlayerPosition && <DotPosition />}
       </div>
     );
   };

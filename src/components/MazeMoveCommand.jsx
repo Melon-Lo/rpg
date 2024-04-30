@@ -32,13 +32,13 @@ const moves = [
 
 export default function MazeMoveCommand() {
   const dispatch = useDispatch();
-  const { playerPosition, enemiesPosition, chestsPosition } = useSelector(state => state.maze);
+  const { playerPosition, bossPosition, enemiesPosition, chestsPosition } = useSelector(state => state.maze);
 
   // 遭遇敵人
   // 之後可能要移到別的 MainPage 裡
   useEffect(() => {
     const handleEncounter = () => {
-      // 如果我方的位置等同於任何一個敵人所在
+      // 如果我方的位置等同於任何一個敵人位置
       const touchingEnemy = JSON.stringify(enemiesPosition.find(enemy => enemy.position.x === playerPosition.x && enemy.position.y === playerPosition.y));
 
       if (touchingEnemy) {
@@ -63,9 +63,35 @@ export default function MazeMoveCommand() {
     handleEncounter();
   }, [dispatch, enemiesPosition, playerPosition])
 
+  // 打王
+  // 之後可能要移到別的 MainPage 裡
+  useEffect(() => {
+    const handleBossEncounter = () => {
+      // 如果我方的位置等同於魔王位置
+      const touchingBoss = bossPosition.position.x === playerPosition.x && bossPosition.position.y === playerPosition.y
+
+      if (touchingBoss) {
+        const bossName = bossPosition.boss;
+        const currentEnemy = enemies.find(enemy => enemy.name === bossName);
+        const { name, img, loot, exp, money, weakness } = currentEnemy;
+        const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
+
+        dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
+        dispatch(addMessage({
+          type: 'battle',
+          content: `此區大BOSS ${name} 出現了！`
+        }));
+        dispatch(changeInBattle(true));
+      }
+    };
+
+    handleBossEncounter();
+  }, [dispatch, playerPosition, bossPosition])
+
   // 得到寶箱
   useEffect(() => {
     const handleGetChest = () => {
+      // 我方位置等於任何一個寶箱位置
       const touchingChest = JSON.stringify(chestsPosition.find(chest => chest.position.x === playerPosition.x && chest.position.y === playerPosition.y));
 
       if (touchingChest) {
