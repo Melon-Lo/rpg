@@ -39,8 +39,11 @@ export default function CommandSection() {
   const selfATK = useSelector(state => state.characterStats.ATK);
   const { turn, executingCommand } = useSelector(state => state.battle);
 
+  // 迷宮相關變數
+  const { inMaze } = useSelector(state => state.maze);
+
+  // 上方文字內容，根據 currentStep 不同而變換
   useEffect(() => {
-    // 上方文字內容，根據 currentStep 不同而變換
     const changeTextContent = () => {
       // 戰鬥狀態相關
       if (currentStep === '主頁' && inBattle && turn === 'self' && executingCommand) {
@@ -80,6 +83,9 @@ export default function CommandSection() {
       } else if (currentStep === '狀態') {
         setTextContent('狀態一覽');
         return
+      } else if (currentStep === '探索') {
+        setTextContent('選擇探索方向');
+        return
       } else if (currentStep === 'talking') {
         setTextContent('對談中⋯⋯');
         return
@@ -88,6 +94,13 @@ export default function CommandSection() {
 
     changeTextContent();
   }, [currentStep, inBattle, turn, executingCommand])
+
+  // 只要進入戰鬥則跳到主頁
+  useEffect(() => {
+    if (inBattle) {
+      setCurrentStep('主頁');
+    }
+  }, [inBattle])
 
   // 按下返回鍵，回到主頁
   const handleReturn = () => {
@@ -101,6 +114,12 @@ export default function CommandSection() {
   // 主頁（指令們）
   const mainCommands = commands.find(command => command.type === 'main').commands;
   const renderedMainCommandItems = mainCommands.map(commandItem => {
+    // 如果不在迷宮中，則不會出現「探索」
+    if (!inMaze && commandItem.command === '探索') return null;
+
+    // 如果在迷宮中，則不會出現「交談」和「移動」
+    if ((inMaze && commandItem.command === '交談') || (inMaze && commandItem.command === '移動')) return null;
+
     return (
       <CommandItem
         key={commandItem.command}
@@ -188,7 +207,7 @@ export default function CommandSection() {
     const sceneName = sceneItem.name;
 
     // 不能前往當前地點
-    if (currentScene === sceneName) return;
+    if (currentScene === sceneName) return null;
 
     const handleClick = () => {
       // 將場景改為點擊地點
@@ -353,7 +372,7 @@ export default function CommandSection() {
         { currentStep === '狀態' && <CharacterStatsList /> }
 
         {/* 迷宮 */}
-        { currentStep === '迷宮' && <MazeMoveCommand /> }
+        { currentStep === '探索' && <MazeMoveCommand /> }
 
         {/* talking */}
         { currentStep === 'talking' && <NextButton /> }

@@ -6,10 +6,9 @@ import { FaArrowRight } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
-import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemiesPosition } from "../store";
+import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemiesPosition, changeChestsPosition, changeItem } from "../store";
 
 // data
-import mazes from "../data/mazes";
 import enemies from "../data/enemies";
 
 const moves = [
@@ -33,8 +32,10 @@ const moves = [
 
 export default function MazeMoveCommand() {
   const dispatch = useDispatch();
-  const { mazeName, playerPosition, enemiesPosition } = useSelector(state => state.maze);
+  const { playerPosition, enemiesPosition, chestsPosition } = useSelector(state => state.maze);
 
+  // 遭遇敵人
+  // 之後可能要移到別的 MainPage 裡
   useEffect(() => {
     const handleEncounter = () => {
       // 如果我方的位置等同於任何一個敵人所在
@@ -45,9 +46,10 @@ export default function MazeMoveCommand() {
         const currentEnemy = enemies.find(enemy => enemy.name === enemyName);
         const { name, img, loot, exp, money, weakness } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
+
         dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
         dispatch(addMessage({
-          type: 'system',
+          type: 'battle',
           content: `${name}出現了！`
         }));
         dispatch(changeInBattle(true));
@@ -56,16 +58,44 @@ export default function MazeMoveCommand() {
         const filteredEnemies = enemiesPosition.filter(enemy => enemy.position.x !== playerPosition.x && enemy.position.y !== playerPosition.y);
         dispatch(changeEnemiesPosition(filteredEnemies));
       }
-    }
+    };
 
     handleEncounter();
   }, [dispatch, enemiesPosition, playerPosition])
 
-  const isMoveOutOfBounds = (newPosition) => {
-    return newPosition.x < 1 || newPosition.x > 5 || newPosition.y < 1 || newPosition.y > 5;
-  };
+  // 得到寶箱
+  useEffect(() => {
+    const handleGetChest = () => {
+      const touchingChest = JSON.stringify(chestsPosition.find(chest => chest.position.x === playerPosition.x && chest.position.y === playerPosition.y));
 
+      if (touchingChest) {
+        const chestName = JSON.parse(touchingChest).chest;
+        const chestQuantity = JSON.parse(touchingChest).quantity;
+
+        dispatch(changeItem({
+          name: chestName,
+          quantity: chestQuantity,
+        }));
+        dispatch(addMessage({
+          type: 'maze',
+          content: `找到寶箱！獲得 ${chestName} * ${chestQuantity}！`
+        }));
+
+        // 同一個地點不會再出現寶箱
+        const filteredChests = chestsPosition.filter(chest => chest.position.x !== playerPosition.x && chest.position.y !== playerPosition.y);
+        dispatch(changeChestsPosition(filteredChests));
+      }
+    };
+
+    handleGetChest();
+  }, [dispatch, chestsPosition, playerPosition])
+
+  // 移動
   const handleMove = (direction) => {
+    const isMoveOutOfBounds = (newPosition) => {
+      return newPosition.x < 1 || newPosition.x > 5 || newPosition.y < 1 || newPosition.y > 5;
+    };
+
     let newPosition = { ...playerPosition };
 
     if (direction === 'up') {
@@ -81,15 +111,13 @@ export default function MazeMoveCommand() {
     if (isMoveOutOfBounds(newPosition)) {
       dispatch(addMessage({
         type: 'maze',
-        content: '無法再往這個方向移動了！'
+        content: '到底了！無法再往這個方向移動'
       }));
       return;
     }
 
     dispatch(changePlayerPosition(newPosition));
   };
-
-  // 得到寶箱
 
   const renderedMoves = moves.map(move => {
     return (

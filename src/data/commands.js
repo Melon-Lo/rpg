@@ -12,6 +12,11 @@ const commands = [
     type: "main",
     commands: [
       {
+        command: "探索",
+        color: "stone",
+        img: GiMaze,
+      },
+      {
         command: "交談",
         color: "blue",
         img: IoChatbubble,
@@ -35,11 +40,6 @@ const commands = [
         command: "狀態",
         color: "teal",
         img: FaPerson,
-      },
-      {
-        command: "迷宮",
-        color: "stone",
-        img: GiMaze,
       },
     ],
   },
