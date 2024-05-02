@@ -47,15 +47,15 @@ const skills = [
   },
   {
     name: "治療",
-    basicValue: 20,
+    basicValue: 50,
     attributes: "none",
     costMP: 10,
     canUseOutsideBattle: true,
     type: "healHP",
-    effectDescription: "恢復 HP 20 點",
-    effectMessage: "HP 恢復了 20 點",
-    effect: (targetHP) => {
-      return targetHP + 50;
+    effectDescription: "恢復 HP 50 點",
+    effectMessage: "HP 恢復了 50 點",
+    effect: function (targetHP) {
+      return targetHP + this.basicValue;
     },
   },
 ];

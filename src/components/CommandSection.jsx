@@ -21,11 +21,15 @@ import mazes from "../data/mazes";
 import decideDamage from "../utils/battle/decideDamage";
 
 export default function CommandSection() {
+  const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
   const selfName = useSelector(state => state.characterStats.name);
+
+  // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
-  const dispatch = useDispatch();
+  const isDiscoverable = scenes.find(scene => scene.name === currentScene).isDiscoverable;
+  const hasNPC = scenes.find(scene => scene.name === currentScene).characters.length > 0;
 
   // 對話相關變數
   const [sentence, setSentence] = useState(0);
@@ -117,8 +121,10 @@ export default function CommandSection() {
   const mainCommands = commands.find(command => command.type === 'main').commands;
   const renderedMainCommandItems = mainCommands.map(commandItem => {
     // 如果該場景無法探險，則不會出現「探險」
-    const isDiscoverable = scenes.find(scene => scene.name === currentScene).isDiscoverable;
     if (!isDiscoverable && commandItem.command === '探險') return null;
+
+    // 如果此處沒有可交談對象，則不會出現「交談」
+    if (!hasNPC && commandItem.command === '交談') return null;
 
     // 如果已經在迷宮內，則不會出現「探險」
     if (inMaze && commandItem.command === '探險') return null;

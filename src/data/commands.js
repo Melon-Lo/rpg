@@ -13,6 +13,11 @@ const commands = [
     type: "main",
     commands: [
       {
+        command: "移動",
+        color: "green",
+        img: FaShoePrints,
+      },
+      {
         command: "探索",
         color: "stone",
         img: GiMaze,
@@ -21,11 +26,6 @@ const commands = [
         command: "交談",
         color: "blue",
         img: IoChatbubble,
-      },
-      {
-        command: "移動",
-        color: "green",
-        img: FaShoePrints,
       },
       {
         command: "技能",

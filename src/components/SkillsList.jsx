@@ -48,8 +48,6 @@ export default function SkillsList({ setCurrentStep }) {
         cancelButtonText: '取消'
       }).then((result) => {
         if (result.isConfirmed) {
-          dispatch(changeExecutingCommand(true));
-
           // 治療技能
           if (skill.type === 'healHP') {
             const valueAfterEffect = skill.effect(selfHP);
@@ -59,13 +57,16 @@ export default function SkillsList({ setCurrentStep }) {
               content: `${selfName}施展了${skill.name}！${skill.effectMessage}`,
             }));
 
-            // 如果是在戰鬥中，施展完換成對方回合
+            // 如果是在戰鬥中，施展完換成對方回合，且切換回主頁
             if (inBattle) {
-              dispatch(changeExecutingCommand(false));
               dispatch(changeTurn('enemy'));
+              setCurrentStep('主頁');
             }
-          // 攻擊技能
+          // 攻擊技能（只有在攻擊時需要changeExecutingCommand）
           } else if (skill.type === 'attack') {
+            dispatch(changeExecutingCommand(true));
+            setCurrentStep('主頁');
+
             const damage = skill.effect(selfMATK, enemyMDEF, skill.basicValue, skill.attributes, enemyWeakness);
             // 如果打到弱點，則出現「擊中弱點！」
             const effectiveText = skill.attributes === enemyWeakness ? '擊中弱點！' : '';
@@ -93,12 +94,11 @@ export default function SkillsList({ setCurrentStep }) {
             }, 1500)
           };
 
-          // 無論如何都回到主頁和減少 costHP
-          setCurrentStep('主頁');
+          // 無論如何都要減少 costHP
           dispatch(changeMP(selfMP - skill.costMP));
         };
       })
-    }
+    };
 
     return (
       <div className="w-3/6 flex justify-between" onClick={handleClick}>

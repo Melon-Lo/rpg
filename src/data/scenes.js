@@ -35,13 +35,7 @@ const scenes = [
     name: "森林",
     img: forest,
     isDiscoverable: true,
-    characters: [
-      {
-        name: "精靈",
-        img: elf,
-        dialogue: ["哈囉！"],
-      },
-    ],
+    characters: [],
   },
   {
     name: "洞穴",

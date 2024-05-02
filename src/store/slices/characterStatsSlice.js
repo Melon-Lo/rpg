@@ -26,7 +26,7 @@ const characterStats = createSlice({
     name: "小明",
     classTitle: "法師",
     level: 1,
-    HP: 100,
+    HP: 1,
     maxHP: 100,
     MP: 50,
     maxMP: 50,
