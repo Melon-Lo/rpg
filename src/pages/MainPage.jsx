@@ -98,7 +98,6 @@ export default function MainPage() {
 
         // 對方發動一般攻擊
         if (nextEnemyAction.actionType === 'attack') {
-          console.log('attack');
           const damage = decideDamage(enemyATK, selfDEF);
           setTimeout(() => {
             dispatch(addMessage({
@@ -128,8 +127,6 @@ export default function MainPage() {
 
           // 對方發動技能
         } else if (nextEnemyAction.actionType === 'skill') {
-          console.log('skill');
-
           const skillName = nextEnemyAction.action;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
           const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;

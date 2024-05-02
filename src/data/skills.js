@@ -3,7 +3,7 @@ import decideSkillDamage from "../utils/battle/decideSkillDamage";
 const skills = [
   {
     name: "火焰",
-    basicValue: 20,
+    basicValue: 15,
     costMP: 10,
     attributes: "fire",
     canUseOutsideBattle: false,
@@ -25,7 +25,7 @@ const skills = [
   },
   {
     name: "水花",
-    basicValue: 20,
+    basicValue: 15,
     costMP: 10,
     attributes: "water",
     canUseOutsideBattle: false,
