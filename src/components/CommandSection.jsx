@@ -11,6 +11,7 @@ import SkillsList from "./SkillsList";
 import Button from "./Button";
 import CharacterStatsList from "./CharacterStatsList";
 import MazeMoveCommand from "./MazeMoveCommand";
+import NextButton from "./NextButton";
 
 // data
 import commands from "../data/commands";
@@ -26,17 +27,14 @@ export default function CommandSection() {
   const [textContent, setTextContent] = useState('想做什麼呢？');
   const selfName = useSelector(state => state.characterStats.name);
 
+  // 對話相關變數
+  const [sentence, setSentence] = useState(0);
+
   // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
   const { money } = useSelector(state => state.items);
   const isDiscoverable = scenes.find(scene => scene.name === currentScene).isDiscoverable;
   const hasNPC = scenes.find(scene => scene.name === currentScene).characters.length > 0;
-
-  // 對話相關變數
-  const [sentence, setSentence] = useState(0);
-  const talker = useSelector(state => state.systemStatus.currentDialogue.talker);
-  const content = useSelector(state => state.systemStatus.currentDialogue.content);
-  const contentLength = useSelector(state => state.systemStatus.currentDialogue.content.length);
 
   // 戰鬥相關變數
   const { inBattle } = useSelector(state => state.battle);
@@ -207,38 +205,6 @@ export default function CommandSection() {
       {charItem.name}
     </Button>;
   })
-
-  // taking 下一句按鈕
-  const NextButton = () => {
-    const handleClick = () => {
-      dispatch(addMessage({
-        type: 'talk',
-        content: `${talker}：「${content[sentence]}」`,
-      }))
-
-      // 每講一句，就推進一句
-      setSentence(sentence + 1);
-
-      // 講到最後一句時，自動退回主頁
-      if (sentence < contentLength - 1) {
-        setSentence(sentence + 1);
-      } else {
-        setCurrentStep('主頁');
-        setSentence(0);
-      }
-    }
-
-    return (
-      <div className="w-full flex justify-end">
-        <Button
-          yellow
-          onClick={handleClick}
-        >
-          下一句
-        </Button>
-      </div>
-    );
-  };
 
   // 移動（場景們）
   const renderedScenes = scenes.map(sceneItem => {
@@ -506,8 +472,8 @@ export default function CommandSection() {
         {/* 迷宮 */}
         { currentStep === '探索' && <MazeMoveCommand /> }
 
-        {/* talking */}
-        { currentStep === 'talking' && <NextButton /> }
+        {/* taking 下一句按鈕 */}
+        { currentStep === 'talking' && <NextButton sentence={sentence} setSentence={setSentence} setCurrentStep={setCurrentStep} /> }
 
         {/* 探險 */}
         { currentStep === '探險' && <DiscoverButton /> }
