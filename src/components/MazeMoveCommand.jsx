@@ -51,7 +51,7 @@ export default function MazeMoveCommand() {
         });
 
         dispatch(addMessage({
-          type: 'maze',
+          type: 'get',
           content: `找到寶箱！獲得 ${chestName} * ${chestQuantity}！`
         }));
 
@@ -84,7 +84,7 @@ export default function MazeMoveCommand() {
 
     if (isMoveOutOfBounds(newPosition)) {
       dispatch(addMessage({
-        type: 'maze',
+        type: 'basic',
         content: '到底了！無法再往這個方向移動'
       }));
       return;

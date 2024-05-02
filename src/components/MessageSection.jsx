@@ -10,12 +10,20 @@ export default function MessageSection() {
     let textColor;
 
     // 根據事件決定文字顏色
-    if (type === 'move') {
-      textColor = 'green';
+    if (type === 'success') {
+      textColor = 'emerald';
+    } else if (type === 'get') {
+      textColor = 'blue';
+    } else if (type === 'hurt') {
+      textColor = 'red';
+    } else if (type === 'attack') {
+      textColor = 'fuchsia';
+    } else {
+      textColor = 'gray';
     }
 
     return (
-      <p className="text-gray-500 first:text-gray-800 first:font-medium">{content}</p>
+      <p className={`text-${textColor}-800 first:font-bold`}>{content}</p>
     );
   }
 
@@ -28,7 +36,7 @@ export default function MessageSection() {
   });
 
   return (
-    <div className="w-11/12 h-16 bg-slate-200 rounded-md overflow-scroll my-1 px-2 py-1">
+    <div className="w-11/12 h-16 bg-slate-200 rounded-md overflow-y-scroll my-1 px-2 py-1">
       {renderedMessages}
     </div>
   );

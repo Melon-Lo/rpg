@@ -14,7 +14,7 @@ export default function AttackButton({ setCurrentStep }) {
 
   const handleAttack = () => {
     dispatch(addMessage({
-      type: 'battle',
+      type: 'basic',
       content: `${selfName}向${enemyName}發動了攻擊！`
     }));
     dispatch(changeExecutingCommand(true));
@@ -25,7 +25,7 @@ export default function AttackButton({ setCurrentStep }) {
       const damage = decideDamage(selfATK, enemyDEF);
       dispatch(changeEnemyHP(enemyHP - damage));
       dispatch(addMessage({
-        type: 'battle',
+        type: 'attack',
         content: `${enemyName}受到了 ${damage} 點的傷害！`
       }));
 

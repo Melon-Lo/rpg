@@ -27,7 +27,7 @@ export default function ScreenSection() {
     const addEnemyMessage = () => {
       if (inBattle) {
         dispatch(addMessage({
-          type: 'battle',
+          type: 'basic',
           content: `${currentEnemyName}出現了！`
         }));
       }

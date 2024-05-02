@@ -60,7 +60,7 @@ export default function MainPage() {
     const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
     dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
     dispatch(addMessage({
-      type: 'system',
+      type: 'basic',
       content: `${name}出現了！`
     }));
     dispatch(changeInBattle(true));
@@ -73,12 +73,12 @@ export default function MainPage() {
       setTimeout(() => {
         if (firstTurn === 'self') {
           dispatch(addMessage({
-            type: 'battle',
+            type: 'basic',
             content: `${selfName}速度較快，我方先攻！`
           }))
         } else if (firstTurn === 'enemy') {
           dispatch(addMessage({
-            type: 'battle',
+            type: 'basic',
             content: '敵人速度較快，敵人先攻！'
           }));
         };
@@ -101,7 +101,7 @@ export default function MainPage() {
           const damage = decideDamage(enemyATK, selfDEF);
           setTimeout(() => {
             dispatch(addMessage({
-              type: 'battle',
+              type: 'basic',
               content: `${enemyName}發動了攻擊！`
             }))
           }, 1500)
@@ -110,7 +110,7 @@ export default function MainPage() {
           setTimeout(() => {
             dispatch(changeHP(selfHP - damage));
             dispatch(addMessage({
-              type: 'battle',
+              type: 'hurt',
               content: `${selfName}受到了 ${damage} 點傷害！`
             }));
           }, 3000)
@@ -134,7 +134,7 @@ export default function MainPage() {
 
           setTimeout(() => {
             dispatch(addMessage({
-              type: 'battle',
+              type: 'basic',
               content: `${enemyName}發動了${skillName}！`
             }))
           }, 1500)
@@ -143,7 +143,7 @@ export default function MainPage() {
           setTimeout(() => {
             dispatch(changeHP(selfHP - damage));
             dispatch(addMessage({
-              type: 'battle',
+              type: 'hurt',
               content: `${selfName}受到了 ${damage} 點傷害！`
             }))
           }, 3000)
@@ -173,7 +173,7 @@ export default function MainPage() {
         // 等待 1.5s
         setTimeout(() => {
           dispatch(addMessage({
-            type: 'battle',
+            type: 'basic',
             content: `${enemyName}被擊敗了！`
           }))
         }, 1500)
@@ -195,7 +195,7 @@ export default function MainPage() {
           }
 
           dispatch(addMessage({
-            type: 'battle',
+            type: 'get',
             content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值、金錢 $ ${enemyMoney}${lootText}`
           }));
 
@@ -219,7 +219,7 @@ export default function MainPage() {
             })
 
             dispatch(addMessage({
-              type: 'system',
+              type: 'basic',
               content: '已破解迷宮，返回村莊'
             }))
             dispatch(changeCurrentScene('村莊'));
@@ -237,7 +237,7 @@ export default function MainPage() {
     const handlePlayerDefeated = () => {
       if (selfDefeated) {
         dispatch(addMessage({
-          type: 'battle',
+          type: 'basic',
           content: '被敵人打倒了⋯⋯'
         }))
 
@@ -287,7 +287,7 @@ export default function MainPage() {
           // 變更狀態
           dispatch(changeCharacterStats(updatedLevelStats));
           dispatch(addMessage({
-            type: 'system',
+            type: 'success',
             content: `等級提升！HP 和 MP 恢復至全滿！${getNewSkillText}`
           }));
 

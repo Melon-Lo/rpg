@@ -173,7 +173,7 @@ export default function CommandSection() {
 
       // 點擊人物後顯示第一句話，剩下的交給 NextButton 處理
       dispatch(addMessage({
-        type: 'talk',
+        type: 'basic',
         content: `${charItem.name}：「${charItem.dialogue[0]}」`,
       }));
 
@@ -209,7 +209,7 @@ export default function CommandSection() {
       dispatch(changeCurrentScene(sceneName));
       // 系統提示
       dispatch(addMessage({
-        type: 'move',
+        type: 'basic',
         content: `${selfName}移動到${sceneName}了。`,
       }));
 
@@ -254,7 +254,7 @@ export default function CommandSection() {
   const EscapeButton = () => {
     const handleEscape = () => {
       dispatch(addMessage({
-        type: 'battle',
+        type: 'basic',
         content: `逃跑中⋯⋯`
       }));
       dispatch(changeExecutingCommand(true));
@@ -267,7 +267,7 @@ export default function CommandSection() {
         // 逃跑成功
         if (escapeSuccess) {
           dispatch(addMessage({
-            type: 'battle',
+            type: 'success',
             content: '成功逃跑了！'
           }));
 
@@ -278,7 +278,7 @@ export default function CommandSection() {
         // 逃跑失敗
         } else {
           dispatch(addMessage({
-            type: 'battle',
+            type: 'basic',
             content: '逃跑失敗⋯⋯'
           }));
           dispatch(changeExecutingCommand(false));

@@ -12,7 +12,7 @@ export default function NextButton({ sentence, setSentence, setCurrentStep }) {
 
   const handleClick = () => {
     dispatch(addMessage({
-      type: 'talk',
+      type: 'basic',
       content: `${talker}：「${content[sentence]}」`,
     }))
 

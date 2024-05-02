@@ -28,7 +28,7 @@ export default function Maze() {
 
         dispatch(changeEnemy({ name, img, exp, isBoss, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
         dispatch(addMessage({
-          type: 'battle',
+          type: 'basic',
           content: `${name}出現了！`
         }));
         dispatch(changeInBattle(true));
@@ -56,7 +56,7 @@ export default function Maze() {
 
         dispatch(changeEnemy({ name, img, isBoss, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
         dispatch(addMessage({
-          type: 'battle',
+          type: 'basic',
           content: `此區大BOSS ${name} 出現了！`
         }));
         dispatch(changeInBattle(true));

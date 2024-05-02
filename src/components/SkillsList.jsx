@@ -53,7 +53,7 @@ export default function SkillsList({ setCurrentStep }) {
             const valueAfterEffect = skill.effect(selfHP);
             dispatch(changeHP(valueAfterEffect));
             dispatch(addMessage({
-              type: 'useSkill',
+              type: 'get',
               content: `${selfName}施展了${skill.name}！${skill.effectMessage}`,
             }));
 
@@ -72,13 +72,13 @@ export default function SkillsList({ setCurrentStep }) {
             const effectiveText = skill.attributes === enemyWeakness ? '擊中弱點！' : '';
 
             dispatch(addMessage({
-              type: 'useSkill',
+              type: 'basic',
               content: `${selfName}施展了${skill.name}！`,
             }));
 
             setTimeout(() => {
               dispatch(addMessage({
-                type: 'useSkill',
+                type: 'attack',
                 content: `${effectiveText}${enemyName} 受到了 ${damage} 點傷害！`,
               }));
               dispatch(changeEnemyHP(enemyHP - damage));

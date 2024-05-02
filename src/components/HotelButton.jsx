@@ -31,7 +31,7 @@ export default function HotelButton({ setCurrentStep }) {
       cancelButtonText: '取消'
     }).then((result) => {
       dispatch(addMessage({
-        type: 'system',
+        type: 'basic',
         content: '休息中⋯⋯'
       }))
       dispatch(changeMoney(money - 10));
@@ -39,7 +39,7 @@ export default function HotelButton({ setCurrentStep }) {
 
       setTimeout(() => {
         dispatch(addMessage({
-          type: 'system',
+          type: 'success',
           content: '休息完畢，神清氣爽！HP 和 MP 都恢復了！'
         }))
 

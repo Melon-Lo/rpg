@@ -20,7 +20,7 @@ export default function DiscoverButton({ setCurrentStep }) {
       cancelButtonText: '取消'
     }).then((result) => {
       dispatch(addMessage({
-        type: 'maze',
+        type: 'basic',
         content: '探險開始，請步步為營！'
       }))
 
