@@ -12,6 +12,7 @@ import Button from "./Button";
 import CharacterStatsList from "./CharacterStatsList";
 import MazeMoveCommand from "./MazeMoveCommand";
 import NextButton from "./NextButton";
+import DiscoverButton from "./DiscoverButton";
 
 // data
 import commands from "../data/commands";
@@ -238,42 +239,6 @@ export default function CommandSection() {
     )
   })
 
-  // 探險按鈕
-  const DiscoverButton = () => {
-    const handleClick = () => {
-      Swal.fire({
-        title: `確定要進入「${currentScene}」探險嗎？`,
-        text: '進入迷宮後無法存檔，而且只有「被擊敗」或「打倒迷宮魔王」才能離開哦！',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '確認',
-        cancelButtonText: '取消'
-      }).then((result) => {
-        dispatch(addMessage({
-          type: 'maze',
-          content: '探險開始，請步步為營！'
-        }))
-
-        // 抓到迷宮資料並進入
-        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === currentScene);
-        const boss = mazes.find(maze => maze.mazeName === currentScene).boss;
-        dispatch(changeInMaze(true));
-        dispatch(changeMazeName('洞穴'));
-        dispatch(changePlayerPosition(playerPosition));
-        dispatch(changeEnemies(enemies));
-        dispatch(changeChests(chests));
-        dispatch(changeBoss(boss));
-        setCurrentStep('主頁');
-      });
-    }
-
-    return (
-      <Button onClick={handleClick} fuchsia>進入{currentScene}探險</Button>
-    )
-  }
-
   // 旅館按鈕
   const HotelButton = () => {
     const handleClick = () => {
@@ -476,7 +441,7 @@ export default function CommandSection() {
         { currentStep === 'talking' && <NextButton sentence={sentence} setSentence={setSentence} setCurrentStep={setCurrentStep} /> }
 
         {/* 探險 */}
-        { currentStep === '探險' && <DiscoverButton /> }
+        { currentStep === '探險' && <DiscoverButton setCurrentStep={setCurrentStep} /> }
 
         {/* 旅館 */}
         { currentStep === '旅館' && !executingCommand && <HotelButton /> }
