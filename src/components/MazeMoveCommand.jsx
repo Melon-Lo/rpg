@@ -5,10 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemies, changeChests, changeItem } from "../store";
-
-// data
-import enemiesData from "../data/enemies";
+import { changePlayerPosition, addMessage, changeChests, changeItem } from "../store";
 
 const moves = [
   {
@@ -31,61 +28,7 @@ const moves = [
 
 export default function MazeMoveCommand() {
   const dispatch = useDispatch();
-  const { playerPosition, boss, enemies, chests } = useSelector(state => state.maze);
-
-  // 遭遇敵人
-  // 之後可能要移到別的 MainPage 裡
-  useEffect(() => {
-    const handleEncounter = () => {
-      // 如果我方的位置等同於任何一個敵人位置
-      const touchingEnemy = JSON.stringify(enemies.find(enemy => enemy.position.x === playerPosition.x && enemy.position.y === playerPosition.y));
-
-      if (touchingEnemy) {
-        const enemyName = JSON.parse(touchingEnemy).enemy;
-        const currentEnemy = enemiesData.find(enemy => enemy.name === enemyName);
-        const { name, img, loot, exp, money, weakness } = currentEnemy;
-        const { HP, maxHP, isBoss, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
-
-        dispatch(changeEnemy({ name, img, exp, isBoss, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
-        dispatch(addMessage({
-          type: 'battle',
-          content: `${name}出現了！`
-        }));
-        dispatch(changeInBattle(true));
-
-        // 同一個地點不會再出現敵人
-        const filteredEnemies = enemies.filter(enemy => enemy.position.x !== playerPosition.x && enemy.position.y !== playerPosition.y);
-        dispatch(changeEnemies(filteredEnemies));
-      }
-    };
-
-    handleEncounter();
-  }, [dispatch, enemies, playerPosition])
-
-  // 打王
-  // 之後可能要移到別的 MainPage 裡
-  useEffect(() => {
-    const handleBossEncounter = () => {
-      // 如果我方的位置等同於魔王位置
-      const touchingBoss = boss.position.x === playerPosition.x && boss.position.y === playerPosition.y
-
-      if (touchingBoss) {
-        const bossName = boss.name;
-        const currentEnemy = enemiesData.find(enemy => enemy.name === bossName);
-        const { name, img, isBoss, loot, exp, money, weakness } = currentEnemy;
-        const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
-
-        dispatch(changeEnemy({ name, img, isBoss, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
-        dispatch(addMessage({
-          type: 'battle',
-          content: `此區大BOSS ${name} 出現了！`
-        }));
-        dispatch(changeInBattle(true));
-      }
-    };
-
-    handleBossEncounter();
-  }, [dispatch, playerPosition, boss])
+  const { playerPosition, boss, chests } = useSelector(state => state.maze);
 
   // 得到寶箱
   useEffect(() => {
