@@ -1,7 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeExecutingCommand, changeTurn, changeInBattle } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -13,13 +13,11 @@ import MazeMoveCommand from "./MazeMoveCommand";
 import NextButton from "./NextButton";
 import DiscoverButton from "./DiscoverButton";
 import HotelButton from "./HotelButton";
+import AttackButton from "./AttackButton";
 
 // data
 import commands from "../data/commands";
 import scenes from "../data/scenes";
-
-// utils
-import decideDamage from "../utils/battle/decideDamage";
 
 export default function CommandSection() {
   const dispatch = useDispatch();
@@ -37,10 +35,6 @@ export default function CommandSection() {
 
   // 戰鬥相關變數
   const { inBattle } = useSelector(state => state.battle);
-  const enemyName = useSelector(state => state.enemies.name);
-  const enemyHP = useSelector(state => state.enemies.HP);
-  const enemyDEF = useSelector(state => state.enemies.DEF);
-  const selfATK = useSelector(state => state.characterStats.ATK);
   const { turn, executingCommand } = useSelector(state => state.battle);
   const { isBoss } = useSelector(state => state.enemies);
 
@@ -256,44 +250,6 @@ export default function CommandSection() {
     )
   });
 
-  // 攻擊敵人按鈕
-  const AttackButton = () => {
-    const handleAttack = () => {
-      dispatch(addMessage({
-        type: 'battle',
-        content: `${selfName}向${enemyName}發動了攻擊！`
-      }));
-      dispatch(changeExecutingCommand(true));
-
-      // 等待 1.5s
-      setTimeout(() => {
-        // 對敵人造成傷害
-        const damage = decideDamage(selfATK, enemyDEF);
-        dispatch(changeEnemyHP(enemyHP - damage));
-        dispatch(addMessage({
-          type: 'battle',
-          content: `${enemyName}受到了 ${damage} 點的傷害！`
-        }));
-
-        // 如果擊敗敵人，剩下的交給 MainPage 處理
-        if (damage >= enemyHP) {
-          dispatch(changeEnemyDefeated(true));
-        } else {
-          // 如果還沒擊敗敵人，則換成對方的回合
-          dispatch(changeExecutingCommand(false));
-          dispatch(changeTurn('enemy'));
-        }
-
-        // 無論如何都回到主頁
-        setCurrentStep('主頁');
-      }, 1500);
-    };
-
-    return (
-      <Button onClick={handleAttack} red>向{enemyName}發動攻擊！</Button>
-    );
-  };
-
   // 逃跑按鈕
   const EscapeButton = () => {
     const handleEscape = () => {
@@ -394,7 +350,7 @@ export default function CommandSection() {
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }
 
         {/* 確定「攻擊」 */}
-        { currentStep === '攻擊' && !executingCommand && <AttackButton /> }
+        { currentStep === '攻擊' && !executingCommand && <AttackButton setCurrentStep={setCurrentStep} /> }
 
         {/* 確定「逃跑」 */}
         { currentStep === '逃跑' && !executingCommand && <EscapeButton /> }
