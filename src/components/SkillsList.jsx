@@ -56,8 +56,14 @@ export default function SkillsList({ setCurrentStep }) {
             dispatch(changeHP(valueAfterEffect));
             dispatch(addMessage({
               type: 'useSkill',
-              content: `${selfName}使用了${skill.name}！${skill.effectMessage}`,
+              content: `${selfName}施展了${skill.name}！${skill.effectMessage}`,
             }));
+
+            // 如果是在戰鬥中，施展完換成對方回合
+            if (inBattle) {
+              dispatch(changeExecutingCommand(false));
+              dispatch(changeTurn('enemy'));
+            }
           // 攻擊技能
           } else if (skill.type === 'attack') {
             const damage = skill.effect(selfMATK, enemyMDEF, skill.basicValue, skill.attributes, enemyWeakness);
@@ -66,18 +72,25 @@ export default function SkillsList({ setCurrentStep }) {
 
             dispatch(addMessage({
               type: 'useSkill',
-              content: `${selfName}施展了${skill.name}！${effectiveText}${enemyName} 受到了 ${damage} 點傷害！`,
+              content: `${selfName}施展了${skill.name}！`,
             }));
-            dispatch(changeEnemyHP(enemyHP - damage));
 
-            // 如果擊敗敵人，剩下的交給 MainPage 處理
-            if (damage >= enemyHP) {
-              dispatch(changeEnemyDefeated(true));
-            // 如果還沒擊敗敵人，則換成對方的回合
-            } else {
-              dispatch(changeExecutingCommand(false));
-              dispatch(changeTurn('enemy'));
-            }
+            setTimeout(() => {
+              dispatch(addMessage({
+                type: 'useSkill',
+                content: `${effectiveText}${enemyName} 受到了 ${damage} 點傷害！`,
+              }));
+              dispatch(changeEnemyHP(enemyHP - damage));
+
+              // 如果擊敗敵人，剩下的交給 MainPage 處理
+              if (damage >= enemyHP) {
+                dispatch(changeEnemyDefeated(true));
+              // 如果還沒擊敗敵人，則換成對方的回合
+              } else {
+                dispatch(changeExecutingCommand(false));
+                dispatch(changeTurn('enemy'));
+              }
+            }, 1500)
           };
 
           // 無論如何都回到主頁和減少 costHP
