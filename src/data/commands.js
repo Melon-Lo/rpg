@@ -7,6 +7,8 @@ import { GiMagicPortal } from "react-icons/gi";
 import { FaRunning } from "react-icons/fa";
 import { GiMaze } from "react-icons/gi";
 import { FaMagnifyingGlassLocation } from "react-icons/fa6";
+import { FaShop } from "react-icons/fa6";
+import { FaHotel } from "react-icons/fa6";
 
 const commands = [
   {
@@ -71,6 +73,21 @@ const commands = [
         command: "逃跑",
         color: "gray",
         img: FaRunning,
+      },
+    ],
+  },
+  {
+    type: "village",
+    commands: [
+      {
+        command: "旅館",
+        color: "lime",
+        img: FaHotel,
+      },
+      {
+        command: "商店",
+        color: "amber",
+        img: FaShop,
       },
     ],
   },

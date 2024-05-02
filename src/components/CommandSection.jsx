@@ -1,7 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle, changeMazeName, changeInMaze, changePlayerPosition, changeEnemies, changeChests, changeBoss } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle, changeMazeName, changeInMaze, changePlayerPosition, changeEnemies, changeChests, changeBoss, changeHP, changeMP, changeMoney } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -28,6 +28,7 @@ export default function CommandSection() {
 
   // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
+  const { money } = useSelector(state => state.items);
   const isDiscoverable = scenes.find(scene => scene.name === currentScene).isDiscoverable;
   const hasNPC = scenes.find(scene => scene.name === currentScene).characters.length > 0;
 
@@ -43,9 +44,10 @@ export default function CommandSection() {
   const enemyHP = useSelector(state => state.enemies.HP);
   const enemyDEF = useSelector(state => state.enemies.DEF);
   const selfATK = useSelector(state => state.characterStats.ATK);
+  const selfMaxHP = useSelector(state => state.characterStats.maxHP);
+  const selfMaxMP = useSelector(state => state.characterStats.maxMP);
   const { turn, executingCommand } = useSelector(state => state.battle);
   const { isBoss } = useSelector(state => state.enemies);
-
 
   // 迷宮相關變數
   const { inMaze } = useSelector(state => state.maze);
@@ -97,6 +99,11 @@ export default function CommandSection() {
       } else if (currentStep === 'talking') {
         setTextContent('對談中⋯⋯');
         return
+
+        // 旅館休息
+      } else if (currentStep === '旅館' && executingCommand) {
+        setTextContent('休息中⋯⋯');
+        return
       }
     }
 
@@ -119,7 +126,7 @@ export default function CommandSection() {
   // 非戰鬥狀態
   // --------------------------------------------
 
-  // 主頁（指令們）
+  // 主頁指令們
   const mainCommands = commands.find(command => command.type === 'main').commands;
   const renderedMainCommandItems = mainCommands.map(commandItem => {
     // 如果該場景無法探險，則不會出現「探險」
@@ -147,6 +154,20 @@ export default function CommandSection() {
       />
     )
   });
+
+  // 村莊指令們
+  const villageCommands = commands.find(command => command.type === 'village').commands;
+  const renderedVillageCommandItems = villageCommands.map(commandItem => {
+    return (
+      <CommandItem
+        key={commandItem.command}
+        command={commandItem.command}
+        color={commandItem.color}
+        Icon={commandItem.img}
+        setCurrentStep={setCurrentStep}
+      />
+    )
+  })
 
   // 交談（可交談對象們）
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
@@ -287,6 +308,58 @@ export default function CommandSection() {
     )
   }
 
+  // 旅館按鈕
+  const HotelButton = () => {
+    const handleClick = () => {
+      // 錢不夠不能休息
+      if (money < 10) {
+        Swal.fire({
+          icon: 'info',
+          title: '金錢不足！',
+        })
+
+        return;
+      };
+
+      Swal.fire({
+        title: '確定要在旅館休息嗎？',
+        text: '休息一次 $10',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消'
+      }).then((result) => {
+        dispatch(addMessage({
+          type: 'system',
+          content: '休息中⋯⋯'
+        }))
+        dispatch(changeMoney(money - 10));
+        dispatch(changeExecutingCommand(true));
+
+        setTimeout(() => {
+          dispatch(addMessage({
+            type: 'system',
+            content: '休息完畢，神清氣爽！HP 和 MP 都恢復了！'
+          }))
+
+          // 補滿 HP 和 MP
+          dispatch(changeHP(selfMaxHP));
+          dispatch(changeMP(selfMaxMP));
+
+          // 回歸先前狀態
+          setCurrentStep('主頁');
+          dispatch(changeExecutingCommand(false));
+        }, 1500)
+      });
+    }
+
+    return (
+      <Button onClick={handleClick} lime>進旅館休息（$10）</Button>
+    )
+  }
+
   // --------------------------------------------
   // 戰鬥狀態（battleTime 為真時）
   // --------------------------------------------
@@ -412,6 +485,9 @@ export default function CommandSection() {
         {/* 主頁：非戰鬥狀態 */}
         { currentStep === '主頁' && !inBattle && renderedMainCommandItems }
 
+        {/* 主頁：如果在村莊就會多出這些指令 */}
+        { currentStep === '主頁' && !inBattle && currentScene === '村莊' && renderedVillageCommandItems }
+
         {/* 交談 */}
         { currentStep === '交談' && renderedCharacters }
 
@@ -435,6 +511,9 @@ export default function CommandSection() {
 
         {/* 探險 */}
         { currentStep === '探險' && <DiscoverButton /> }
+
+        {/* 旅館 */}
+        { currentStep === '旅館' && !executingCommand && <HotelButton /> }
 
         {/* 主頁：戰鬥指令 */}
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }

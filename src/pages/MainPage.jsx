@@ -196,12 +196,12 @@ export default function MainPage() {
 
           dispatch(addMessage({
             type: 'battle',
-            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值、金錢 ${enemyMoney} 元${lootText}`
+            content: `戰鬥勝利！獲得 ${enemyEXP} 點經驗值、金錢 $ ${enemyMoney}${lootText}`
           }));
 
           Swal.fire({
             title: '戰鬥勝利！',
-            text: `獲得 ${enemyEXP} 點經驗值、金錢 ${enemyMoney} 元${lootText}`,
+            text: `獲得 ${enemyEXP} 點經驗值、金錢 $${enemyMoney}${lootText}`,
           });
 
           // 回到初始狀態：沒在執行動作、沒在戰鬥中、敵人沒被擊敗
