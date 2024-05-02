@@ -44,6 +44,8 @@ export default function CommandSection() {
   const enemyDEF = useSelector(state => state.enemies.DEF);
   const selfATK = useSelector(state => state.characterStats.ATK);
   const { turn, executingCommand } = useSelector(state => state.battle);
+  const { isBoss } = useSelector(state => state.enemies);
+
 
   // 迷宮相關變數
   const { inMaze } = useSelector(state => state.maze);
@@ -292,6 +294,9 @@ export default function CommandSection() {
   // 戰鬥指令們
   const battleCommands = commands.find(command => command.type === 'battle').commands;
   const renderedBattleCommandItems = battleCommands.map(commandItem => {
+    // BOSS戰無法逃跑
+    if (isBoss && commandItem.command === '逃跑') return null;
+
     return (
       <CommandItem
         key={commandItem.command}
