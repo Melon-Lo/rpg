@@ -147,7 +147,25 @@ export default function MazeMoveCommand() {
       return;
     }
 
-    dispatch(changePlayerPosition(newPosition));
+    if (newPosition.x === boss.position.x && newPosition.y === boss.position.y) {
+      Swal.fire({
+        title: '強敵警告',
+        text: '感受到前方有強敵的氣息，確定要繼續前進嗎？',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消'
+      }).then((result) => {
+        // 如果用戶點擊了確認按鈕，則繼續執行後續操作
+        if (result.isConfirmed) {
+          dispatch(changePlayerPosition(newPosition));
+        }
+      });
+    } else {
+      dispatch(changePlayerPosition(newPosition));
+    }
   };
 
   const renderedMoves = moves.map(move => {

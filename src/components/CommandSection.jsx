@@ -262,8 +262,8 @@ export default function CommandSection() {
         }))
 
         // 抓到迷宮資料並進入
-        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === '洞穴');
-        const boss = mazes.find(maze => maze.mazeName === '洞穴').boss;
+        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === currentScene);
+        const boss = mazes.find(maze => maze.mazeName === currentScene).boss;
         dispatch(changeInMaze(true));
         dispatch(changeMazeName('洞穴'));
         dispatch(changePlayerPosition(playerPosition));
