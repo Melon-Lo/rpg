@@ -45,9 +45,9 @@ export default function MazeMoveCommand() {
         const enemyName = JSON.parse(touchingEnemy).enemy;
         const currentEnemy = enemiesData.find(enemy => enemy.name === enemyName);
         const { name, img, loot, exp, money, weakness } = currentEnemy;
-        const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
+        const { HP, maxHP, isBoss, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
-        dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
+        dispatch(changeEnemy({ name, img, exp, isBoss, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
         dispatch(addMessage({
           type: 'battle',
           content: `${name}出現了！`
@@ -73,10 +73,10 @@ export default function MazeMoveCommand() {
       if (touchingBoss) {
         const bossName = boss.name;
         const currentEnemy = enemiesData.find(enemy => enemy.name === bossName);
-        const { name, img, loot, exp, money, weakness } = currentEnemy;
+        const { name, img, isBoss, loot, exp, money, weakness } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
-        dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
+        dispatch(changeEnemy({ name, img, isBoss, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
         dispatch(addMessage({
           type: 'battle',
           content: `此區大BOSS ${name} 出現了！`

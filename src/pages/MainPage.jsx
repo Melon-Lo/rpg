@@ -32,7 +32,7 @@ export default function MainPage() {
   // 戰鬥相關數據
   const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
   const selfStats = useSelector(state => state.characterStats);
-  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot } = useSelector(state => state.enemies);
+  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
   const { money } = useSelector(state => state.items);
@@ -203,12 +203,28 @@ export default function MainPage() {
           dispatch(changeInBattle(false));
           dispatch(changeEnemyDefeated(false));
           dispatch(changeTurn(''));
+
+          // 如果打倒魔王，則退出迷宮、回到村莊
+          if (enemyIsBoss) {
+            Swal.fire({
+              icon: 'success',
+              title: '迷宮被破解了！',
+              text: '已成功打倒地區魔王，返回村莊'
+            })
+
+            dispatch(addMessage({
+              type: 'system',
+              content: '已破解迷宮，返回村莊'
+            }))
+            dispatch(changeCurrentScene('村莊'));
+            dispatch(changeInMaze(false));
+          };
         }, 3000)
       }
     }
 
     handleEnemyDefeated();
-  }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP, enemyLoot, enemyMoney, money])
+  }, [dispatch, selfHP, enemyDefeated, enemyEXP, enemyName, selfEXP, enemyLoot, enemyMoney, money, enemyIsBoss])
 
   // 戰鬥失敗：當角色被擊敗時
   useEffect(() => {
@@ -249,28 +265,31 @@ export default function MainPage() {
   useEffect(() => {
     const handleLevelUp = () => {
       if (selfEXP >= selfEXPtoNextLevel) {
-        const updatedLevelStats = levelUp(selfLevel, selfStats, selfClassTitle, classeslevelsStats);
-        dispatch(changeCharacterStats(updatedLevelStats));
-        dispatch(addMessage({
-          type: 'system',
-          content: `等級提升！HP 和 MP 恢復至全滿！`
-        }));
+        // 為了不跟其他彈出視窗衝突，升級提示會稍微晚一點點出現
+        setTimeout(() => {
+          const updatedLevelStats = levelUp(selfLevel, selfStats, selfClassTitle, classeslevelsStats);
+          dispatch(changeCharacterStats(updatedLevelStats));
+          dispatch(addMessage({
+            type: 'system',
+            content: `等級提升！HP 和 MP 恢復至全滿！`
+          }));
 
-        Swal.fire({
-          title: `等級提升至${updatedLevelStats.level}級！`,
-          html: `
-            <div>
-              <h5>最大HP：${selfMaxHP} -> ${updatedLevelStats.maxHP}</h5>
-              <h5>最大MP：${selfMaxMP} -> ${updatedLevelStats.maxMP}</h5>
-              <h5>攻擊力：${selfATK} -> ${updatedLevelStats.ATK}</h5>
-              <h5>防禦力：${selfDEF} -> ${updatedLevelStats.DEF}</h5>
-              <h5>魔法攻擊力：${selfMATK} -> ${updatedLevelStats.MATK}</h5>
-              <h5>魔法防禦力：${selfMDEF} -> ${updatedLevelStats.MDEF}</h5>
-              <h5>速度：${selfSPD} -> ${updatedLevelStats.SPD}</h5>
-            <div>
-          `,
-          icon: 'success',
-        })
+          Swal.fire({
+            title: `等級提升至${updatedLevelStats.level}級！`,
+            html: `
+              <div>
+                <h5>最大HP：${selfMaxHP} -> ${updatedLevelStats.maxHP}</h5>
+                <h5>最大MP：${selfMaxMP} -> ${updatedLevelStats.maxMP}</h5>
+                <h5>攻擊力：${selfATK} -> ${updatedLevelStats.ATK}</h5>
+                <h5>防禦力：${selfDEF} -> ${updatedLevelStats.DEF}</h5>
+                <h5>魔法攻擊力：${selfMATK} -> ${updatedLevelStats.MATK}</h5>
+                <h5>魔法防禦力：${selfMDEF} -> ${updatedLevelStats.MDEF}</h5>
+                <h5>速度：${selfSPD} -> ${updatedLevelStats.SPD}</h5>
+              <div>
+            `,
+            icon: 'success',
+          })
+        }, 500);
       };
     };
 

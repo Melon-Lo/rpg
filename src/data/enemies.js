@@ -6,6 +6,7 @@ const enemies = [
     name: "蝙蝠",
     img: bat,
     weakness: "fire",
+    isBoss: false,
     stats: {
       HP: 50,
       maxHP: 50,
@@ -54,6 +55,7 @@ const enemies = [
     name: "魔王",
     img: devil,
     weakness: "water",
+    isBoss: true,
     stats: {
       HP: 300,
       maxHP: 300,
