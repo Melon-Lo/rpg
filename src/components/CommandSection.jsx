@@ -1,7 +1,8 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle, changeMazeName, changeInMaze, changePlayerPosition, changeEnemies, changeChests, changeBoss } from "../store";
+import Swal from "sweetalert2";
 
 // components
 import CommandItem from "./CommandItem";
@@ -14,6 +15,7 @@ import MazeMoveCommand from "./MazeMoveCommand";
 // data
 import commands from "../data/commands";
 import scenes from "../data/scenes";
+import mazes from "../data/mazes";
 
 // utils
 import decideDamage from "../utils/battle/decideDamage";
@@ -114,6 +116,13 @@ export default function CommandSection() {
   // 主頁（指令們）
   const mainCommands = commands.find(command => command.type === 'main').commands;
   const renderedMainCommandItems = mainCommands.map(commandItem => {
+    // 如果該場景無法探險，則不會出現「探險」
+    const isDiscoverable = scenes.find(scene => scene.name === currentScene).isDiscoverable;
+    if (!isDiscoverable && commandItem.command === '探險') return null;
+
+    // 如果已經在迷宮內，則不會出現「探險」
+    if (inMaze && commandItem.command === '探險') return null;
+
     // 如果不在迷宮中，則不會出現「探索」
     if (!inMaze && commandItem.command === '探索') return null;
 
@@ -170,7 +179,7 @@ export default function CommandSection() {
     </Button>;
   })
 
-  // taking 下一句
+  // taking 下一句按鈕
   const NextButton = () => {
     const handleClick = () => {
       dispatch(addMessage({
@@ -233,6 +242,42 @@ export default function CommandSection() {
       </Button>
     )
   })
+
+  // 探險按鈕
+  const DiscoverButton = () => {
+    const handleClick = () => {
+      Swal.fire({
+        title: `確定要進入「${currentScene}」探險嗎？`,
+        text: '進入迷宮後無法存檔，而且只有「被擊敗」或「打倒迷宮魔王」才能離開哦！',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '確認',
+        cancelButtonText: '取消'
+      }).then((result) => {
+        dispatch(addMessage({
+          type: 'maze',
+          content: '探險開始，請步步為營！'
+        }))
+
+        // 抓到迷宮資料並進入
+        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === '洞穴');
+        const boss = mazes.find(maze => maze.mazeName === '洞穴').boss;
+        dispatch(changeInMaze(true));
+        dispatch(changeMazeName('洞穴'));
+        dispatch(changePlayerPosition(playerPosition));
+        dispatch(changeEnemies(enemies));
+        dispatch(changeChests(chests));
+        dispatch(changeBoss(boss));
+        setCurrentStep('主頁');
+      });
+    }
+
+    return (
+      <Button onClick={handleClick} fuchsia>進入{currentScene}探險</Button>
+    )
+  }
 
   // --------------------------------------------
   // 戰鬥狀態（battleTime 為真時）
@@ -376,6 +421,9 @@ export default function CommandSection() {
 
         {/* talking */}
         { currentStep === 'talking' && <NextButton /> }
+
+        {/* 探險 */}
+        { currentStep === '探險' && <DiscoverButton /> }
 
         {/* 主頁：戰鬥指令 */}
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }

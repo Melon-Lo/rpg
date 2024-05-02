@@ -6,6 +6,7 @@ import { LuSwords } from "react-icons/lu";
 import { GiMagicPortal } from "react-icons/gi";
 import { FaRunning } from "react-icons/fa";
 import { GiMaze } from "react-icons/gi";
+import { FaMagnifyingGlassLocation } from "react-icons/fa6";
 
 const commands = [
   {
@@ -40,6 +41,11 @@ const commands = [
         command: "狀態",
         color: "teal",
         img: FaPerson,
+      },
+      {
+        command: "探險",
+        color: "fuchsia",
+        img: FaMagnifyingGlassLocation,
       },
     ],
   },

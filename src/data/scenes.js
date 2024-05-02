@@ -13,6 +13,7 @@ const scenes = [
   {
     name: "村莊",
     img: village,
+    isDiscoverable: false,
     characters: [
       {
         name: "村長",
@@ -33,6 +34,7 @@ const scenes = [
   {
     name: "森林",
     img: forest,
+    isDiscoverable: true,
     characters: [
       {
         name: "精靈",
@@ -42,8 +44,9 @@ const scenes = [
     ],
   },
   {
-    name: "山洞",
+    name: "洞穴",
     img: cave,
+    isDiscoverable: true,
     characters: [
       {
         name: "山頂洞人",

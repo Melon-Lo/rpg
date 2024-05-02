@@ -2,10 +2,9 @@ import { FaArrowUp } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
-
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-
+import Swal from "sweetalert2";
 import { changePlayerPosition, addMessage, changeEnemy, changeInBattle, changeEnemies, changeChests, changeItem } from "../store";
 
 // data
@@ -102,6 +101,12 @@ export default function MazeMoveCommand() {
           name: chestName,
           quantity: chestQuantity,
         }));
+
+        Swal.fire({
+          title: '找到寶箱！',
+          text: `獲得 ${chestName} * ${chestQuantity}！`,
+        });
+
         dispatch(addMessage({
           type: 'maze',
           content: `找到寶箱！獲得 ${chestName} * ${chestQuantity}！`
