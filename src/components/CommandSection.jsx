@@ -1,8 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle, changeMazeName, changeInMaze, changePlayerPosition, changeEnemies, changeChests, changeBoss, changeHP, changeMP, changeMoney } from "../store";
-import Swal from "sweetalert2";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeEnemyHP, changeExecutingCommand, changeEnemyDefeated, changeTurn, changeInBattle } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -13,11 +12,11 @@ import CharacterStatsList from "./CharacterStatsList";
 import MazeMoveCommand from "./MazeMoveCommand";
 import NextButton from "./NextButton";
 import DiscoverButton from "./DiscoverButton";
+import HotelButton from "./HotelButton";
 
 // data
 import commands from "../data/commands";
 import scenes from "../data/scenes";
-import mazes from "../data/mazes";
 
 // utils
 import decideDamage from "../utils/battle/decideDamage";
@@ -33,7 +32,6 @@ export default function CommandSection() {
 
   // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
-  const { money } = useSelector(state => state.items);
   const isDiscoverable = scenes.find(scene => scene.name === currentScene).isDiscoverable;
   const hasNPC = scenes.find(scene => scene.name === currentScene).characters.length > 0;
 
@@ -43,8 +41,6 @@ export default function CommandSection() {
   const enemyHP = useSelector(state => state.enemies.HP);
   const enemyDEF = useSelector(state => state.enemies.DEF);
   const selfATK = useSelector(state => state.characterStats.ATK);
-  const selfMaxHP = useSelector(state => state.characterStats.maxHP);
-  const selfMaxMP = useSelector(state => state.characterStats.maxMP);
   const { turn, executingCommand } = useSelector(state => state.battle);
   const { isBoss } = useSelector(state => state.enemies);
 
@@ -239,58 +235,6 @@ export default function CommandSection() {
     )
   })
 
-  // 旅館按鈕
-  const HotelButton = () => {
-    const handleClick = () => {
-      // 錢不夠不能休息
-      if (money < 10) {
-        Swal.fire({
-          icon: 'info',
-          title: '金錢不足！',
-        })
-
-        return;
-      };
-
-      Swal.fire({
-        title: '確定要在旅館休息嗎？',
-        text: '休息一次 $10',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: '確認',
-        cancelButtonText: '取消'
-      }).then((result) => {
-        dispatch(addMessage({
-          type: 'system',
-          content: '休息中⋯⋯'
-        }))
-        dispatch(changeMoney(money - 10));
-        dispatch(changeExecutingCommand(true));
-
-        setTimeout(() => {
-          dispatch(addMessage({
-            type: 'system',
-            content: '休息完畢，神清氣爽！HP 和 MP 都恢復了！'
-          }))
-
-          // 補滿 HP 和 MP
-          dispatch(changeHP(selfMaxHP));
-          dispatch(changeMP(selfMaxMP));
-
-          // 回歸先前狀態
-          setCurrentStep('主頁');
-          dispatch(changeExecutingCommand(false));
-        }, 1500)
-      });
-    }
-
-    return (
-      <Button onClick={handleClick} lime>進旅館休息（$10）</Button>
-    )
-  }
-
   // --------------------------------------------
   // 戰鬥狀態（battleTime 為真時）
   // --------------------------------------------
@@ -444,7 +388,7 @@ export default function CommandSection() {
         { currentStep === '探險' && <DiscoverButton setCurrentStep={setCurrentStep} /> }
 
         {/* 旅館 */}
-        { currentStep === '旅館' && !executingCommand && <HotelButton /> }
+        { currentStep === '旅館' && !executingCommand && <HotelButton setCurrentStep={setCurrentStep} /> }
 
         {/* 主頁：戰鬥指令 */}
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }
@@ -456,5 +400,5 @@ export default function CommandSection() {
         { currentStep === '逃跑' && !executingCommand && <EscapeButton /> }
       </div>
     </section>
-  )
+  );
 };
