@@ -51,7 +51,7 @@ export default function ItemsList({ setCurrentStep }) {
 
           // 使用物品訊息
           dispatch(addMessage({
-            type: 'basic',
+            type: 'get',
             content: `${selfName}使用了${item.name}！${item.effectMessage}`,
           }));
 

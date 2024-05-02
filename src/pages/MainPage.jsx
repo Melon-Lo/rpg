@@ -89,15 +89,16 @@ export default function MainPage() {
 
   // 敵方戰鬥回合
   useEffect(() => {
+    // 若對方未被擊敗，則輪到對方回合
     const handleEnemyTurn = () => {
-      // 若對方未被擊敗，則輪到對方回合
       if (inBattle && turn === 'enemy') {
         // 先拿到對方的行為 AI
-        const currentEnemyAi = enemiesData.find(enemy => enemy.name === '蝙蝠').ai;
+        const currentEnemyAi = enemiesData.find(enemy => enemy.name === enemyName).ai;
         const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
 
         // 對方發動一般攻擊
         if (nextEnemyAction.actionType === 'attack') {
+          console.log('attack');
           const damage = decideDamage(enemyATK, selfDEF);
           setTimeout(() => {
             dispatch(addMessage({
@@ -127,6 +128,8 @@ export default function MainPage() {
 
           // 對方發動技能
         } else if (nextEnemyAction.actionType === 'skill') {
+          console.log('skill');
+
           const skillName = nextEnemyAction.action;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
           const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;
@@ -157,14 +160,12 @@ export default function MainPage() {
               dispatch(changeTurn('self'));
             }
           }, 4500)
-        }
-
-        dispatch(changeTurn('enemyExecuting'));
+        };
       }
     }
 
     handleEnemyTurn();
-  }, [dispatch, enemyHP, enemyMaxHP, turn, enemyATK, selfDEF, selfName, enemyName, selfHP, enemyMATK, selfMDEF, inBattle]);
+  }, [turn]);
 
   // 戰鬥勝利：當敵人被擊敗時
   useEffect(() => {

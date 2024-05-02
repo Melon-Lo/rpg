@@ -24,7 +24,7 @@ const skills = [
     effect: decideSkillDamage,
   },
   {
-    name: "下雨",
+    name: "水花",
     basicValue: 20,
     costMP: 10,
     attributes: "water",

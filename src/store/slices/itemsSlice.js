@@ -7,16 +7,16 @@ const itemsSlice = createSlice({
     data: [
       {
         name: "補藥",
-        quantity: 3,
+        quantity: 5,
       },
       {
         name: "魔法藥",
-        quantity: 2,
+        quantity: 3,
       },
-      {
-        name: "毒藥",
-        quantity: 2,
-      },
+      // {
+      //   name: "毒藥",
+      //   quantity: 2,
+      // },
     ],
   },
   reducers: {

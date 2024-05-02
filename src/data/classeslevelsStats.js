@@ -14,7 +14,7 @@ const classeslevelsStats = [
           MATK: 1,
           MDEF: 1,
           SPD: index % 3 === 0 ? 1 : 0,
-          expToNextLevel: 100 + index * 50,
+          expToNextLevel: 20 + index * 10,
         };
         return {
           level,
@@ -36,7 +36,7 @@ const classeslevelsStats = [
           MATK: 3,
           MDEF: 3,
           SPD: index % 3 === 0 ? 1 : 0,
-          expToNextLevel: 100 + index * 50,
+          expToNextLevel: 20 + index * 10,
         };
         return {
           level,
