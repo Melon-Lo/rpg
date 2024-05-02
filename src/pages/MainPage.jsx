@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemies, changeChests, changeBoss } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemies, changeChests, changeBoss, addSkill } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -15,6 +15,7 @@ import Button from "../components/Button";
 import enemiesData from "../data/enemies";
 import skills from "../data/skills";
 import classeslevelsStats from "../data/classeslevelsStats";
+import classeslevelsSkills from "../data/classeslevelsSkills";
 import mazes from "../data/mazes";
 
 // utils
@@ -273,10 +274,21 @@ export default function MainPage() {
         // 為了不跟其他彈出視窗衝突，升級提示會稍微晚一點點出現
         setTimeout(() => {
           const updatedLevelStats = levelUp(selfLevel, selfStats, selfClassTitle, classeslevelsStats);
+          const levelsSkills = classeslevelsSkills.find(item => item.classTitle === selfClassTitle).levelsSkills;
+
+          // 提升到特定等級可以學會特定技能
+          const newSkill = levelsSkills.find(item => item.level === updatedLevelStats.level)?.skill;
+          let getNewSkillText = '';
+          if (newSkill) {
+            dispatch(addSkill(newSkill));
+            getNewSkillText = `習得技能：${newSkill}`
+          }
+
+          // 變更狀態
           dispatch(changeCharacterStats(updatedLevelStats));
           dispatch(addMessage({
             type: 'system',
-            content: `等級提升！HP 和 MP 恢復至全滿！`
+            content: `等級提升！HP 和 MP 恢復至全滿！${getNewSkillText}`
           }));
 
           Swal.fire({
@@ -290,6 +302,7 @@ export default function MainPage() {
                 <h5>魔法攻擊力：${selfMATK} -> ${updatedLevelStats.MATK}</h5>
                 <h5>魔法防禦力：${selfMDEF} -> ${updatedLevelStats.MDEF}</h5>
                 <h5>速度：${selfSPD} -> ${updatedLevelStats.SPD}</h5>
+                <h5>${getNewSkillText}</h5>
               <div>
             `,
             icon: 'success',

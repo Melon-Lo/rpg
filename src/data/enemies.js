@@ -16,7 +16,7 @@ const enemies = [
       MDEF: 2,
       SPD: 1,
     },
-    exp: 10,
+    exp: 60,
     money: 10,
     loot: [
       {
@@ -65,7 +65,7 @@ const enemies = [
       MDEF: 2,
       SPD: 4,
     },
-    exp: 100,
+    exp: 200,
     money: 100,
     loot: [
       {
