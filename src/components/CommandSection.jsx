@@ -1,7 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeExecutingCommand, changeTurn, changeInBattle } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -14,6 +14,7 @@ import NextButton from "./NextButton";
 import DiscoverButton from "./DiscoverButton";
 import HotelButton from "./HotelButton";
 import AttackButton from "./AttackButton";
+import EscapeButton from "./EscapeButton";
 
 // data
 import commands from "../data/commands";
@@ -261,51 +262,6 @@ export default function CommandSection({ setShowModal }) {
     )
   });
 
-  // 逃跑按鈕
-  const EscapeButton = () => {
-    const handleEscape = () => {
-      dispatch(addMessage({
-        type: 'basic',
-        content: `逃跑中⋯⋯`
-      }));
-      dispatch(changeExecutingCommand(true));
-
-      // 等待 1.5s
-      setTimeout(() => {
-        // 逃跑成功機率 50%
-        const escapeSuccess = Math.random() > 0.5;
-
-        // 逃跑成功
-        if (escapeSuccess) {
-          dispatch(addMessage({
-            type: 'success',
-            content: '成功逃跑了！'
-          }));
-
-          // 回到非戰鬥狀態
-          dispatch(changeInBattle(false));
-          dispatch(changeExecutingCommand(false));
-          dispatch(changeTurn(''));
-        // 逃跑失敗
-        } else {
-          dispatch(addMessage({
-            type: 'basic',
-            content: '逃跑失敗⋯⋯'
-          }));
-          dispatch(changeExecutingCommand(false));
-          dispatch(changeTurn('enemy'));
-        }
-
-        // 無論如何都回到主頁
-        setCurrentStep('主頁');
-      }, 1500);
-    };
-
-    return (
-      <Button onClick={handleEscape} gray>確定逃跑</Button>
-    );
-  };
-
   return (
     <section id="command-section" className="w-11/12 bg-orange-100 rounded-md my-1">
       {/* 上方 */}
@@ -367,7 +323,7 @@ export default function CommandSection({ setShowModal }) {
         { currentStep === '攻擊' && !executingCommand && <AttackButton setCurrentStep={setCurrentStep} /> }
 
         {/* 確定「逃跑」 */}
-        { currentStep === '逃跑' && !executingCommand && <EscapeButton /> }
+        { currentStep === '逃跑' && !executingCommand && <EscapeButton setCurrentStep={setCurrentStep} /> }
       </div>
     </section>
   );
