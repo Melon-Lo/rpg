@@ -7,7 +7,7 @@ export default function StatusSection() {
   const { money } = useSelector(state => state.items);
 
   return (
-    <section className="w-11/12 flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded my-1">
+    <section id="status-section" className="w-11/12 flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded my-1">
       <div className="flex justify-between items-center w-full">
         <div className="w-4/12">
           <div>
@@ -31,7 +31,7 @@ export default function StatusSection() {
           <div className="bg-yellow-300 rounded-full p-1">
             <RiCoinsLine />
           </div>
-          <div className="mx-4">
+          <div className="mx-2 text-lg">
             {money}
           </div>
         </div>

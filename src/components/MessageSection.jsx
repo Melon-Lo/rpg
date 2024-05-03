@@ -36,7 +36,7 @@ export default function MessageSection() {
   });
 
   return (
-    <div className="w-11/12 h-16 bg-slate-200 rounded-md overflow-y-scroll my-1 px-2 py-1">
+    <div id="message-section" className="w-11/12 h-16 bg-slate-200 rounded-md overflow-y-scroll my-1 px-2 py-1">
       {renderedMessages}
     </div>
   );

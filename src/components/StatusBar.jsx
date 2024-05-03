@@ -12,7 +12,7 @@ export default function StatusBar({ type, color, currentValue, maxValue, selfSta
   const barStyle = selfStatus ? 'w-5/12 md:w-7/12' : 'w-full';
 
   return (
-    <div className="flex justify-between items-center py-2">
+    <div className="flex justify-between items-center py-1">
       { selfStatus && <ValueNumbers /> }
       {/* 灰色背景 */}
       <div className={`${barStyle} bg-gray-300 rounded-md relative overflow-hidden h-4`}>

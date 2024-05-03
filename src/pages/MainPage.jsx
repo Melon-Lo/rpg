@@ -313,10 +313,10 @@ export default function MainPage() {
   }, [dispatch, selfEXP, selfEXPtoNextLevel, selfStats, selfClassTitle, selfLevel, selfATK, selfDEF, selfMATK, selfMDEF, selfSPD, selfMaxHP, selfMaxMP])
 
   return (
-    <div className="flex flex-col items-center">
-      <StatusSection />
+    <div id="main-page" className="flex flex-col items-center">
       <ScreenSection />
       <MessageSection />
+      <StatusSection />
       <CommandSection />
 
       {/* DEV ONLY */}

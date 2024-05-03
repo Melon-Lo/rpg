@@ -37,7 +37,7 @@ export default function ScreenSection() {
   }, [inBattle, currentEnemyName, dispatch]);
 
   return (
-    <section className="relative w-full h-48 flex justify-center my-1">
+    <section id="screen-section" className="relative w-full h-48 flex justify-center my-1">
       <div className="relative w-11/12 h-full rounded-md overflow-hidden">
 
         {/* 如果在迷宮中，不顯示當前地點 */}

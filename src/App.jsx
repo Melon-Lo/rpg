@@ -1,3 +1,4 @@
+import './App.scss';
 import Header from "./components/Header";
 import MainPage from "./pages/MainPage";
 import CreatePage from "./pages/CreatePage";
@@ -11,7 +12,7 @@ export default function App () {
     <div>
       <BrowserRouter basename={basename}>
         <Header />
-        <div className="mt-20">
+        <div className="mt-16 w-screen flex justify-center">
             <Routes>
               <Route path="/" element={<MainPage />}></Route>
               <Route path="create" element={<CreatePage />}></Route>

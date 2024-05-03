@@ -296,7 +296,7 @@ export default function CommandSection() {
   };
 
   return (
-    <section className="w-11/12 bg-orange-100 rounded-md my-1">
+    <section id="command-section" className="w-11/12 bg-orange-100 rounded-md my-1">
       {/* 上方 */}
       <div className="flex justify-between p-2">
         {/* 文字敘述 */}
