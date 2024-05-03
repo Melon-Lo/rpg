@@ -119,16 +119,16 @@ export default function CreatePage() {
   });
 
   return (
-    <div className="flex flex-col items-center py-3">
+    <div className="flex flex-col items-center py-3 mb-3 border-2 border-gray-300 min-w-[325px] w-10/12 max-w-[768px] rounded-lg">
       <div className="text-center">
-        <h1 className="text-4xl">歡迎來到好玩的RPG！</h1>
+        <h1 className="text-3xl p-3">歡迎來到好玩的RPG！</h1>
         <h3 className="text-lg text-gray-600 mt-3">在此建立你的角色</h3>
       </div>
       <form className="mt-10 w-full flex flex-col items-center" onSubmit={handleSubmit}>
         {/* 輸入名字 */}
         <div className="flex flex-col items-start text-lg w-full py-2 px-5">
           <h2 className="m-3 font-bold text-2xl">【名字】</h2>
-          <input onChange={handleInputChange} value={name} className="p-3 w-80" type="text" placeholder="輸入角色名（10個字以內）" />
+          <input onChange={handleInputChange} value={name} className="p-3 w-full" type="text" placeholder="輸入角色名（10個字以內）" />
         </div>
         {/* 選擇職業 */}
         <div className="flex flex-col items-start text-lg w-full py-2 px-5">

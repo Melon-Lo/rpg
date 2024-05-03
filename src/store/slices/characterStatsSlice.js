@@ -37,7 +37,7 @@ const characterStats = createSlice({
     SPD: 3,
     exp: 0,
     expToNextLevel: 20,
-    skills: [],
+    skills: ["火焰"],
   },
   reducers: {
     changeStatName(state, action) {
