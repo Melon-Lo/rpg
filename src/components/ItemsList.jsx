@@ -77,7 +77,7 @@ export default function ItemsList({ setCurrentStep }) {
 
   return (
     <div className="w-full flex flex-wrap bg-slate-50/75 p-3">
-      {renderedItems}
+      {renderedItems.length > 0 ? renderedItems : '目前沒有任何物品'}
     </div>
   );
 };

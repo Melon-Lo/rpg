@@ -313,7 +313,7 @@ export default function MainPage() {
   }, [dispatch, selfEXP, selfEXPtoNextLevel, selfStats, selfClassTitle, selfLevel, selfATK, selfDEF, selfMATK, selfMDEF, selfSPD, selfMaxHP, selfMaxMP])
 
   return (
-    <div id="main-page" className="flex flex-col items-center">
+    <div id="main-page" className="flex flex-col items-center w-full">
       <ScreenSection />
       <MessageSection />
       <StatusSection />

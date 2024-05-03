@@ -119,7 +119,7 @@ export default function SkillsList({ setCurrentStep }) {
 
   return (
     <div className="w-full flex flex-wrap bg-slate-50/75 p-3">
-      {renderedSkills}
+      {renderedSkills.length > 0 ? renderedSkills : '目前沒有任何技能'}
     </div>
   );
 };
