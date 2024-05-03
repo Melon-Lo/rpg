@@ -35,8 +35,7 @@ export default function CommandSection({ setShowModal }) {
   const hasNPC = scenes.find(scene => scene.name === currentScene).characters.length > 0;
 
   // 戰鬥相關變數
-  const { inBattle } = useSelector(state => state.battle);
-  const { turn, executingCommand } = useSelector(state => state.battle);
+  const { inBattle, turn, executingCommand } = useSelector(state => state.battle);
   const { isBoss } = useSelector(state => state.enemies);
 
   // 迷宮相關變數
@@ -85,6 +84,12 @@ export default function CommandSection({ setShowModal }) {
         return
       } else if (currentStep === '探索') {
         setTextContent('選擇探索方向');
+        return
+      } else if (currentStep === '旅館') {
+        setTextContent('休息是為了走更長的路');
+        return
+      } else if (currentStep === '商店') {
+        setTextContent('努力賺錢是為了快樂花錢');
         return
       } else if (currentStep === 'talking') {
         setTextContent('對談中⋯⋯');

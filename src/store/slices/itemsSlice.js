@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const itemsSlice = createSlice({
   name: "items",
   initialState: {
-    money: 10000,
+    money: 50,
     data: [
       {
         name: "補藥",
-        quantity: 5,
+        quantity: 3,
       },
       {
         name: "魔法藥",

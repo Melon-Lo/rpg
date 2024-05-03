@@ -9,16 +9,16 @@ import { changePlayerPosition, addMessage, changeChests, changeItem } from "../s
 
 const moves = [
   {
+    direction: 'left',
+    img: FaArrowLeft,
+  },
+  {
     direction: 'up',
     img: FaArrowUp,
   },
   {
     direction: 'down',
     img: FaArrowDown,
-  },
-  {
-    direction: 'left',
-    img: FaArrowLeft,
   },
   {
     direction: 'right',

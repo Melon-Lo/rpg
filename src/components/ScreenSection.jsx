@@ -53,7 +53,7 @@ export default function ScreenSection() {
           {/* 根據戰鬥狀態決定顯示內容 */}
           <div className="absolute inset-0">
             {/* 對話中，且非戰鬥狀態時，顯示NPC */}
-            { currentNPCImgSrc && !inBattle &&
+            { currentNPCImgSrc && !inBattle && !inMaze &&
               <img className="w-full h-full object-contain" src={currentNPCImgSrc} alt="npc-img" />
             }
 

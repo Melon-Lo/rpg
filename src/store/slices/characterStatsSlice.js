@@ -37,7 +37,7 @@ const characterStats = createSlice({
     SPD: 3,
     exp: 0,
     expToNextLevel: 20,
-    skills: ["水花"],
+    skills: [],
   },
   reducers: {
     changeStatName(state, action) {
@@ -75,6 +75,7 @@ const characterStats = createSlice({
         (item) => item.classTitle === state.classTitle
       );
       const currentClassTitleInitialStats = currentClassTitle.initialStats;
+      const currentClassTitleInitialSkills = currentClassTitle.initialSkills;
 
       function getRandomStat(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -107,6 +108,7 @@ const characterStats = createSlice({
       state.maxMP = currentClassTitleInitialStats.maxMP;
       state.MP = currentClassTitleInitialStats.maxMP;
       state.level = 1;
+      state.skills = currentClassTitleInitialSkills;
 
       // 確保總和為 35
       let total = state.ATK + state.DEF + state.MATK + state.MDEF + state.SPD;
@@ -166,6 +168,7 @@ const characterStats = createSlice({
         SPD,
         exp,
         expToNextLevel,
+        skills,
       } = action.payload;
       state.level = level;
       state.HP = HP;
@@ -179,6 +182,7 @@ const characterStats = createSlice({
       state.SPD = SPD;
       state.exp = exp;
       state.expToNextLevel = expToNextLevel;
+      state.skills = skills;
     },
   },
 });

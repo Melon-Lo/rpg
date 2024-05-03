@@ -325,12 +325,12 @@ export default function MainPage() {
       {showModal && <ShopModal setShowModal={setShowModal} />}
 
       {/* DEV ONLY */}
-      <Button blue onClick={handleShowEnemy}>
+      {/* <Button blue onClick={handleShowEnemy}>
         出現蝙蝠
-      </Button>
+      </Button> */}
 
       {/* DEV ONLY */}
-      <Button blue onClick={() => navigate('create')}>to create</Button>
+      {/* <Button blue onClick={() => navigate('create')}>to create</Button> */}
 
       {/* DEV ONLY */}
       {/* <Button blue onClick={() => dispatch(changeItem({
@@ -341,7 +341,7 @@ export default function MainPage() {
       </Button> */}
 
       {/* DEV ONLY */}
-      <Button blue onClick={() => {
+      {/* <Button blue onClick={() => {
         const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === '洞穴');
         const boss = mazes.find(maze => maze.mazeName === '洞穴').boss;
         dispatch(changeInMaze(true));
@@ -352,7 +352,7 @@ export default function MainPage() {
         dispatch(changeBoss(boss));
       }}>
         進入洞穴迷宮
-      </Button>
+      </Button> */}
 
     </div>
   );

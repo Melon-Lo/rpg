@@ -10,9 +10,9 @@ const enemies = [
     stats: {
       HP: 30,
       maxHP: 30,
-      ATK: 8,
+      ATK: 10,
       DEF: 1,
-      MATK: 8,
+      MATK: 10,
       MDEF: 1,
       SPD: 2,
     },
@@ -54,14 +54,14 @@ const enemies = [
     stats: {
       HP: 150,
       maxHP: 150,
-      ATK: 20,
-      DEF: 5,
-      MATK: 20,
-      MDEF: 5,
+      ATK: 18,
+      DEF: 3,
+      MATK: 15,
+      MDEF: 3,
       SPD: 3,
     },
-    exp: 80,
-    money: 100,
+    exp: 50,
+    money: 80,
     loot: [
       {
         name: "魔法藥",

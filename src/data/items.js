@@ -32,7 +32,7 @@ const items = [
   {
     name: "究極補藥",
     type: "healHP",
-    description: "有起死回生之效果",
+    description: "有起死回生之效果，極難取得。",
     effectDescription: "恢復 HP 999 點",
     effectMessage: "HP 恢復了 999 點",
     effect: (hp) => {
@@ -52,7 +52,7 @@ const items = [
   {
     name: "高等魔法藥",
     type: "healMP",
-    description: "高等魔法師愛用",
+    description: "高等魔法師愛用，沒個幾罐都不敢講自己會魔法。",
     effectDescription: "恢復 MP 100 點",
     effectMessage: "MP 恢復了 100 點",
     effect: (mp) => {
@@ -62,7 +62,7 @@ const items = [
   {
     name: "究極魔法藥",
     type: "healMP",
-    description: "使用後全身充滿魔力。",
+    description: "使用後全身充滿魔力，可謂神藥。",
     effectDescription: "恢復 MP 300 點",
     effectMessage: "MP 恢復了 300 點",
     effect: (mp) => {
