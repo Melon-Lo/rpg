@@ -1,0 +1,37 @@
+@media (min-width: 768px) {
+  #main-page,
+  #screen-section,
+  #message-section,
+  #status-section,
+  #command-section {
+    margin: 0;
+    padding: 0;
+  }
+  #main-page {
+    height: 80vh;
+    max-width: 1024px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr auto 1fr;
+    gap: 10px;
+    grid-template-areas: "screen message" "screen message" "screen status" "screen command";
+  }
+  #main-page #screen-section {
+    grid-area: screen;
+    height: 100%;
+  }
+  #main-page #message-section {
+    grid-area: message;
+    height: 100%;
+    padding: 15px;
+  }
+  #main-page #status-section {
+    grid-area: status;
+    padding: 10px;
+  }
+  #main-page #command-section {
+    grid-area: command;
+    height: 100%;
+    padding: 10px;
+  }
+}/*# sourceMappingURL=App.css.map */
