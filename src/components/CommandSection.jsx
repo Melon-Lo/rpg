@@ -19,7 +19,7 @@ import AttackButton from "./AttackButton";
 import commands from "../data/commands";
 import scenes from "../data/scenes";
 
-export default function CommandSection() {
+export default function CommandSection({ setShowModal }) {
   const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
@@ -229,6 +229,17 @@ export default function CommandSection() {
     )
   })
 
+  // 商店按鈕
+  const ShopButton = () => {
+    const handleClick = () => {
+      setShowModal(true);
+    }
+
+    return (
+      <Button onClick={handleClick} amber>進入商店</Button>
+    )
+  }
+
   // --------------------------------------------
   // 戰鬥狀態（battleTime 為真時）
   // --------------------------------------------
@@ -345,6 +356,9 @@ export default function CommandSection() {
 
         {/* 旅館 */}
         { currentStep === '旅館' && !executingCommand && <HotelButton setCurrentStep={setCurrentStep} /> }
+
+        {/* 旅館 */}
+        { currentStep === '商店' && !executingCommand && <ShopButton setShowModal={setShowModal} /> }
 
         {/* 主頁：戰鬥指令 */}
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }

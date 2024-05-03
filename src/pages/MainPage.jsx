@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemies, changeChests, changeBoss, addSkill } from "../store";
 import Swal from "sweetalert2";
 
@@ -10,6 +10,7 @@ import ScreenSection from "../components/ScreenSection";
 import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
 import Button from "../components/Button";
+import ShopModal from "../components/ShopModal";
 
 // data
 import enemiesData from "../data/enemies";
@@ -29,6 +30,9 @@ export default function MainPage() {
   const navigate = useNavigate();
 
   const { roleCreated } = useSelector(state => state.systemStatus);
+
+  // ShopModal
+  const [showModal, setShowModal] = useState(false);
 
   // 戰鬥相關數據
   const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
@@ -135,7 +139,7 @@ export default function MainPage() {
           setTimeout(() => {
             dispatch(addMessage({
               type: 'basic',
-              content: `${enemyName}發動了${skillName}！`
+              content: `${enemyName}施展了${skillName}！`
             }))
           }, 1500)
 
@@ -317,7 +321,8 @@ export default function MainPage() {
       <ScreenSection />
       <MessageSection />
       <StatusSection />
-      <CommandSection />
+      <CommandSection setShowModal={setShowModal} />
+      {showModal && <ShopModal setShowModal={setShowModal} />}
 
       {/* DEV ONLY */}
       <Button blue onClick={handleShowEnemy}>
