@@ -42,11 +42,12 @@ export default function ProgressModal({ setShowModal }) {
           currentTime={data.currentTime.currentTime}
           currentScene={data.systemStatus.currentScene}
           money={data.items.money}
+          setShowModal={setShowModal}
         />
       );
     } else {
       // 如果 allProgressData 中缺少該項，則返回一個占位元素
-      return <ProgressItem key={index} index={index + 1} />;
+      return <ProgressItem key={index} index={index + 1} setShowModal={setShowModal} />;
     }
   });
 

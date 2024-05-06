@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 export default function ProgressItem({
   index,
@@ -8,6 +9,7 @@ export default function ProgressItem({
   level,
   currentScene,
   money,
+  setShowModal,
 }) {
 
   // 取得現在所有的資料
@@ -16,20 +18,42 @@ export default function ProgressItem({
   const { currentScene: scene } = useSelector(state => state.systemStatus);
 
   const handleSave = () => {
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const date = currentDate.getDate();
-    const hours = currentDate.getHours();
-    const minutes = currentDate.getMinutes();
-    const currentTime = `${year}/${month}/${date} ${hours}:${minutes}`
-    const progressData = {
-      characterStats: { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills },
-      items: { money: currentMoney, data },
-      systemStatus: { currentScene: scene },
-      currentTime: { currentTime },
-    };
-    localStorage.setItem(`progressData${index}`, JSON.stringify(progressData));
+    Swal.fire({
+      title: `確定要覆蓋此進度嗎？`,
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const date = currentDate.getDate();
+        const hours = currentDate.getHours();
+        const minutes = currentDate.getMinutes();
+        const currentTime = `${year}/${month}/${date} ${hours}:${minutes}`
+        const progressData = {
+          characterStats: { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills },
+          items: { money: currentMoney, data },
+          systemStatus: { currentScene: scene },
+          currentTime: { currentTime },
+        };
+        localStorage.setItem(`progressData${index}`, JSON.stringify(progressData));
+
+          // 存檔完馬上跳出提示，趁機更新數據
+          setShowModal('');
+          setTimeout(() => {
+            setShowModal('progress');
+          }, 1)
+
+          Swal.fire({
+            title: '存檔成功！',
+            icon: 'success',
+          })
+        }
+      })
   };
 
   return (
