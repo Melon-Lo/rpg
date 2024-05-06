@@ -154,6 +154,9 @@ const characterStats = createSlice({
     addSkill(state, action) {
       state.skills = [...state.skills, action.payload];
     },
+    changeSkills(state, action) {
+      state.skills = action.payload;
+    },
     changeCharacterStats(state, action) {
       const {
         level,
@@ -194,6 +197,7 @@ export const {
   changeMP,
   changeEXP,
   addSkill,
+  changeSkills,
   changeCharacterStats,
 } = characterStats.actions;
 export const characterStatsReducer = characterStats.reducer;

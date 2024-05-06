@@ -1,14 +1,14 @@
 import { RxCross1 } from "react-icons/rx";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 
 import ProgressItem from "./ProgressItem";
 
 export default function ProgressModal({ setShowModal }) {
   const [type, setType] = useState('save');
   const titleText = type === 'save' ? '儲存進度' : '讀取進度';
-  const typeStyle = 'mx-3 px-3 py-2 text-rose-800 cursor-pointer '
-  const selectedStyle = 'bg-rose-800 text-slate-100 rounded-md';
+  const typeColor = type === 'save' ? 'rose' : 'sky'
+  const typeStyle = `mx-3 px-3 py-2 text-${typeColor}-800 cursor-pointer `
+  const selectedStyle = `bg-${typeColor}-800 text-slate-100 rounded-md`;
 
   // 創建一個空陣列來存儲所有的進度數據
   let allProgressData = [];
@@ -43,22 +43,24 @@ export default function ProgressModal({ setShowModal }) {
           currentScene={data.systemStatus.currentScene}
           money={data.items.money}
           setShowModal={setShowModal}
+          type={type}
+          typeColor={typeColor}
         />
       );
     } else {
       // 如果 allProgressData 中缺少該項，則返回一個占位元素
-      return <ProgressItem key={index} index={index + 1} setShowModal={setShowModal} />;
+      return <ProgressItem key={index} index={index + 1} setShowModal={setShowModal} type={type} typeColor={typeColor} />;
     }
   });
 
   return (
     <div className="fixed bg-gray-800/75 inset-0 z-10">
       <div className="relative w-full h-full">
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-rose-200 w-10/12 h-2/3 rounded-lg">
+        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-2/3 rounded-lg`}>
           <div className="relative flex flex-col justify-center items-center py-3">
             <h1 className="text-3xl text-gray-800">{titleText}</h1>
             <div onClick={handleCloseModal} className="absolute top-2 right-2">
-              <RxCross1 className="text-2xl text-rose-900" />
+              <RxCross1 className={`text-2xl text-${typeColor}-900`} />
             </div>
           </div>
           <div className="text-center my-3 text-lg">

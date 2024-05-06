@@ -14,6 +14,7 @@ import {
   changeMP,
   changeEXP,
   addSkill,
+  changeSkills,
   changeCharacterStats,
 } from "./slices/characterStatsSlice";
 
@@ -21,6 +22,7 @@ import {
 import {
   itemsSliceReducer,
   changeItem,
+  changeItems,
   changeMoney,
 } from "./slices/itemsSlice";
 
@@ -92,6 +94,7 @@ export {
   changeMP,
   changeEXP,
   addSkill,
+  changeSkills,
   changeCharacterStats,
 
   // systemStatus
@@ -101,6 +104,7 @@ export {
 
   // items
   changeItem,
+  changeItems,
   changeMoney,
 
   // messages,
