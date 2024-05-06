@@ -345,7 +345,7 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         { currentStep === '旅館' && !executingCommand && <HotelButton setCurrentStep={setCurrentStep} /> }
 
         {/* 旅館 */}
-        { currentStep === '商店' && !executingCommand && <ShopButton setShowModal={setShowModal} /> }
+        { currentStep === '商店' && !executingCommand && <ShopButton /> }
 
         {/* 主頁：戰鬥指令 */}
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }

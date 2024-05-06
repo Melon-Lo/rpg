@@ -327,9 +327,9 @@ export default function MainPage() {
       <ScreenSection />
       <MessageSection />
       <StatusSection />
-      <CommandSection currentStep={currentStep} setCurrentStep={setCurrentStep} setShowModal={setShowModal} />
-      {showModal === 'shop' && <ShopModal setShowModal={setShowModal} setCurrentStep={setCurrentStep} />}
-      {showModal === 'progress' && <ProgressModal setShowModal={setShowModal} setCurrentStep={setCurrentStep} />}
+      <CommandSection currentStep={currentStep} setCurrentStep={setCurrentStep} />
+      {showModal === 'shop' && <ShopModal setCurrentStep={setCurrentStep} />}
+      {showModal === 'progress' && <ProgressModal setCurrentStep={setCurrentStep} />}
 
       {/* DEV ONLY */}
       <Button blue onClick={handleShowEnemy}>

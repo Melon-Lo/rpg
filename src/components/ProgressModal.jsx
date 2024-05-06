@@ -44,7 +44,6 @@ export default function ProgressModal({ setCurrentStep }) {
           currentTime={data.currentTime.currentTime}
           currentScene={data.systemStatus.currentScene}
           money={data.items.money}
-          setShowModal={setShowModal}
           type={type}
           typeColor={typeColor}
           setCurrentStep={setCurrentStep}
@@ -52,7 +51,7 @@ export default function ProgressModal({ setCurrentStep }) {
       );
     } else {
       // 如果 allProgressData 中缺少該項，則返回一個占位元素
-      return <ProgressItem key={index} index={index + 1} setShowModal={setShowModal} type={type} typeColor={typeColor} />;
+      return <ProgressItem key={index} index={index + 1} type={type} typeColor={typeColor} />;
     }
   });
 
