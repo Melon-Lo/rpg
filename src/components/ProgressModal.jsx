@@ -1,14 +1,16 @@
 import { RxCross1 } from "react-icons/rx";
-import { useState } from "react";
-
+import { useState, useContext } from "react";
 import ProgressItem from "./ProgressItem";
+import { ModalContext } from "../contexts/modal";
 
-export default function ProgressModal({ setShowModal, setCurrentStep }) {
+export default function ProgressModal({ setCurrentStep }) {
   const [type, setType] = useState('save');
   const titleText = type === 'save' ? '儲存進度' : '讀取進度';
   const typeColor = type === 'save' ? 'rose' : 'sky'
   const typeStyle = `mx-3 px-3 py-2 text-${typeColor}-800 cursor-pointer `
   const selectedStyle = `bg-${typeColor}-800 text-slate-100 rounded-md`;
+
+  const { setShowModal } = useContext(ModalContext);
 
   // 創建一個空陣列來存儲所有的進度數據
   let allProgressData = [];

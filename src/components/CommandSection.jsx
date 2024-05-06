@@ -1,6 +1,6 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
 
 // components
@@ -21,10 +21,14 @@ import commands from "../data/commands";
 import scenes from "../data/scenes";
 import systemButtons from "../data/systemButtons";
 
-export default function CommandSection({ setShowModal, currentStep, setCurrentStep }) {
+// contexts
+import { ModalContext } from "../contexts/modal";
+
+export default function CommandSection({ currentStep, setCurrentStep }) {
   const dispatch = useDispatch();
   const [textContent, setTextContent] = useState('想做什麼呢？');
   const selfName = useSelector(state => state.characterStats.name);
+  const { setShowModal } = useContext(ModalContext);
 
   // 對話相關變數
   const [sentence, setSentence] = useState(0);

@@ -1,6 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
 import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney } from "../store";
 import Swal from "sweetalert2";
+import { ModalContext } from "../contexts/modal";
+import { useContext } from "react";
 
 export default function ProgressItem({
   index,
@@ -10,7 +12,6 @@ export default function ProgressItem({
   level,
   currentScene,
   money,
-  setShowModal,
   type,
   typeColor,
   setCurrentStep,
@@ -21,6 +22,8 @@ export default function ProgressItem({
   const { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills } = useSelector(state => state.characterStats);
   const { money: currentMoney, data } = useSelector(state => state.items);
   const { currentScene: scene } = useSelector(state => state.systemStatus);
+
+  const { setShowModal } = useContext(ModalContext);
 
   const handleClick = () => {
     if (type === 'save') {

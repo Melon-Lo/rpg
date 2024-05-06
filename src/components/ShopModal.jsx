@@ -3,17 +3,20 @@ import ShopItem from "./ShopItem";
 import { RxCross1 } from "react-icons/rx";
 import shopsItems from "../data/shopsItems";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { changeItem, changeMoney } from "../store";
+import { ModalContext } from "../contexts/modal";
 
-export default function ShopModal({ setShowModal, setCurrentStep }) {
+export default function ShopModal({ setCurrentStep }) {
   const dispatch = useDispatch();
   const { currentScene } = useSelector(state => state.systemStatus);
   const { money } = useSelector(state => state.items);
   const currentShopItems = shopsItems.find(shop => shop.shop === currentScene).items;
   const [total, setTotal] = useState(0);
   const [shoppingCart, setShoppingCart] = useState([]);
+
+  const { setShowModal } = useContext(ModalContext);
 
   const handleCloseModal = () => {
     setShowModal('');

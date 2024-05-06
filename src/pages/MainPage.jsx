@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemies, changeChests, changeBoss, addSkill } from "../store";
 import Swal from "sweetalert2";
 
@@ -25,6 +25,9 @@ import decideDamage from "../utils/battle/decideDamage";
 import getRandomLoot from "../utils/battle/getRandomLoot";
 import levelUp from "../utils/characterStats/levelUp";
 
+// contexts
+import { ModalContext } from "../contexts/modal";
+
 export default function MainPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,7 +38,7 @@ export default function MainPage() {
   const [currentStep, setCurrentStep] = useState('主頁');
 
   // modal
-  const [showModal, setShowModal] = useState('');
+  const { showModal, setShowModal } = useContext(ModalContext);
 
   // 戰鬥相關數據
   const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
