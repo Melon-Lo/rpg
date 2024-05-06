@@ -325,9 +325,9 @@ export default function MainPage() {
       {showModal && <ShopModal setShowModal={setShowModal} />}
 
       {/* DEV ONLY */}
-      {/* <Button blue onClick={handleShowEnemy}>
+      <Button blue onClick={handleShowEnemy}>
         出現蝙蝠
-      </Button> */}
+      </Button>
 
       {/* DEV ONLY */}
       {/* <Button blue onClick={() => navigate('create')}>to create</Button> */}

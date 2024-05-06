@@ -168,7 +168,6 @@ const characterStats = createSlice({
         SPD,
         exp,
         expToNextLevel,
-        skills,
       } = action.payload;
       state.level = level;
       state.HP = HP;
@@ -182,7 +181,6 @@ const characterStats = createSlice({
       state.SPD = SPD;
       state.exp = exp;
       state.expToNextLevel = expToNextLevel;
-      state.skills = skills;
     },
   },
 });

@@ -5,7 +5,10 @@ const classeslevelsSkills = [
   },
   {
     classTitle: "法師",
-    levelsSkills: [{ level: 2, skill: "水花" }],
+    levelsSkills: [
+      { level: 2, skill: "水花" },
+      { level: 4, skill: "熊熊烈火" },
+    ],
   },
 ];
 
