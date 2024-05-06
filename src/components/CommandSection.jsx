@@ -19,6 +19,7 @@ import EscapeButton from "./EscapeButton";
 // data
 import commands from "../data/commands";
 import scenes from "../data/scenes";
+import systemButtons from "../data/systemButtons";
 
 export default function CommandSection({ setShowModal }) {
   const dispatch = useDispatch();
@@ -84,6 +85,9 @@ export default function CommandSection({ setShowModal }) {
         return
       } else if (currentStep === '探索') {
         setTextContent('選擇探索方向');
+        return
+      } else if (currentStep === '系統') {
+        setTextContent('隨時存檔保心安');
         return
       } else if (currentStep === '旅館') {
         setTextContent('休息是為了走更長的路');
@@ -235,10 +239,23 @@ export default function CommandSection({ setShowModal }) {
     )
   })
 
+  // 系統指令們
+  const renderedSystemButtons = systemButtons.map(button => {
+    const handleClick = () => {
+      if (button === '存取進度') {
+        setShowModal('progress');
+      };
+    };
+
+    return (
+      <Button onClick={handleClick} className="mx-1" rose key={button}>{button}</Button>
+    );
+  });
+
   // 商店按鈕
   const ShopButton = () => {
     const handleClick = () => {
-      setShowModal(true);
+      setShowModal('shop');
     }
 
     return (
@@ -314,6 +331,9 @@ export default function CommandSection({ setShowModal }) {
 
         {/* 探險 */}
         { currentStep === '探險' && <DiscoverButton setCurrentStep={setCurrentStep} /> }
+
+        {/* 系統 */}
+        { currentStep === '系統' && !executingCommand && renderedSystemButtons }
 
         {/* 旅館 */}
         { currentStep === '旅館' && !executingCommand && <HotelButton setCurrentStep={setCurrentStep} /> }

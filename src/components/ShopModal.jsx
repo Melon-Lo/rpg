@@ -16,7 +16,7 @@ export default function ShopModal({ setShowModal }) {
   const [shoppingCart, setShoppingCart] = useState([]);
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setShowModal('');
   };
 
   const handleSubmit = () => {
@@ -64,7 +64,7 @@ export default function ShopModal({ setShowModal }) {
 
         // 回歸購買前狀態
         setShoppingCart([]);
-        setShowModal(false);
+        setShowModal('');
       }
     });
   }

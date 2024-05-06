@@ -11,13 +11,13 @@ import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
 import Button from "../components/Button";
 import ShopModal from "../components/ShopModal";
+import ProgressModal from "../components/ProgressModal";
 
 // data
 import enemiesData from "../data/enemies";
 import skills from "../data/skills";
 import classeslevelsStats from "../data/classeslevelsStats";
 import classeslevelsSkills from "../data/classeslevelsSkills";
-import mazes from "../data/mazes";
 
 // utils
 import decideTurnOrder from "../utils/battle/decideTurnOrder";
@@ -32,7 +32,7 @@ export default function MainPage() {
   const { roleCreated } = useSelector(state => state.systemStatus);
 
   // ShopModal
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState('');
 
   // 戰鬥相關數據
   const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
@@ -322,7 +322,8 @@ export default function MainPage() {
       <MessageSection />
       <StatusSection />
       <CommandSection setShowModal={setShowModal} />
-      {showModal && <ShopModal setShowModal={setShowModal} />}
+      {showModal === 'shop' && <ShopModal setShowModal={setShowModal} />}
+      {showModal === 'progress' && <ProgressModal setShowModal={setShowModal} />}
 
       {/* DEV ONLY */}
       <Button blue onClick={handleShowEnemy}>

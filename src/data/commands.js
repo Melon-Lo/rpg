@@ -9,6 +9,7 @@ import { GiMaze } from "react-icons/gi";
 import { FaMagnifyingGlassLocation } from "react-icons/fa6";
 import { FaShop } from "react-icons/fa6";
 import { FaHotel } from "react-icons/fa6";
+import { FaGear } from "react-icons/fa6";
 
 const commands = [
   {
@@ -48,6 +49,11 @@ const commands = [
         command: "探險",
         color: "fuchsia",
         img: FaMagnifyingGlassLocation,
+      },
+      {
+        command: "系統",
+        color: "rose",
+        img: FaGear,
       },
     ],
   },

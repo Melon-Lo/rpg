@@ -1,6 +1,7 @@
 import decideSkillDamage from "../utils/battle/decideSkillDamage";
 
 const skills = [
+  // 火屬性
   {
     name: "火焰",
     basicValue: 15,
@@ -34,6 +35,7 @@ const skills = [
     effectDescription: "火屬性攻擊，傷害高",
     effect: decideSkillDamage,
   },
+  // 水屬性
   {
     name: "水花",
     basicValue: 15,
@@ -67,6 +69,7 @@ const skills = [
     effectMessage: "",
     effect: decideSkillDamage,
   },
+  // 無屬性
   {
     name: "聲波",
     basicValue: 20,
@@ -89,6 +92,7 @@ const skills = [
     effectMessage: "",
     effect: decideSkillDamage,
   },
+  // 治療類
   {
     name: "治療",
     basicValue: 50,
