@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/rpg/static/css/main.5e6f8473.css",
-    "main.js": "/rpg/static/js/main.29bc8208.js",
+    "main.css": "/rpg/static/css/main.6a184990.css",
+    "main.js": "/rpg/static/js/main.2acc84ea.js",
     "static/media/devil.png": "/rpg/static/media/devil.9ed451a0c395d8634b5e.png",
     "static/media/village.jpg": "/rpg/static/media/village.db06608e99adc901c7a6.jpg",
     "static/media/villager.png": "/rpg/static/media/villager.6f3ab21bf531c2957075.png",
@@ -12,11 +12,11 @@
     "static/media/forest.jpg": "/rpg/static/media/forest.c952b66564789aab9b61.jpg",
     "static/media/cave.jpg": "/rpg/static/media/cave.5982dd2b12828047ca7d.jpg",
     "index.html": "/rpg/index.html",
-    "main.5e6f8473.css.map": "/rpg/static/css/main.5e6f8473.css.map",
-    "main.29bc8208.js.map": "/rpg/static/js/main.29bc8208.js.map"
+    "main.6a184990.css.map": "/rpg/static/css/main.6a184990.css.map",
+    "main.2acc84ea.js.map": "/rpg/static/js/main.2acc84ea.js.map"
   },
   "entrypoints": [
-    "static/css/main.5e6f8473.css",
-    "static/js/main.29bc8208.js"
+    "static/css/main.6a184990.css",
+    "static/js/main.2acc84ea.js"
   ]
 }
