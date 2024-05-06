@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import ProgressItem from "./ProgressItem";
 
-export default function ProgressModal({ setShowModal }) {
+export default function ProgressModal({ setShowModal, setCurrentStep }) {
   const [type, setType] = useState('save');
   const titleText = type === 'save' ? '儲存進度' : '讀取進度';
   const typeColor = type === 'save' ? 'rose' : 'sky'
@@ -45,6 +45,7 @@ export default function ProgressModal({ setShowModal }) {
           setShowModal={setShowModal}
           type={type}
           typeColor={typeColor}
+          setCurrentStep={setCurrentStep}
         />
       );
     } else {

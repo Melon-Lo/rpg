@@ -21,9 +21,8 @@ import commands from "../data/commands";
 import scenes from "../data/scenes";
 import systemButtons from "../data/systemButtons";
 
-export default function CommandSection({ setShowModal }) {
+export default function CommandSection({ setShowModal, currentStep, setCurrentStep }) {
   const dispatch = useDispatch();
-  const [currentStep, setCurrentStep] = useState('主頁');
   const [textContent, setTextContent] = useState('想做什麼呢？');
   const selfName = useSelector(state => state.characterStats.name);
 
@@ -134,8 +133,11 @@ export default function CommandSection({ setShowModal }) {
     // 如果此處沒有可交談對象，則不會出現「交談」
     if (!hasNPC && commandItem.command === '交談') return null;
 
-    // 如果已經在迷宮內，則不會出現「探險」
+    // 如果在迷宮內，則不會出現「探險」
     if (inMaze && commandItem.command === '探險') return null;
+
+    // 如果在迷宮內，則不會出現「系統」
+    if (inMaze && commandItem.command === '系統') return null;
 
     // 如果不在迷宮中，則不會出現「探索」
     if (!inMaze && commandItem.command === '探索') return null;

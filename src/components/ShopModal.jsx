@@ -7,7 +7,7 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { changeItem, changeMoney } from "../store";
 
-export default function ShopModal({ setShowModal }) {
+export default function ShopModal({ setShowModal, setCurrentStep }) {
   const dispatch = useDispatch();
   const { currentScene } = useSelector(state => state.systemStatus);
   const { money } = useSelector(state => state.items);
@@ -65,6 +65,7 @@ export default function ShopModal({ setShowModal }) {
         // 回歸購買前狀態
         setShoppingCart([]);
         setShowModal('');
+        setCurrentStep('主頁');
       }
     });
   }

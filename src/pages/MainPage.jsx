@@ -31,7 +31,10 @@ export default function MainPage() {
 
   const { roleCreated } = useSelector(state => state.systemStatus);
 
-  // ShopModal
+  // 目前指令
+  const [currentStep, setCurrentStep] = useState('主頁');
+
+  // modal
   const [showModal, setShowModal] = useState('');
 
   // 戰鬥相關數據
@@ -321,9 +324,9 @@ export default function MainPage() {
       <ScreenSection />
       <MessageSection />
       <StatusSection />
-      <CommandSection setShowModal={setShowModal} />
-      {showModal === 'shop' && <ShopModal setShowModal={setShowModal} />}
-      {showModal === 'progress' && <ProgressModal setShowModal={setShowModal} />}
+      <CommandSection currentStep={currentStep} setCurrentStep={setCurrentStep} setShowModal={setShowModal} />
+      {showModal === 'shop' && <ShopModal setShowModal={setShowModal} setCurrentStep={setCurrentStep} />}
+      {showModal === 'progress' && <ProgressModal setShowModal={setShowModal} setCurrentStep={setCurrentStep} />}
 
       {/* DEV ONLY */}
       <Button blue onClick={handleShowEnemy}>

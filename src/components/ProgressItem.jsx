@@ -13,6 +13,7 @@ export default function ProgressItem({
   setShowModal,
   type,
   typeColor,
+  setCurrentStep,
 }) {
   const dispatch = useDispatch();
 
@@ -97,6 +98,7 @@ export default function ProgressItem({
         dispatch(changeItems(progressData.items.data));
         dispatch(changeMoney(progressData.items.money));
         setShowModal('');
+        setCurrentStep('主頁');
 
         Swal.fire({
           title: '讀取成功！',
