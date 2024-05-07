@@ -19,16 +19,18 @@ export default function ScreenSection() {
 
   const { inMaze } = useSelector(state => state.maze);
 
-  // 是否在戰鬥中的變數
+  // 戰鬥變數
   const { inBattle } = useSelector(state => state.battle);
+  const { isBoss } = useSelector(state => state.enemies);
 
+  // 每當出現敵人時，顯示訊息
   useEffect(() => {
-    // 每當出現敵人時，顯示訊息
     const addEnemyMessage = () => {
       if (inBattle) {
+        const bossText = isBoss ? '此區域大BOSS' : '';
         dispatch(addMessage({
           type: 'basic',
-          content: `${currentEnemyName}出現了！`
+          content: `${bossText}${currentEnemyName}出現了！`
         }));
       }
     }

@@ -66,10 +66,6 @@ export default function MainPage() {
     const { name, img, loot, exp, money, weakness } = currentEnemy;
     const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
     dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
-    dispatch(addMessage({
-      type: 'basic',
-      content: `${name}出現了！`
-    }));
     dispatch(changeInBattle(true));
   };
 

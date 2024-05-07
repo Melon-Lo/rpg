@@ -27,20 +27,16 @@ export default function Maze() {
         const { HP, maxHP, isBoss, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
         dispatch(changeEnemy({ name, img, exp, isBoss, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
-        dispatch(addMessage({
-          type: 'basic',
-          content: `${name}出現了！`
-        }));
         dispatch(changeInBattle(true));
 
         // 同一個地點不會再出現敵人
         const filteredEnemies = enemies.filter(enemy => enemy.position.x !== playerPosition.x && enemy.position.y !== playerPosition.y);
         dispatch(changeEnemies(filteredEnemies));
-      }
+      };
     };
 
     handleEncounter();
-  }, [dispatch, enemies, playerPosition])
+  }, [playerPosition])
 
   // 打王
   useEffect(() => {
@@ -55,10 +51,6 @@ export default function Maze() {
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
         dispatch(changeEnemy({ name, img, isBoss, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
-        dispatch(addMessage({
-          type: 'basic',
-          content: `此區大BOSS ${name} 出現了！`
-        }));
         dispatch(changeInBattle(true));
       }
     };
