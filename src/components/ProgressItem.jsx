@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney } from "../store";
+import { useNavigate } from "react-router-dom";
+import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";
@@ -18,6 +19,7 @@ export default function ProgressItem({
   typeColor,
 }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { setCurrentStep } = useContext(StepContext);
 
   // 取得所有的資料
@@ -102,7 +104,11 @@ export default function ProgressItem({
         dispatch(changeSkills(progressData.characterStats.skills));
         dispatch(changeItems(progressData.items.data));
         dispatch(changeMoney(progressData.items.money));
+
+        // 回到主頁
         setShowModal('');
+        dispatch(changeRoleCreated(true));
+        navigate('/');
         setCurrentStep('主頁');
 
         Swal.fire({
