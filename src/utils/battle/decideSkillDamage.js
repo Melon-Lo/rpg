@@ -1,4 +1,5 @@
-// 決定技能攻擊傷害值
+// 技能攻擊傷害值
+// 傷害值：(基本值 + (魔攻 - 魔防)) * 弱點傷害倍率 * 浮動值
 function decideSkillDamage(
   attackerMATK,
   defenderMDEF,

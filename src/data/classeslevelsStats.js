@@ -7,8 +7,8 @@ const classeslevelsStats = [
       ...Array.from({ length: 20 }, (_, index) => {
         const level = index + 1;
         const baseStats = {
-          maxHP: 22,
-          maxMP: 6,
+          maxHP: 12,
+          maxMP: 8,
           ATK: 3,
           DEF: 3,
           MATK: 1,
@@ -29,8 +29,8 @@ const classeslevelsStats = [
       ...Array.from({ length: 20 }, (_, index) => {
         const level = index + 1;
         const baseStats = {
-          maxHP: 12,
-          maxMP: 12,
+          maxHP: 10,
+          maxMP: 10,
           ATK: 1,
           DEF: 1,
           MATK: 3,
