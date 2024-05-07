@@ -12,6 +12,9 @@ export default function ProgressModal() {
   const typeStyle = `mx-3 px-3 py-2 text-${typeColor}-800 cursor-pointer `
   const selectedStyle = `bg-${typeColor}-800 text-slate-100 rounded-md`;
 
+  // 10 個儲存格
+  const progressItemQuantity = 10;
+
   // LandingPage 相關
   const currentPath = window.location.pathname;
   const isLandingPage = currentPath === '/rpg/landing' || currentPath === '/rpg/landing/';
@@ -23,25 +26,27 @@ export default function ProgressModal() {
     }
   }, [])
 
+  const handleCloseModal = () => {
+    setShowModal('');
+  };
+
   // 創建一個空陣列來存儲所有的進度數據
   let allProgressData = [];
 
   // 循環所有 key，從 localStorage 中取出數據
-  for (let i = 0; i <= 3; i++) {
+  for (let i = 1; i <= progressItemQuantity; i++) {
     const key = `progressData${i}`;
     const data = localStorage.getItem(key);
 
     if (data) {
       const parsedData = JSON.parse(data);
       allProgressData.push(parsedData);
-    }
+    } else {
+      allProgressData.push('');
+    };
   };
 
-  const handleCloseModal = () => {
-    setShowModal('');
-  };
-
-  const renderedProgressItems = Array.from({ length: 3 }, (_, index) => {
+  const renderedProgressItems = Array.from({ length: progressItemQuantity }, (_, index) => {
     const data = allProgressData[index];
 
     if (data) {
@@ -68,7 +73,7 @@ export default function ProgressModal() {
   return (
     <div className="fixed bg-gray-800/75 inset-0 z-10">
       <div className="relative w-full h-full">
-        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-5/6 rounded-lg`}>
+        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-5/6 rounded-lg overflow-y-hidden`}>
           <div className="relative flex flex-col justify-center items-center py-3">
             <h1 className="text-3xl text-gray-800">{titleText}</h1>
             <div onClick={handleCloseModal} className="absolute top-2 right-2">
@@ -92,8 +97,10 @@ export default function ProgressModal() {
               </span>
             </div>
           }
-          <div className="flex flex-col items-center">
-            {renderedProgressItems}
+          <div className="h-5/6 pb-5 overflow-y-scroll">
+            <div className="flex flex-col items-center">
+              {renderedProgressItems}
+            </div>
           </div>
         </div>
       </div>

@@ -3,18 +3,32 @@ import Button from "../components/Button";
 import ProgressModal from "../components/ProgressModal";
 import { ModalContext } from "../contexts/modal";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const { showModal, setShowModal } = useContext(ModalContext);
 
   const handleGoCreatePage = () => {
-    navigate('create');
-  }
+    Swal.fire({
+      title: `確定要開啟新遊戲嗎？`,
+      text: '即將開始創建角色',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('create');
+      };
+    });
+  };
 
   const handleShowProgressModal = () => {
     setShowModal('progress');
-  }
+  };
 
   return (
     <div className="flex flex-col items-center">
@@ -25,5 +39,5 @@ export default function LandingPage() {
       </div>
       {showModal && <ProgressModal />}
     </div>
-  )
-}
+  );
+};

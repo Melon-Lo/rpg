@@ -85,8 +85,8 @@ export default function ShopModal() {
   return (
       <div className="fixed bg-gray-800/75 inset-0 z-10">
         <div className="relative w-full h-full">
-          <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-amber-200 w-10/12 h-2/3 rounded-lg">
-            <div className="relative h-1/6 flex flex-col justify-center items-center py-1">
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-amber-200 w-10/12 h-5/6 rounded-lg">
+            <div className="h-1/6 relative flex flex-col justify-center items-center py-1">
               <h1 className="text-3xl text-amber-900">商店</h1>
               <h2 className="text-amber-800">＊點擊商品可以查看效果</h2>
               <div className="absolute top-2 right-2" onClick={handleCloseModal}>

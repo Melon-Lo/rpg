@@ -49,10 +49,13 @@ export default function ProgressItem({
       if (result.isConfirmed) {
         const currentDate = new Date();
         const year = currentDate.getFullYear();
-        const month = currentDate.getMonth();
+        // 0 是 一月
+        const month = currentDate.getMonth() + 1;
         const date = currentDate.getDate();
         const hours = currentDate.getHours();
-        const minutes = currentDate.getMinutes();
+        // 「分」如果小於 10，前面要加 0
+        let minutes = currentDate.getMinutes();
+        minutes = minutes < 10 ? '0' + minutes : minutes;
         const currentTime = `${year}/${month}/${date} ${hours}:${minutes}`
         const progressData = {
           characterStats: { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills },
