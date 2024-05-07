@@ -1,4 +1,9 @@
-export default function CommandItem({ command, color, Icon, setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function CommandItem({ command, color, Icon }) {
+  const { setCurrentStep } = useContext(StepContext);
+
   const handleClick = () => {
     setCurrentStep(command);
   };

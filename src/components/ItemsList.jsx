@@ -3,8 +3,13 @@ import { changeHP, changeMP, addMessage, changeItem, changeTurn } from "../store
 import items from "../data/items";
 import Swal from "sweetalert2";
 
-export default function ItemsList({ setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function ItemsList() {
   const dispatch = useDispatch();
+  const { setCurrentStep } = useContext(StepContext);
+
   const { data: itemsData } = useSelector(state => state.items);
   const { HP: selfHP, MP: selfMP, name: selfName } = useSelector(state => state.characterStats);
   const { inBattle } = useSelector(state => state.battle);

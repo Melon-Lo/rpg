@@ -27,6 +27,7 @@ import levelUp from "../utils/characterStats/levelUp";
 
 // contexts
 import { ModalContext } from "../contexts/modal";
+import { StepContext } from "../contexts/step";
 
 export default function MainPage() {
   const dispatch = useDispatch();
@@ -34,11 +35,9 @@ export default function MainPage() {
 
   const { roleCreated } = useSelector(state => state.systemStatus);
 
-  // 目前指令
-  const [currentStep, setCurrentStep] = useState('主頁');
-
-  // modal
+  // contexts
   const { showModal, setShowModal } = useContext(ModalContext);
+  const { currentStep, setCurrentStep } = useContext(StepContext);
 
   // 戰鬥相關數據
   const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
@@ -327,9 +326,9 @@ export default function MainPage() {
       <ScreenSection />
       <MessageSection />
       <StatusSection />
-      <CommandSection currentStep={currentStep} setCurrentStep={setCurrentStep} />
-      {showModal === 'shop' && <ShopModal setCurrentStep={setCurrentStep} />}
-      {showModal === 'progress' && <ProgressModal setCurrentStep={setCurrentStep} />}
+      <CommandSection />
+      {showModal === 'shop' && <ShopModal />}
+      {showModal === 'progress' && <ProgressModal />}
 
       {/* DEV ONLY */}
       <Button blue onClick={handleShowEnemy}>

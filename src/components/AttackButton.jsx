@@ -3,7 +3,10 @@ import { addMessage, changeExecutingCommand, changeEnemyHP, changeEnemyDefeated,
 import decideDamage from "../utils/battle/decideDamage";
 import Button from "./Button";
 
-export default function AttackButton({ setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function AttackButton() {
   const dispatch = useDispatch();
   const selfName = useSelector(state => state.characterStats.name);
   const selfATK = useSelector(state => state.characterStats.ATK);
@@ -11,6 +14,7 @@ export default function AttackButton({ setCurrentStep }) {
   const enemyName = useSelector(state => state.enemies.name);
   const enemyDEF = useSelector(state => state.enemies.DEF);
 
+  const { setCurrentStep } = useContext(StepContext);
 
   const handleAttack = () => {
     dispatch(addMessage({

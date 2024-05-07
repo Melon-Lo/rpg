@@ -23,12 +23,14 @@ import systemButtons from "../data/systemButtons";
 
 // contexts
 import { ModalContext } from "../contexts/modal";
+import { StepContext } from "../contexts/step";
 
-export default function CommandSection({ currentStep, setCurrentStep }) {
+export default function CommandSection() {
   const dispatch = useDispatch();
   const [textContent, setTextContent] = useState('想做什麼呢？');
   const selfName = useSelector(state => state.characterStats.name);
   const { setShowModal } = useContext(ModalContext);
+  const { currentStep, setCurrentStep } = useContext(StepContext);
 
   // 對話相關變數
   const [sentence, setSentence] = useState(0);
@@ -155,7 +157,6 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         command={commandItem.command}
         color={commandItem.color}
         Icon={commandItem.img}
-        setCurrentStep={setCurrentStep}
       />
     )
   });
@@ -169,7 +170,6 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         command={commandItem.command}
         color={commandItem.color}
         Icon={commandItem.img}
-        setCurrentStep={setCurrentStep}
       />
     )
   })
@@ -285,7 +285,6 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         command={commandItem.command}
         color={commandItem.color}
         Icon={commandItem.img}
-        setCurrentStep={setCurrentStep}
       />
     )
   });
@@ -321,10 +320,10 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         { currentStep === '移動' && renderedScenes }
 
         {/* 物品 */}
-        { currentStep === '物品' && <ItemsList setCurrentStep={setCurrentStep} /> }
+        { currentStep === '物品' && <ItemsList /> }
 
         {/* 技能 */}
-        { currentStep === '技能' && <SkillsList setCurrentStep={setCurrentStep} /> }
+        { currentStep === '技能' && <SkillsList /> }
 
         {/* 狀態 */}
         { currentStep === '狀態' && <CharacterStatsList /> }
@@ -333,16 +332,16 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         { currentStep === '探索' && <MazeMoveCommand /> }
 
         {/* taking 下一句按鈕 */}
-        { currentStep === 'talking' && <NextButton sentence={sentence} setSentence={setSentence} setCurrentStep={setCurrentStep} /> }
+        { currentStep === 'talking' && <NextButton sentence={sentence} setSentence={setSentence} /> }
 
         {/* 探險 */}
-        { currentStep === '探險' && <DiscoverButton setCurrentStep={setCurrentStep} /> }
+        { currentStep === '探險' && <DiscoverButton /> }
 
         {/* 系統 */}
         { currentStep === '系統' && !executingCommand && renderedSystemButtons }
 
         {/* 旅館 */}
-        { currentStep === '旅館' && !executingCommand && <HotelButton setCurrentStep={setCurrentStep} /> }
+        { currentStep === '旅館' && !executingCommand && <HotelButton /> }
 
         {/* 旅館 */}
         { currentStep === '商店' && !executingCommand && <ShopButton /> }
@@ -351,10 +350,10 @@ export default function CommandSection({ currentStep, setCurrentStep }) {
         { currentStep === '主頁' && inBattle && !executingCommand && turn === 'self' && renderedBattleCommandItems }
 
         {/* 確定「攻擊」 */}
-        { currentStep === '攻擊' && !executingCommand && <AttackButton setCurrentStep={setCurrentStep} /> }
+        { currentStep === '攻擊' && !executingCommand && <AttackButton /> }
 
         {/* 確定「逃跑」 */}
-        { currentStep === '逃跑' && !executingCommand && <EscapeButton setCurrentStep={setCurrentStep} /> }
+        { currentStep === '逃跑' && !executingCommand && <EscapeButton /> }
       </div>
     </section>
   );

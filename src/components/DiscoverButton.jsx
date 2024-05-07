@@ -4,9 +4,13 @@ import Button from "./Button";
 import Swal from "sweetalert2";
 import mazes from "../data/mazes";
 
-export default function DiscoverButton({ setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function DiscoverButton() {
   const dispatch = useDispatch();
   const { currentScene } = useSelector(state => state.systemStatus);
+  const { setCurrentStep } = useContext(StepContext);
 
   const handleClick = () => {
     Swal.fire({

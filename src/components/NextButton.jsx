@@ -2,8 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addMessage } from "../store";
 import Button from "./Button";
 
-export default function NextButton({ sentence, setSentence, setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function NextButton({ sentence, setSentence }) {
   const dispatch = useDispatch();
+  const { setCurrentStep } = useContext(StepContext);
 
   const talker = useSelector(state => state.systemStatus.currentDialogue.talker);
   const content = useSelector(state => state.systemStatus.currentDialogue.content);

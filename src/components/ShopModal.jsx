@@ -7,9 +7,12 @@ import { useState, useContext } from "react";
 import Swal from "sweetalert2";
 import { changeItem, changeMoney } from "../store";
 import { ModalContext } from "../contexts/modal";
+import { StepContext } from "../contexts/step";
 
-export default function ShopModal({ setCurrentStep }) {
+export default function ShopModal() {
   const dispatch = useDispatch();
+  const { setCurrentStep } = useContext(StepContext);
+
   const { currentScene } = useSelector(state => state.systemStatus);
   const { money } = useSelector(state => state.items);
   const currentShopItems = shopsItems.find(shop => shop.shop === currentScene).items;

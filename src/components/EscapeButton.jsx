@@ -2,8 +2,13 @@ import { useDispatch } from "react-redux";
 import { addMessage, changeExecutingCommand, changeInBattle, changeTurn } from "../store";
 import Button from "./Button";
 
-export default function EscapeButton({ setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function EscapeButton() {
   const dispatch = useDispatch();
+
+  const { setCurrentStep } = useContext(StepContext);
 
   const handleEscape = () => {
     dispatch(addMessage({

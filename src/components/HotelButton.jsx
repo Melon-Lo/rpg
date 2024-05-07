@@ -3,8 +3,13 @@ import { addMessage, changeMoney, changeHP, changeMP, changeExecutingCommand } f
 import Button from "./Button";
 import Swal from "sweetalert2";
 
-export default function HotelButton({ setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function HotelButton() {
   const dispatch = useDispatch();
+  const { setCurrentStep } = useContext(StepContext);
+
   const { money } = useSelector(state => state.items);
   const selfMaxHP = useSelector(state => state.characterStats.maxHP);
   const selfMaxMP = useSelector(state => state.characterStats.maxMP);

@@ -1,16 +1,29 @@
 import { RxCross1 } from "react-icons/rx";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import ProgressItem from "./ProgressItem";
-import { ModalContext } from "../contexts/modal";
 
-export default function ProgressModal({ setCurrentStep }) {
+import { ModalContext } from "../contexts/modal";
+import { StepContext } from "../contexts/step";
+
+export default function ProgressModal() {
+  const { setShowModal } = useContext(ModalContext);
+  const { setCurrentStep } = useContext(StepContext);
   const [type, setType] = useState('save');
   const titleText = type === 'save' ? '儲存進度' : '讀取進度';
   const typeColor = type === 'save' ? 'rose' : 'sky'
   const typeStyle = `mx-3 px-3 py-2 text-${typeColor}-800 cursor-pointer `
   const selectedStyle = `bg-${typeColor}-800 text-slate-100 rounded-md`;
 
-  const { setShowModal } = useContext(ModalContext);
+  // LandingPage 相關
+  const currentPath = window.location.pathname;
+  const isLandingPage = currentPath === '/rpg/landing' || currentPath === '/rpg/landing/';
+
+  useEffect(() => {
+    if (isLandingPage) {
+      setType('load');
+    }
+  }, [])
+
 
   // 創建一個空陣列來存儲所有的進度數據
   let allProgressData = [];
@@ -46,7 +59,6 @@ export default function ProgressModal({ setCurrentStep }) {
           money={data.items.money}
           type={type}
           typeColor={typeColor}
-          setCurrentStep={setCurrentStep}
         />
       );
     } else {
@@ -58,27 +70,29 @@ export default function ProgressModal({ setCurrentStep }) {
   return (
     <div className="fixed bg-gray-800/75 inset-0 z-10">
       <div className="relative w-full h-full">
-        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-2/3 rounded-lg`}>
+        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-5/6 rounded-lg`}>
           <div className="relative flex flex-col justify-center items-center py-3">
             <h1 className="text-3xl text-gray-800">{titleText}</h1>
             <div onClick={handleCloseModal} className="absolute top-2 right-2">
               <RxCross1 className={`text-2xl text-${typeColor}-900`} />
             </div>
           </div>
-          <div className="text-center my-3 text-lg">
-            <span
-              className={typeStyle + (type === 'save' && selectedStyle)}
-              onClick={() => setType('save')}
-            >
-              存檔
-            </span>
-            <span
-              className={typeStyle + (type === 'load' && selectedStyle)}
-              onClick={() => setType('load')}
-            >
-              讀檔
-            </span>
-          </div>
+          {!isLandingPage &&
+            <div className="text-center my-3 text-lg">
+              <span
+                className={typeStyle + (type === 'save' && selectedStyle)}
+                onClick={() => setType('save')}
+              >
+                存檔
+              </span>
+              <span
+                className={typeStyle + (type === 'load' && selectedStyle)}
+                onClick={() => setType('load')}
+              >
+                讀檔
+              </span>
+            </div>
+          }
           <div className="flex flex-col items-center">
             {renderedProgressItems}
           </div>

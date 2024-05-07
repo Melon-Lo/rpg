@@ -3,8 +3,13 @@ import { changeHP, changeMP, addMessage, changeTurn, changeEnemyHP, changeEnemyD
 import skillsData from "../data/skills";
 import Swal from "sweetalert2";
 
-export default function SkillsList({ setCurrentStep }) {
+import { useContext } from "react";
+import { StepContext } from "../contexts/step";
+
+export default function SkillsList() {
   const dispatch = useDispatch();
+  const { setCurrentStep } = useContext(StepContext);
+
   const { HP: selfHP, MP: selfMP, skills: selfSkills, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
   const { MDEF: enemyMDEF, HP: enemyHP, name: enemyName, weakness: enemyWeakness } = useSelector(state => state.enemies);
   const { inBattle } = useSelector(state => state.battle);

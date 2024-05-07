@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney } from "../store";
 import Swal from "sweetalert2";
-import { ModalContext } from "../contexts/modal";
+
 import { useContext } from "react";
+import { ModalContext } from "../contexts/modal";
+import { StepContext } from "../contexts/step";
 
 export default function ProgressItem({
   index,
@@ -14,9 +16,9 @@ export default function ProgressItem({
   money,
   type,
   typeColor,
-  setCurrentStep,
 }) {
   const dispatch = useDispatch();
+  const { setCurrentStep } = useContext(StepContext);
 
   // 取得所有的資料
   const { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills } = useSelector(state => state.characterStats);
