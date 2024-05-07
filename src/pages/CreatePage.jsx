@@ -110,7 +110,7 @@ export default function CreatePage() {
     const selectedStyle = classTitle === classItem.classTitle ? 'border-blue-800 border-4' : 'border-2 border-gray-400';
 
     return (
-      <div key={classItem.classTitle} className={"w-40 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => handleSelectClass(classItem)}>
+      <div key={classItem.classTitle} className={"w-32 m-1 p-8 rounded-md flex flex-col items-center " + selectedStyle} onClick={() => handleSelectClass(classItem)}>
         <classItem.icon className="text-xl" />
         <h5 className="font-medium mt-3">{classItem.classTitle}</h5>
       </div>
@@ -132,7 +132,7 @@ export default function CreatePage() {
         {/* 選擇職業 */}
         <div className="flex flex-col items-start text-lg w-full py-2 px-5">
           <h2 className="m-3 font-bold text-2xl">【職業】</h2>
-          <div className="flex flex-wrap justify-start items-center w-5/6">
+          <div className="flex flex-wrap justify-start items-center w-full">
             {renderedClassList}
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
 
 // components
@@ -24,9 +25,11 @@ import systemButtons from "../data/systemButtons";
 // contexts
 import { ModalContext } from "../contexts/modal";
 import { StepContext } from "../contexts/step";
+import Swal from "sweetalert2";
 
 export default function CommandSection() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [textContent, setTextContent] = useState('想做什麼呢？');
   const selfName = useSelector(state => state.characterStats.name);
   const { setShowModal } = useContext(ModalContext);
@@ -250,6 +253,21 @@ export default function CommandSection() {
     const handleClick = () => {
       if (button === '存取進度') {
         setShowModal('progress');
+      } else if (button === '回到首頁') {
+        Swal.fire({
+          title: `確定要回到主頁嗎？`,
+          text: '記得先存檔哦！',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: '確認',
+          cancelButtonText: '取消'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate('landing');
+          };
+        });
       };
     };
 
