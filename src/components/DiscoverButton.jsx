@@ -23,21 +23,23 @@ export default function DiscoverButton() {
       confirmButtonText: '確認',
       cancelButtonText: '取消'
     }).then((result) => {
-      dispatch(addMessage({
-        type: 'basic',
-        content: '探險開始，請步步為營！'
-      }))
+      if (result.isConfirmed) {
+        dispatch(addMessage({
+          type: 'basic',
+          content: '探險開始，請步步為營！'
+        }))
 
-      // 抓到迷宮資料並進入
-      const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === currentScene);
-      const boss = mazes.find(maze => maze.mazeName === currentScene).boss;
-      dispatch(changeInMaze(true));
-      dispatch(changeMazeName('洞穴'));
-      dispatch(changePlayerPosition(playerPosition));
-      dispatch(changeEnemies(enemies));
-      dispatch(changeChests(chests));
-      dispatch(changeBoss(boss));
-      setCurrentStep('主頁');
+        // 抓到迷宮資料並進入
+        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === currentScene);
+        const boss = mazes.find(maze => maze.mazeName === currentScene).boss;
+        dispatch(changeInMaze(true));
+        dispatch(changeMazeName('洞穴'));
+        dispatch(changePlayerPosition(playerPosition));
+        dispatch(changeEnemies(enemies));
+        dispatch(changeChests(chests));
+        dispatch(changeBoss(boss));
+        setCurrentStep('主頁');
+      }
     });
   }
 

@@ -34,7 +34,6 @@ export default function ItemsList() {
         confirmButtonText: '確認',
         cancelButtonText: '取消'
       }).then((result) => {
-        // 如果用戶點擊了確認按鈕，則繼續執行後續操作
         if (result.isConfirmed) {
           // 運算完的值
           let valueAfterEffect;

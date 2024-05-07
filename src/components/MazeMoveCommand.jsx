@@ -101,7 +101,6 @@ export default function MazeMoveCommand() {
         confirmButtonText: '確認',
         cancelButtonText: '取消'
       }).then((result) => {
-        // 如果用戶點擊了確認按鈕，則繼續執行後續操作
         if (result.isConfirmed) {
           dispatch(changePlayerPosition(newPosition));
         }

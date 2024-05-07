@@ -3,11 +3,9 @@ import { useState, useContext, useEffect } from "react";
 import ProgressItem from "./ProgressItem";
 
 import { ModalContext } from "../contexts/modal";
-import { StepContext } from "../contexts/step";
 
 export default function ProgressModal() {
   const { setShowModal } = useContext(ModalContext);
-  const { setCurrentStep } = useContext(StepContext);
   const [type, setType] = useState('save');
   const titleText = type === 'save' ? '儲存進度' : '讀取進度';
   const typeColor = type === 'save' ? 'rose' : 'sky'
@@ -18,12 +16,12 @@ export default function ProgressModal() {
   const currentPath = window.location.pathname;
   const isLandingPage = currentPath === '/rpg/landing' || currentPath === '/rpg/landing/';
 
+  // 如果是在 LandingPage，只能讀取進度
   useEffect(() => {
     if (isLandingPage) {
       setType('load');
     }
   }, [])
-
 
   // 創建一個空陣列來存儲所有的進度數據
   let allProgressData = [];
@@ -77,6 +75,7 @@ export default function ProgressModal() {
               <RxCross1 className={`text-2xl text-${typeColor}-900`} />
             </div>
           </div>
+          {/* 如果是在 LandingPage，只能讀取進度 */}
           {!isLandingPage &&
             <div className="text-center my-3 text-lg">
               <span

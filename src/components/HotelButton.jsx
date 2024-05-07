@@ -35,27 +35,29 @@ export default function HotelButton() {
       confirmButtonText: '確認',
       cancelButtonText: '取消'
     }).then((result) => {
-      dispatch(addMessage({
-        type: 'basic',
-        content: '休息中⋯⋯'
-      }))
-      dispatch(changeMoney(money - 10));
-      dispatch(changeExecutingCommand(true));
-
-      setTimeout(() => {
+      if (result.isConfirmed) {
         dispatch(addMessage({
-          type: 'success',
-          content: '休息完畢，神清氣爽！HP 和 MP 都恢復了！'
+          type: 'basic',
+          content: '休息中⋯⋯'
         }))
+        dispatch(changeMoney(money - 10));
+        dispatch(changeExecutingCommand(true));
 
-        // 補滿 HP 和 MP
-        dispatch(changeHP(selfMaxHP));
-        dispatch(changeMP(selfMaxMP));
-
-        // 回歸先前狀態
-        setCurrentStep('主頁');
-        dispatch(changeExecutingCommand(false));
-      }, 1500)
+        setTimeout(() => {
+          dispatch(addMessage({
+            type: 'success',
+            content: '休息完畢，神清氣爽！HP 和 MP 都恢復了！'
+          }))
+  
+          // 補滿 HP 和 MP
+          dispatch(changeHP(selfMaxHP));
+          dispatch(changeMP(selfMaxMP));
+  
+          // 回歸先前狀態
+          setCurrentStep('主頁');
+          dispatch(changeExecutingCommand(false));
+        }, 1500)
+      }
     });
   }
 
