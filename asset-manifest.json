@@ -1,10 +1,13 @@
 {
   "files": {
-    "main.css": "/rpg/static/css/main.6a184990.css",
-    "main.js": "/rpg/static/js/main.cb182797.js",
+    "main.css": "/rpg/static/css/main.df30a9ec.css",
+    "main.js": "/rpg/static/js/main.e8532346.js",
     "static/media/devil.png": "/rpg/static/media/devil.9ed451a0c395d8634b5e.png",
+    "static/media/lion.png": "/rpg/static/media/lion.7436ecde3ae246f34e9a.png",
+    "static/media/bear.png": "/rpg/static/media/bear.4087e65f40621d63f049.png",
     "static/media/village.jpg": "/rpg/static/media/village.db06608e99adc901c7a6.jpg",
     "static/media/villager.png": "/rpg/static/media/villager.6f3ab21bf531c2957075.png",
+    "static/media/wolf.png": "/rpg/static/media/wolf.999e38f40bf95406d5ab.png",
     "static/media/bat.png": "/rpg/static/media/bat.3895c60120879fdd3826.png",
     "static/media/elder.png": "/rpg/static/media/elder.5d4cb9f515504a3a2b43.png",
     "static/media/caveman.png": "/rpg/static/media/caveman.40c72db17d31cc30ecbd.png",
@@ -12,11 +15,11 @@
     "static/media/forest.jpg": "/rpg/static/media/forest.c952b66564789aab9b61.jpg",
     "static/media/cave.jpg": "/rpg/static/media/cave.5982dd2b12828047ca7d.jpg",
     "index.html": "/rpg/index.html",
-    "main.6a184990.css.map": "/rpg/static/css/main.6a184990.css.map",
-    "main.cb182797.js.map": "/rpg/static/js/main.cb182797.js.map"
+    "main.df30a9ec.css.map": "/rpg/static/css/main.df30a9ec.css.map",
+    "main.e8532346.js.map": "/rpg/static/js/main.e8532346.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a184990.css",
-    "static/js/main.cb182797.js"
+    "static/css/main.df30a9ec.css",
+    "static/js/main.e8532346.js"
   ]
 }
