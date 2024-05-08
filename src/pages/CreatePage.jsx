@@ -67,6 +67,9 @@ export default function CreatePage() {
         dispatch(changeStatName(name));
         dispatch(changeStatClassTitle(classTitle));
         dispatch(changeRoleCreated(true));
+        dispatch(changeName(''));
+        dispatch(changeClassTitle(''));
+        dispatch(resetStats());
         navigate('/');
       }
     });

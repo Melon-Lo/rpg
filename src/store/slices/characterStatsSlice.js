@@ -3,41 +3,22 @@ import classes from "../../data/classes";
 
 const characterStats = createSlice({
   name: "characterStats",
-  // initialState: {
-  //   name: "",
-  //   classTitle: "",
-  //   level: 1,
-  //   HP: 0,
-  //   maxHP: 0,
-  //   MP: 0,
-  //   maxMP: 0,
-  //   ATK: 0,
-  //   DEF: 0,
-  //   MATK: 0,
-  //   MDEF: 0,
-  //   SPD: 0,
-  //   exp: 0,
-  //   expToNextLevel: 50,
-  //   skills: [],
-  // },
-
-  // DEV ONLY
   initialState: {
-    name: "小明",
-    classTitle: "法師",
+    name: "",
+    classTitle: "",
     level: 1,
-    HP: 70,
-    maxHP: 70,
-    MP: 35,
-    maxMP: 35,
-    ATK: 5,
-    DEF: 5,
-    MATK: 15,
-    MDEF: 10,
-    SPD: 3,
+    HP: 0,
+    maxHP: 0,
+    MP: 0,
+    maxMP: 0,
+    ATK: 0,
+    DEF: 0,
+    MATK: 0,
+    MDEF: 0,
+    SPD: 0,
     exp: 0,
     expToNextLevel: 20,
-    skills: ["火焰"],
+    skills: [],
   },
   reducers: {
     changeStatName(state, action) {
@@ -107,8 +88,12 @@ const characterStats = createSlice({
       state.HP = currentClassTitleInitialStats.maxHP;
       state.maxMP = currentClassTitleInitialStats.maxMP;
       state.MP = currentClassTitleInitialStats.maxMP;
-      state.level = 1;
       state.skills = currentClassTitleInitialSkills;
+
+      // 1 級狀態
+      state.level = 1;
+      state.exp = 0;
+      state.expToNextLevel = 20;
 
       // 確保總和為 35
       let total = state.ATK + state.DEF + state.MATK + state.MDEF + state.SPD;

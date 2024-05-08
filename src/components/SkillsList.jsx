@@ -10,8 +10,8 @@ export default function SkillsList() {
   const dispatch = useDispatch();
   const { setCurrentStep } = useContext(StepContext);
 
-  const { HP: selfHP, MP: selfMP, skills: selfSkills, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
-  const { MDEF: enemyMDEF, HP: enemyHP, name: enemyName, weakness: enemyWeakness } = useSelector(state => state.enemies);
+  const { HP: selfHP, MP: selfMP, skills: selfSkills, ATK: selfATK, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
+  const { DEF: enemyDEF, MDEF: enemyMDEF, HP: enemyHP, name: enemyName, weakness: enemyWeakness } = useSelector(state => state.enemies);
   const { inBattle } = useSelector(state => state.battle);
 
   // 查看、使用技能
@@ -67,7 +67,7 @@ export default function SkillsList() {
               dispatch(changeTurn('enemy'));
               setCurrentStep('主頁');
             }
-          // 攻擊技能（只有在攻擊時需要changeExecutingCommand）
+          // 攻擊魔法（只有在攻擊時需要changeExecutingCommand）
           } else if (skill.type === 'attack') {
             dispatch(changeExecutingCommand(true));
             setCurrentStep('主頁');
@@ -97,7 +97,35 @@ export default function SkillsList() {
                 dispatch(changeTurn('enemy'));
               }
             }, 1500)
-          };
+          // 物理攻擊技能（只有在攻擊時需要changeExecutingCommand）
+          } else if (skill.type === 'physicalAttack') {
+            dispatch(changeExecutingCommand(true));
+            setCurrentStep('主頁');
+
+            const damage = skill.effect(selfATK, enemyDEF, skill.basicValue);
+
+            dispatch(addMessage({
+              type: 'basic',
+              content: `${selfName}發動了${skill.name}！`,
+            }));
+
+            setTimeout(() => {
+              dispatch(addMessage({
+                type: 'attack',
+                content: `${enemyName} 受到了 ${damage} 點傷害！`,
+              }));
+              dispatch(changeEnemyHP(enemyHP - damage));
+
+              // 如果擊敗敵人，剩下的交給 MainPage 處理
+              if (damage >= enemyHP) {
+                dispatch(changeEnemyDefeated(true));
+              // 如果還沒擊敗敵人，則換成對方的回合
+              } else {
+                dispatch(changeExecutingCommand(false));
+                dispatch(changeTurn('enemy'));
+              }
+            }, 1500)
+          }
 
           // 無論如何都要減少 costHP
           dispatch(changeMP(selfMP - skill.costMP));

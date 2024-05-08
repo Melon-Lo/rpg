@@ -19,7 +19,7 @@ const classes = [
       maxHP: 100,
       maxMP: 10,
     },
-    initialSkills: [],
+    initialSkills: ["重砍"],
   },
   {
     classTitle: "法師",
@@ -38,7 +38,7 @@ const classes = [
       maxHP: 70,
       maxMP: 35,
     },
-    initialSkills: ["火焰"],
+    initialSkills: ["治療"],
   },
 ];
 

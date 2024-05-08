@@ -266,6 +266,7 @@ export default function CommandSection() {
         }).then((result) => {
           if (result.isConfirmed) {
             navigate('landing');
+            setCurrentStep('主頁');
           };
         });
       };
