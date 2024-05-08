@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rpg/static/css/main.9b5f7b34.css",
-    "main.js": "/rpg/static/js/main.852f3b41.js",
+    "main.js": "/rpg/static/js/main.a6c67fd3.js",
     "static/media/devil.png": "/rpg/static/media/devil.9ed451a0c395d8634b5e.png",
     "static/media/lion.png": "/rpg/static/media/lion.7436ecde3ae246f34e9a.png",
     "static/media/bear.png": "/rpg/static/media/bear.4087e65f40621d63f049.png",
@@ -16,10 +16,10 @@
     "static/media/cave.jpg": "/rpg/static/media/cave.5982dd2b12828047ca7d.jpg",
     "index.html": "/rpg/index.html",
     "main.9b5f7b34.css.map": "/rpg/static/css/main.9b5f7b34.css.map",
-    "main.852f3b41.js.map": "/rpg/static/js/main.852f3b41.js.map"
+    "main.a6c67fd3.js.map": "/rpg/static/js/main.a6c67fd3.js.map"
   },
   "entrypoints": [
     "static/css/main.9b5f7b34.css",
-    "static/js/main.852f3b41.js"
+    "static/js/main.a6c67fd3.js"
   ]
 }
