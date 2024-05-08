@@ -1,7 +1,8 @@
 import decideSkillDamage from "../utils/battle/decideSkillDamage";
+import decidePhysicalSkillDamage from "../utils/battle/decidePhysicalSkillDamage";
 
 const skills = [
-  // 火屬性
+  // 火屬性魔法
   {
     name: "火焰",
     basicValue: 15,
@@ -35,7 +36,7 @@ const skills = [
     effectDescription: "火屬性攻擊，傷害高",
     effect: decideSkillDamage,
   },
-  // 水屬性
+  // 水屬性魔法
   {
     name: "水花",
     basicValue: 15,
@@ -69,7 +70,7 @@ const skills = [
     effectMessage: "",
     effect: decideSkillDamage,
   },
-  // 無屬性
+  // 無屬性魔法
   {
     name: "聲波",
     basicValue: 20,
@@ -91,6 +92,51 @@ const skills = [
     effectDescription: "無屬性攻擊，傷害一般",
     effectMessage: "",
     effect: decideSkillDamage,
+  },
+  // 物理技能
+  {
+    name: "重砍",
+    basicValue: 20,
+    attributes: "none",
+    costMP: 5,
+    canUseOutsideBattle: false,
+    type: "physicalAttack",
+    effectDescription: "物理技能，傷害低",
+    effectMessage: "",
+    effect: decidePhysicalSkillDamage,
+  },
+  {
+    name: "衝撞",
+    basicValue: 20,
+    attributes: "none",
+    costMP: 5,
+    canUseOutsideBattle: false,
+    type: "physicalAttack",
+    effectDescription: "物理技能，傷害低",
+    effectMessage: "",
+    effect: decidePhysicalSkillDamage,
+  },
+  {
+    name: "撕咬",
+    basicValue: 30,
+    attributes: "none",
+    costMP: 7,
+    canUseOutsideBattle: false,
+    type: "physicalAttack",
+    effectDescription: "物理技能，傷害低",
+    effectMessage: "",
+    effect: decidePhysicalSkillDamage,
+  },
+  {
+    name: "獅吼",
+    basicValue: 35,
+    attributes: "none",
+    costMP: 8,
+    canUseOutsideBattle: false,
+    type: "physicalAttack",
+    effectDescription: "物理技能，傷害低",
+    effectMessage: "",
+    effect: decidePhysicalSkillDamage,
   },
   // 治療類
   {

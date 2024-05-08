@@ -28,25 +28,21 @@ const enemies = [
       },
     ],
     ai: (percentHP) => {
-      let actionType;
-      let action;
+      let action, skill;
 
       if (percentHP > 0.6) {
-        actionType = "attack";
+        action = "attack";
       } else {
         const randomNum = Math.random();
         if (randomNum < 0.5) {
-          actionType = "skill";
-          action = "聲波";
+          action = "attackSkill";
+          skill = "聲波";
         } else {
-          actionType = "attack";
+          action = "attack";
         }
       }
 
-      return {
-        actionType,
-        action,
-      };
+      return { action, skill };
     },
   },
   {
@@ -72,25 +68,21 @@ const enemies = [
       },
     ],
     ai: (percentHP) => {
-      let actionType;
-      let action;
+      let action, skill;
 
       if (percentHP > 0.6) {
-        actionType = "attack";
+        action = "attack";
       } else {
         const randomNum = Math.random();
         if (randomNum < 0.5) {
-          actionType = "skill";
-          action = "火焰";
+          action = "attackSkill";
+          skill = "火焰";
         } else {
-          actionType = "attack";
+          action = "attack";
         }
       }
 
-      return {
-        actionType,
-        action,
-      };
+      return { action, skill };
     },
   },
   {
@@ -116,29 +108,25 @@ const enemies = [
       },
     ],
     ai: (percentHP) => {
-      let actionType;
-      let action;
+      let action, skill;
 
       if (percentHP > 0.6) {
-        actionType = "attack";
+        action = "attack";
       } else {
         const randomNum = Math.random();
         if (randomNum < 0.5) {
-          actionType = "skill";
-          action = "聲波";
+          action = "physicalAttackSkill";
+          skill = "衝撞";
         } else {
-          actionType = "attack";
+          action = "attack";
         }
       }
 
-      return {
-        actionType,
-        action,
-      };
+      return { action, skill };
     },
   },
   {
-    name: "狼",
+    name: "灰狼",
     img: wolf,
     weakness: "water",
     isBoss: false,
@@ -160,25 +148,21 @@ const enemies = [
       },
     ],
     ai: (percentHP) => {
-      let actionType;
-      let action;
+      let action, skill;
 
       if (percentHP > 0.6) {
-        actionType = "attack";
+        action = "attack";
       } else {
         const randomNum = Math.random();
         if (randomNum < 0.5) {
-          actionType = "skill";
-          action = "聲波";
+          action = "physicalAttackSkill";
+          skill = "撕咬";
         } else {
-          actionType = "attack";
+          action = "attack";
         }
       }
 
-      return {
-        actionType,
-        action,
-      };
+      return { action, skill };
     },
   },
   {
@@ -204,25 +188,21 @@ const enemies = [
       },
     ],
     ai: (percentHP) => {
-      let actionType;
-      let action;
+      let action, skill;
 
       if (percentHP > 0.6) {
-        actionType = "attack";
+        action = "attack";
       } else {
         const randomNum = Math.random();
         if (randomNum < 0.5) {
-          actionType = "skill";
-          action = "聲波";
+          action = "physicalAttackSkill";
+          skill = "獅吼";
         } else {
-          actionType = "attack";
+          action = "attack";
         }
       }
 
-      return {
-        actionType,
-        action,
-      };
+      return { action, skill };
     },
   },
 ];

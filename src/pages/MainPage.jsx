@@ -9,9 +9,9 @@ import StatusSection from "../components/StatusSection";
 import ScreenSection from "../components/ScreenSection";
 import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
-import Button from "../components/Button";
 import ShopModal from "../components/ShopModal";
 import ProgressModal from "../components/ProgressModal";
+import Button from "../components/Button";
 
 // data
 import enemiesData from "../data/enemies";
@@ -60,6 +60,7 @@ export default function MainPage() {
   // 戰鬥狀態
   // --------------------------------------------
 
+  // DEV ONLY
   // 敵人出現後，將該敵人的數值傳給 enemiesSlice
   const handleShowEnemy = () => {
     const currentEnemy = enemiesData.find(enemy => enemy.name === '蝙蝠');
@@ -100,7 +101,7 @@ export default function MainPage() {
         const nextEnemyAction = currentEnemyAi(enemyHP / enemyMaxHP);
 
         // 對方發動一般攻擊
-        if (nextEnemyAction.actionType === 'attack') {
+        if (nextEnemyAction.action === 'attack') {
           const damage = decideDamage(enemyATK, selfDEF);
           setTimeout(() => {
             dispatch(addMessage({
@@ -127,10 +128,9 @@ export default function MainPage() {
               dispatch(changeTurn('self'));
             }
           }, 4500)
-
-          // 對方發動技能
-        } else if (nextEnemyAction.actionType === 'skill') {
-          const skillName = nextEnemyAction.action;
+        // 對方攻擊魔法（看MATK）
+        } else if (nextEnemyAction.action === 'attackSkill') {
+          const skillName = nextEnemyAction.skill;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
           const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;
           const damage = skillEffect(enemyMATK, selfMDEF, skillBasicValue);
@@ -160,7 +160,39 @@ export default function MainPage() {
               dispatch(changeTurn('self'));
             }
           }, 4500)
-        };
+        // 對方攻擊技能（看ATK）
+        } else if (nextEnemyAction.action === 'physicalAttackSkill') {
+          const skillName = nextEnemyAction.skill;
+          const skillEffect = skills.find(skill => skill.name === skillName).effect;
+          const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;
+          const damage = skillEffect(enemyATK, selfDEF, skillBasicValue);
+
+          setTimeout(() => {
+            dispatch(addMessage({
+              type: 'basic',
+              content: `${enemyName}發動了${skillName}！`
+            }))
+          }, 1500)
+
+          // 等待 3s
+          setTimeout(() => {
+            dispatch(changeHP(selfHP - damage));
+            dispatch(addMessage({
+              type: 'hurt',
+              content: `${selfName}受到了 ${damage} 點傷害！`
+            }))
+          }, 3000)
+
+          setTimeout(() => {
+            // 角色被打死
+            if (damage >= selfHP) {
+              dispatch(changeSelfDefeated(true));
+            // 如果角色未死亡，換到自己的回合
+            } else {
+              dispatch(changeTurn('self'));
+            }
+          }, 4500)
+        }
       }
     }
 
