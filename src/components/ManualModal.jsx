@@ -79,8 +79,11 @@ export default function ManualModal() {
               E-mail：<a href="mailto:dp98062@gmail.com">dp98062@gmail.com</a><br />
               GitHub：<a target="_blank" rel="noreferrer" href="https://github.com/Melon-Lo/rpg">https://github.com/Melon-Lo/rpg</a>
             </p>
+            <div className="w-full h-px bg-gray-400 my-4"></div>
+            <p className="leading-6 text-gray-800">
+              Copyright © Designed and Created by Melon Lo, All Rights Reserved.
+            </p>
           </div>
-          <div className="text-center text-sm mt-3 px-3">copyright © designed and created by Melon Lo, all rights reserved.</div>
         </div>
       </div>
     </div>
