@@ -5,12 +5,20 @@ import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, res
 import { RiDiceFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { useEffect } from "react";
 
 export default function CreatePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { name, classTitle } = useSelector(state => state.form);
   const { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
+
+  // 每次到 CreatePage 都會回到初始狀態
+  useEffect(() => {
+    dispatch(changeName(''));
+    dispatch(changeClassTitle(''));
+    dispatch(resetStats());
+  }, [])
 
   // 送出資料
   const handleSubmit = (e) => {
@@ -67,9 +75,6 @@ export default function CreatePage() {
         dispatch(changeStatName(name));
         dispatch(changeStatClassTitle(classTitle));
         dispatch(changeRoleCreated(true));
-        dispatch(changeName(''));
-        dispatch(changeClassTitle(''));
-        dispatch(resetStats());
         navigate('/');
       }
     });
