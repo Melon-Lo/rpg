@@ -3,7 +3,7 @@ export default function StatusBar({ type, color, currentValue, maxValue, selfSta
 
   const ValueNumbers = () => {
     return (
-      <div>
+      <div className="text-nowrap pr-3">
         {type}：{currentValue} / {maxValue}
       </div>
     );
