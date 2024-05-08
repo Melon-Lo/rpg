@@ -1,7 +1,6 @@
 import { RxCross1 } from "react-icons/rx";
 import { useState, useContext, useEffect } from "react";
 import ProgressItem from "./ProgressItem";
-
 import { ModalContext } from "../contexts/modal";
 
 export default function ProgressModal() {

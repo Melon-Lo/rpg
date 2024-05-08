@@ -269,7 +269,9 @@ export default function CommandSection() {
             setCurrentStep('主頁');
           };
         });
-      };
+      } else if (button === '遊戲說明') {
+        setShowModal('manual');
+      }
     };
 
     return (

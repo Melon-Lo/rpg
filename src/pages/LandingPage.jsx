@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import Button from "../components/Button";
 import ProgressModal from "../components/ProgressModal";
+import ManualModal from "../components/ManualModal";
 import { ModalContext } from "../contexts/modal";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -30,14 +31,20 @@ export default function LandingPage() {
     setShowModal('progress');
   };
 
+  const handleShowManualModal = () => {
+    setShowModal('manual');
+  }
+
   return (
     <div className="flex flex-col items-center">
       <h1 className="text-3xl my-10">好玩的RPG</h1>
       <div>
         <Button blue className="my-3" onClick={handleGoCreatePage}>新的冒險</Button>
         <Button green className="my-3" onClick={handleShowProgressModal}>讀取進度</Button>
+        <Button amber className="my-3" onClick={handleShowManualModal}>遊戲說明</Button>
       </div>
-      {showModal && <ProgressModal />}
+      {showModal === 'progress' && <ProgressModal />}
+      {showModal === 'manual' && <ManualModal />}
     </div>
   );
 };

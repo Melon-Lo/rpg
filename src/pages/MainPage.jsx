@@ -11,6 +11,7 @@ import MessageSection from "../components/MessageSection";
 import CommandSection from "../components/CommandSection";
 import ShopModal from "../components/ShopModal";
 import ProgressModal from "../components/ProgressModal";
+import ManualModal from "../components/ManualModal";
 import Button from "../components/Button";
 
 // data
@@ -355,6 +356,7 @@ export default function MainPage() {
       <CommandSection />
       {showModal === 'shop' && <ShopModal />}
       {showModal === 'progress' && <ProgressModal />}
+      {showModal === 'manual' && <ManualModal />}
 
       {/* DEV ONLY */}
       {/* <Button blue onClick={handleShowEnemy}>
