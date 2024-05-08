@@ -1,5 +1,5 @@
 // 技能攻擊傷害值
-// 傷害值：(基本值 + (攻 - 防)) * 浮動值
+// 傷害值：(基本值 + 攻 + (攻 - 防)) * 浮動值
 function decidePhysicalSkillDamage(attackerATK, defenderDEF, basicValue) {
   // 傷害浮動
   const randomNumber = Math.random() * (1.1 - 0.9) + 0.9;
@@ -10,7 +10,9 @@ function decidePhysicalSkillDamage(attackerATK, defenderDEF, basicValue) {
     basicDamage = 0;
   }
 
-  const damage = Math.floor((basicValue + basicDamage) * randomNumber);
+  const damage = Math.floor(
+    (basicValue + attackerATK + basicDamage) * randomNumber
+  );
 
   return damage;
 }

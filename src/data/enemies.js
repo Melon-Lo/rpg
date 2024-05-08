@@ -46,7 +46,7 @@ const enemies = [
     },
   },
   {
-    name: "魔王",
+    name: "惡鬼",
     img: devil,
     weakness: "water",
     isBoss: true,
@@ -91,8 +91,8 @@ const enemies = [
     weakness: "fire",
     isBoss: false,
     stats: {
-      HP: 40,
-      maxHP: 40,
+      HP: 50,
+      maxHP: 50,
       ATK: 10,
       DEF: 3,
       MATK: 2,
@@ -166,13 +166,13 @@ const enemies = [
     },
   },
   {
-    name: "森林之王",
+    name: "百獸之王",
     img: lion,
     weakness: "fire",
     isBoss: true,
     stats: {
-      HP: 120,
-      maxHP: 120,
+      HP: 150,
+      maxHP: 150,
       ATK: 15,
       DEF: 5,
       MATK: 10,
