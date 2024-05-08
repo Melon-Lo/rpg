@@ -3,12 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const messagesSlice = createSlice({
   name: "messages",
   initialState: {
-    messages: [
-      {
-        type: "system",
-        content: "歡迎來到好玩的RPG～祝你有個驚險刺激的冒險！",
-      },
-    ],
+    messages: [],
   },
   reducers: {
     addMessage(state, action) {
@@ -17,8 +12,11 @@ const messagesSlice = createSlice({
         content: action.payload.content,
       });
     },
+    clearMessages(state, action) {
+      state.messages = [];
+    },
   },
 });
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, clearMessages } = messagesSlice.actions;
 export const messagesSliceReducer = messagesSlice.reducer;

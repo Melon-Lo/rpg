@@ -141,7 +141,7 @@ const skills = [
   // 治療類
   {
     name: "治療",
-    basicValue: 50,
+    basicValue: 100,
     attributes: "none",
     costMP: 10,
     canUseOutsideBattle: true,

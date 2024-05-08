@@ -1,7 +1,7 @@
 import Button from "../components/Button";
 import classes from "../data/classes";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated } from "../store";
+import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
@@ -72,10 +72,20 @@ export default function CreatePage() {
           confirmButtonText: '開始冒險',
         });
 
+        // stat
         dispatch(changeStatName(name));
         dispatch(changeStatClassTitle(classTitle));
         dispatch(changeRoleCreated(true));
+        // items
+        dispatch(resetItems());
         navigate('/');
+
+        // 清空訊息欄
+        dispatch(clearMessages());
+        dispatch(addMessage({
+          type: 'basic',
+          content: '請開始你的冒險！'
+        }));
       }
     });
   };
@@ -112,6 +122,24 @@ export default function CreatePage() {
     }
     dispatch(generateStats());
   };
+
+  // 回到主頁
+  const handleReturn = () => {
+    Swal.fire({
+      title: '確定要回到主頁嗎？',
+      text: '已填寫的資料不會保存哦！',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/landing');
+      }
+    })
+  }
 
   // 職業列表
   const renderedClassList = classes.map(classItem => {
@@ -161,6 +189,7 @@ export default function CreatePage() {
         </div>
         <Button blue rounded className="mt-5">創建角色</Button>
       </form>
+      <Button gray rounded className="mt-5" onClick={handleReturn}>回到主頁</Button>
     </div>
   );
 }

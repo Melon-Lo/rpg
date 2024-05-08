@@ -38,7 +38,7 @@ const classes = [
       maxHP: 70,
       maxMP: 35,
     },
-    initialSkills: ["治療"],
+    initialSkills: ["火焰"],
   },
 ];
 

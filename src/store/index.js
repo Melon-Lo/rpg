@@ -24,6 +24,7 @@ import {
   changeItem,
   changeItems,
   changeMoney,
+  resetItems,
 } from "./slices/itemsSlice";
 
 // systemStatus
@@ -35,7 +36,11 @@ import {
 } from "./slices/systemStatusSlice";
 
 // messages
-import { messagesSliceReducer, addMessage } from "./slices/messagesSlice";
+import {
+  messagesSliceReducer,
+  addMessage,
+  clearMessages,
+} from "./slices/messagesSlice";
 
 // battle
 import {
@@ -106,9 +111,11 @@ export {
   changeItem,
   changeItems,
   changeMoney,
+  resetItems,
 
   // messages,
   addMessage,
+  clearMessages,
 
   // battle
   changeInBattle,

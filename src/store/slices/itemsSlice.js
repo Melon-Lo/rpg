@@ -7,11 +7,11 @@ const itemsSlice = createSlice({
     data: [
       {
         name: "補藥",
-        quantity: 3,
+        quantity: 2,
       },
       {
         name: "魔法藥",
-        quantity: 3,
+        quantity: 1,
       },
       // {
       //   name: "毒藥",
@@ -41,8 +41,23 @@ const itemsSlice = createSlice({
     changeMoney(state, action) {
       state.money = action.payload;
     },
+    resetItems(state, action) {
+      // 初始狀態
+      state.money = 50;
+      state.data = [
+        {
+          name: "補藥",
+          quantity: 2,
+        },
+        {
+          name: "魔法藥",
+          quantity: 1,
+        },
+      ];
+    },
   },
 });
 
-export const { changeItem, changeItems, changeMoney } = itemsSlice.actions;
+export const { changeItem, changeItems, changeMoney, resetItems } =
+  itemsSlice.actions;
 export const itemsSliceReducer = itemsSlice.reducer;
