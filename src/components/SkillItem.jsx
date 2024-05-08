@@ -1,24 +1,57 @@
 import { useSelector, useDispatch } from "react-redux";
 import { addMessage, changeHP, changeMP, changeTurn, changeExecutingCommand, changeEnemyHP, changeEnemyDefeated } from "../store";
-import skillsData from "../data/skills";
-import Swal from "sweetalert2";
 import { useContext } from "react";
 import { StepContext } from "../contexts/step";
+import Swal from "sweetalert2";
+import skillsData from "../data/skills";
+
+// icons
+import { FaFire } from "react-icons/fa";
+import { IoWaterSharp } from "react-icons/io5";
+import { FaRegCircle } from "react-icons/fa";
+import { LuSword } from "react-icons/lu";
+import { GiHealthNormal } from "react-icons/gi";
 
 export default function SkillItem({ name, costMP, type, attributes }) {
   const dispatch = useDispatch();
   const { setCurrentStep } = useContext(StepContext);
 
+  // 各項數據
   const { HP: selfHP, MP: selfMP, ATK: selfATK, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
   const { DEF: enemyDEF, MDEF: enemyMDEF, HP: enemyHP, name: enemyName, weakness: enemyWeakness } = useSelector(state => state.enemies);
   const { inBattle } = useSelector(state => state.battle);
 
-  // 先抓到 skills 列表中的該物件，取得該 skill 的屬性
+  // 先抓到 skills 列表中的該物件，取得該 skill 的資料
   const skill = skillsData.find(skill => skill.name === name);
 
   // 判別該技能當前可否使用
   const canUse = selfMP >= costMP && (inBattle || skill.canUseOutsideBattle);
   const canUseStyle = canUse ? 'font-bold' : 'text-gray-500';
+
+  // 根據不同類別和屬性顯示 icon
+  const Icon = () => {
+    let iconComponent;
+    if (type === 'attack') {
+      if (attributes === 'fire') {
+        iconComponent = <FaFire />;
+      } else if (attributes === 'water') {
+        iconComponent = <IoWaterSharp />;
+      } else if (attributes === 'none') {
+        iconComponent = <FaRegCircle />;
+      }
+    } else if (type === 'physicalAttack') {
+      iconComponent = <LuSword />;
+    } else if (type === 'healHP') {
+      iconComponent = <GiHealthNormal />;
+    }
+
+    return (
+      <div className="flex justify-center items-center mr-1">
+        {iconComponent}
+      </div>
+    )
+  }
+
 
   const handleClick = () => {
     // 如果 MP 不足，則提早 return
@@ -132,7 +165,7 @@ export default function SkillItem({ name, costMP, type, attributes }) {
 
   return (
     <div className="w-3/6 flex justify-between" onClick={handleClick}>
-      <h5 className={`px-2 py-1 ${canUseStyle}`}>{name}</h5>
+      <h5 className={`px-2 py-1 flex ${canUseStyle}`}><Icon />{name}</h5>
       <h5 className={`px-2 py-1 ${canUseStyle}`}>{costMP}</h5>
     </div>
   );
