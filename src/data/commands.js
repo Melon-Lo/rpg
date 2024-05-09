@@ -10,6 +10,7 @@ import { FaMagnifyingGlassLocation } from "react-icons/fa6";
 import { FaShop } from "react-icons/fa6";
 import { FaHotel } from "react-icons/fa6";
 import { FaGear } from "react-icons/fa6";
+import { BsEscape } from "react-icons/bs";
 
 const commands = [
   {
@@ -54,6 +55,11 @@ const commands = [
         command: "系統",
         color: "rose",
         img: FaGear,
+      },
+      {
+        command: "脫逃",
+        color: "purple",
+        img: BsEscape,
       },
     ],
   },

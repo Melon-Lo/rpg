@@ -1,7 +1,7 @@
 import Button from "../components/Button";
 import classes from "../data/classes";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems } from "../store";
+import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems, changeCurrentScene, changeVisitedMazes, changeVisitedMazesChests } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
@@ -78,6 +78,12 @@ export default function CreatePage() {
         dispatch(changeRoleCreated(true));
         // items
         dispatch(resetItems());
+        // 場景
+        dispatch(changeCurrentScene('村莊'));
+        // maze
+        dispatch(changeVisitedMazes([]));
+        dispatch(changeVisitedMazesChests([]));
+
         navigate('/');
 
         // 清空訊息欄

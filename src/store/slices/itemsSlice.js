@@ -39,7 +39,8 @@ const itemsSlice = createSlice({
       state.data = action.payload;
     },
     changeMoney(state, action) {
-      state.money = action.payload;
+      // 錢固定為整數
+      state.money = Math.floor(action.payload);
     },
     resetItems(state, action) {
       // 初始狀態

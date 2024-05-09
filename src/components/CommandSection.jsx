@@ -16,6 +16,7 @@ import DiscoverButton from "./DiscoverButton";
 import HotelButton from "./HotelButton";
 import AttackButton from "./AttackButton";
 import EscapeButton from "./EscapeButton";
+import MazeEscapeButton from "./MazeEscapeButton";
 
 // data
 import commands from "../data/commands";
@@ -142,14 +143,17 @@ export default function CommandSection() {
     // 如果此處沒有可交談對象，則不會出現「交談」
     if (!hasNPC && commandItem.command === '交談') return null;
 
-    // 如果在迷宮內，則不會出現「探險」
+    // 在迷宮內才會出現「探險」
     if (inMaze && commandItem.command === '探險') return null;
 
-    // 如果在迷宮內，則不會出現「系統」
+    // 在迷宮內才會出現「系統」
     if (inMaze && commandItem.command === '系統') return null;
 
-    // 如果不在迷宮中，則不會出現「探索」
+    // 在迷宮中才會出現「探索」
     if (!inMaze && commandItem.command === '探索') return null;
+
+    // 在迷宮中才會出現「探索」
+    if (!inMaze && commandItem.command === '脫逃') return null;
 
     // 如果在迷宮中，則不會出現「交談」和「移動」
     if ((inMaze && commandItem.command === '交談') || (inMaze && commandItem.command === '移動')) return null;
@@ -357,6 +361,9 @@ export default function CommandSection() {
 
         {/* 探險 */}
         { currentStep === '探險' && <DiscoverButton /> }
+
+        {/* 脫逃 */}
+        { currentStep === '脫逃' && <MazeEscapeButton /> }
 
         {/* 系統 */}
         { currentStep === '系統' && !executingCommand && renderedSystemButtons }
