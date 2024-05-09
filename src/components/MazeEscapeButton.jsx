@@ -1,7 +1,7 @@
 import Button from "./Button";
 import Swal from "sweetalert2";
 import { useSelector, useDispatch } from "react-redux";
-import { changeMoney, changeInMaze } from "../store";
+import { addMessage, changeMoney, changeInMaze } from "../store";
 import { useContext } from "react";
 import { StepContext } from "../contexts/step";
 
@@ -29,8 +29,13 @@ export default function MazeEscapeButton() {
 
         Swal.fire({
           title: '從迷宮中脫逃了！',
-          text: '金錢損失了一半',
+          text: '損失一半金錢',
         })
+
+        dispatch(addMessage({
+          type: 'basic',
+          content: '從迷宮中脫逃了！損失一半金錢⋯⋯'
+        }));
       }
     })
   };

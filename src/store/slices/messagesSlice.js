@@ -12,11 +12,15 @@ const messagesSlice = createSlice({
         content: action.payload.content,
       });
     },
+    changeMessages(state, action) {
+      state.messages = action.payload;
+    },
     clearMessages(state, action) {
       state.messages = [];
     },
   },
 });
 
-export const { addMessage, clearMessages } = messagesSlice.actions;
+export const { addMessage, changeMessages, clearMessages } =
+  messagesSlice.actions;
 export const messagesSliceReducer = messagesSlice.reducer;

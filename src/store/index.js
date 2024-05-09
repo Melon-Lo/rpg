@@ -41,6 +41,7 @@ import {
 import {
   messagesSliceReducer,
   addMessage,
+  changeMessages,
   clearMessages,
 } from "./slices/messagesSlice";
 
@@ -119,6 +120,7 @@ export {
 
   // messages,
   addMessage,
+  changeMessages,
   clearMessages,
 
   // battle

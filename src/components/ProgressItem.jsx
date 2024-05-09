@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests } from "../store";
+import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";
@@ -110,6 +110,12 @@ export default function ProgressItem({
         dispatch(changeItems(progressData.items.data));
         dispatch(changeMoney(progressData.items.money));
         dispatch(changeVisitedMazesChests(progressData.visitedMazesChests.visitedMazesChests));
+        dispatch(changeMessages([
+          {
+            type: 'basic',
+            content: '請繼續你的冒險！'
+          }
+        ]));
 
         // 回到主頁
         setShowModal('');
