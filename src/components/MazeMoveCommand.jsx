@@ -5,7 +5,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
-import { changePlayerPosition, addMessage, changeChests, changeItem } from "../store";
+import { changePlayerPosition, addMessage, changeItem, changeVisitedMazesChests } from "../store";
 
 const moves = [
   {
@@ -28,17 +28,19 @@ const moves = [
 
 export default function MazeMoveCommand() {
   const dispatch = useDispatch();
-  const { playerPosition, boss, chests } = useSelector(state => state.maze);
+  const { currentScene } = useSelector(state => state.systemStatus);
+  const { playerPosition, boss, visitedMazesChests } = useSelector(state => state.maze);
+  const chests = visitedMazesChests.find(maze => maze.mazeName === currentScene).chests;
 
   // 得到寶箱
   useEffect(() => {
     const handleGetChest = () => {
       // 我方位置等於任何一個寶箱位置
-      const touchingChest = JSON.stringify(chests.find(chest => chest.position.x === playerPosition.x && chest.position.y === playerPosition.y));
+      const touchingChest = chests.find(chest => chest.position.x === playerPosition.x && chest.position.y === playerPosition.y);
 
       if (touchingChest) {
-        const chestName = JSON.parse(touchingChest).chest;
-        const chestQuantity = JSON.parse(touchingChest).quantity;
+        const chestName = touchingChest.chest;
+        const chestQuantity = touchingChest.quantity;
 
         dispatch(changeItem({
           name: chestName,
@@ -57,7 +59,14 @@ export default function MazeMoveCommand() {
 
         // 同一個地點不會再出現寶箱
         const filteredChests = chests.filter(chest => chest.position.x !== playerPosition.x && chest.position.y !== playerPosition.y);
-        dispatch(changeChests(filteredChests));
+        const existingIndex = visitedMazesChests.findIndex(item => item.mazeName === currentScene);
+        let updatedVisitedMazesChests = [...visitedMazesChests];
+        updatedVisitedMazesChests[existingIndex] = {
+          ...visitedMazesChests[existingIndex],
+          chests: filteredChests,
+        }
+
+        dispatch(changeVisitedMazesChests(updatedVisitedMazesChests));
       }
     };
 

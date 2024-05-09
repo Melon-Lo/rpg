@@ -14,6 +14,9 @@ const systemStatusSlice = createSlice({
       img: "",
       content: "",
     },
+
+    // 已破解的迷宮，寶箱不會再出現
+    visitedMazes: [],
   },
   reducers: {
     changeRoleCreated(state, action) {
@@ -32,6 +35,12 @@ const systemStatusSlice = createSlice({
     changeCurrentDialogue(state, action) {
       state.currentDialogue = action.payload;
     },
+    addVisitedMaze(state, action) {
+      state.visitedMazes = [...state.visitedMazes, action.payload];
+    },
+    changeVisitedMazes(state, action) {
+      state.visitedMazes = action.payload;
+    },
   },
 });
 
@@ -40,5 +49,7 @@ export const {
   changeCurrentScene,
   changeCurrentTalker,
   changeCurrentDialogue,
+  addVisitedMaze,
+  changeVisitedMazes,
 } = systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;

@@ -33,6 +33,8 @@ import {
   changeRoleCreated,
   changeCurrentScene,
   changeCurrentDialogue,
+  addVisitedMaze,
+  changeVisitedMazes,
 } from "./slices/systemStatusSlice";
 
 // messages
@@ -66,8 +68,8 @@ import {
   changeMazeName,
   changePlayerPosition,
   changeEnemies,
-  changeChests,
   changeBoss,
+  changeVisitedMazesChests,
 } from "./slices/mazeSlice";
 
 const store = configureStore({
@@ -101,11 +103,13 @@ export {
   addSkill,
   changeSkills,
   changeCharacterStats,
+  addVisitedMaze,
 
   // systemStatus
   changeRoleCreated,
   changeCurrentScene,
   changeCurrentDialogue,
+  changeVisitedMazes,
 
   // items
   changeItem,
@@ -133,6 +137,6 @@ export {
   changeMazeName,
   changePlayerPosition,
   changeEnemies,
-  changeChests,
   changeBoss,
+  changeVisitedMazesChests,
 };

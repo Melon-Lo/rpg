@@ -43,7 +43,8 @@ export default function ManualModal() {
               ＊迷宮中會有該地區魔王，在畫面中顯示為紅色拱門的圖標。<br />
               ＊只有在戰鬥中被打倒，或是將地區魔王打倒才能離開迷宮。<br />
               ＊迷宮中不可存檔。<br />
-              ＊每次進入迷宮，寶箱和敵人等都會刷新。
+              ＊每次進入迷宮，寶箱和敵人等都會刷新。<br />
+              <b className="text-red-500">＊所有寶箱都只會被開啟一次，開過就不會再有，請特別注意。</b>
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
             <h5 className="text-xl my-2 font-medium">戰鬥</h5>

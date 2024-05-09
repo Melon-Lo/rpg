@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useContext, useEffect, useState } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, changeMazeName, changePlayerPosition, changeEnemies, changeChests, changeBoss, addSkill } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, addVisitedMaze, changeMazeName, changePlayerPosition, changeEnemies, changeBoss } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -33,7 +33,8 @@ export default function MainPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { roleCreated } = useSelector(state => state.systemStatus);
+  // 系統數據
+  const { roleCreated, visitedMazes } = useSelector(state => state.systemStatus);
 
   // contexts
   const { showModal } = useContext(ModalContext);
@@ -45,6 +46,7 @@ export default function MainPage() {
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
   const { money } = useSelector(state => state.items);
+  const { mazeName } = useSelector(state => state.maze);
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -382,7 +384,7 @@ export default function MainPage() {
         dispatch(changeMazeName('洞穴'));
         dispatch(changePlayerPosition(playerPosition));
         dispatch(changeEnemies(enemies));
-        dispatch(changeChests(chests));
+        dispatch(changeChests(chests)); // 已過時
         dispatch(changeBoss(boss));
       }}>
         進入洞穴迷宮
