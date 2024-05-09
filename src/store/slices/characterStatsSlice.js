@@ -21,10 +21,10 @@ const characterStats = createSlice({
     skills: [],
   },
   reducers: {
-    changeStatName(state, action) {
+    changeName(state, action) {
       state.name = action.payload;
     },
-    changeStatClassTitle(state, action) {
+    changeClassTitle(state, action) {
       state.classTitle = action.payload;
     },
     changeHP(state, action) {
@@ -174,8 +174,8 @@ const characterStats = createSlice({
 });
 
 export const {
-  changeStatName,
-  changeStatClassTitle,
+  changeName,
+  changeClassTitle,
   generateStats,
   resetStats,
   changeHP,

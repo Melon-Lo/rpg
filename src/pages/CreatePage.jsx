@@ -1,22 +1,23 @@
 import Button from "../components/Button";
 import classes from "../data/classes";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle, changeStatName, changeStatClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems, changeCurrentScene, changeVisitedMazes, changeVisitedMazesChests } from "../store";
+import { changeName, changeClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems, changeCurrentScene, changeVisitedMazes, changeVisitedMazesChests } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function CreatePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { name, classTitle } = useSelector(state => state.form);
+  const [name, setName] = useState('');
+  const [classTitle, setClassTitle] = useState('');
+
+  // const { name, classTitle } = useSelector(state => state.form);
   const { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
 
   // 每次到 CreatePage 都會回到初始狀態
   useEffect(() => {
-    dispatch(changeName(''));
-    dispatch(changeClassTitle(''));
     dispatch(resetStats());
   }, [])
 
@@ -73,8 +74,8 @@ export default function CreatePage() {
         });
 
         // stat
-        dispatch(changeStatName(name));
-        dispatch(changeStatClassTitle(classTitle));
+        dispatch(changeName(name));
+        dispatch(changeClassTitle(classTitle));
         dispatch(changeRoleCreated(true));
         // items
         dispatch(resetItems());
@@ -103,13 +104,13 @@ export default function CreatePage() {
     // 名字長度不得超過10個字
     if (value.length > 10) return
 
-    dispatch(changeName(value));
+    setName(value);
   };
 
   // 選職業
   const handleSelectClass = (item) => {
+    setClassTitle(item.classTitle);
     dispatch(changeClassTitle(item.classTitle));
-    dispatch(changeStatClassTitle(item.classTitle));
 
     // 當選擇不同的職業時，數值會重設
     if (item.classTitle === classTitle) return;

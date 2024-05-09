@@ -1,12 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-// form
-import { formReducer, changeName, changeClassTitle } from "./slices/formSlice";
-
 // characterStats
 import {
-  changeStatName,
-  changeStatClassTitle,
+  changeName,
+  changeClassTitle,
   characterStatsReducer,
   generateStats,
   resetStats,
@@ -75,7 +72,6 @@ import {
 
 const store = configureStore({
   reducer: {
-    form: formReducer,
     characterStats: characterStatsReducer,
     items: itemsSliceReducer,
     systemStatus: systemStatusSliceReducer,
@@ -89,13 +85,9 @@ const store = configureStore({
 export {
   store,
 
-  // form
+  // characterStats
   changeName,
   changeClassTitle,
-
-  // characterStats
-  changeStatName,
-  changeStatClassTitle,
   generateStats,
   resetStats,
   changeHP,

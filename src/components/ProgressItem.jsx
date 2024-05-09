@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { changeCharacterStats, changeStatName, changeStatClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages } from "../store";
+import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";
@@ -101,8 +101,8 @@ export default function ProgressItem({
     }).then((result) => {
       if (result.isConfirmed) {
         const progressData = JSON.parse(localStorage.getItem(`progressData${index}`));
-        dispatch(changeStatName(progressData.characterStats.name));
-        dispatch(changeStatClassTitle(progressData.characterStats.classTitle));
+        dispatch(changeName(progressData.characterStats.name));
+        dispatch(changeClassTitle(progressData.characterStats.classTitle));
         dispatch(changeCharacterStats({ ...progressData.characterStats }));
         dispatch(changeCurrentScene(progressData.systemStatus.currentScene));
         dispatch(changeVisitedMazes(progressData.systemStatus.visitedMazes));
