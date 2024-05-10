@@ -6,6 +6,7 @@ const enemiesSlice = createSlice({
     name: "",
     img: "",
     isBoss: false,
+    stage: 0,
     HP: 0,
     maxHP: 0,
     ATK: 0,
@@ -24,6 +25,7 @@ const enemiesSlice = createSlice({
         name,
         HP,
         isBoss,
+        stage,
         maxHP,
         ATK,
         DEF,
@@ -40,6 +42,7 @@ const enemiesSlice = createSlice({
       state.name = name;
       state.HP = HP;
       state.isBoss = isBoss;
+      state.stage = stage;
       state.maxHP = maxHP;
       state.ATK = ATK;
       state.DEF = DEF;

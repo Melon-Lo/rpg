@@ -47,10 +47,10 @@ export default function Maze() {
       if (touchingBoss) {
         const bossName = boss.name;
         const currentEnemy = enemiesData.find(enemy => enemy.name === bossName);
-        const { name, img, isBoss, loot, exp, money, weakness } = currentEnemy;
+        const { name, img, isBoss, stage, loot, exp, money, weakness } = currentEnemy;
         const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
 
-        dispatch(changeEnemy({ name, img, isBoss, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
+        dispatch(changeEnemy({ name, img, isBoss, stage, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
         dispatch(changeInBattle(true));
       }
     };

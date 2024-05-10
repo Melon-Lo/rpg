@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useContext, useEffect, useState } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, addVisitedMaze, changeMazeName, changePlayerPosition, changeEnemies, changeBoss } from "../store";
+import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage, addVisitedMaze, changeMazeName, changePlayerPosition, changeEnemies, changeBoss } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -42,7 +42,7 @@ export default function MainPage() {
   // 戰鬥相關數據
   const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
   const selfStats = useSelector(state => state.characterStats);
-  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss } = useSelector(state => state.enemies);
+  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
   const { money } = useSelector(state => state.items);
@@ -224,7 +224,7 @@ export default function MainPage() {
 
           // 隨機獲得戰利品
           const loot = getRandomLoot(enemyLoot);
-          // 如果有獲得戰利品（ 50% 機率）
+          // 如果有獲得戰利品（50% 機率）
           if (loot) {
             lootText = `、${loot.name} * ${loot.quantity}`;
             dispatch(changeItem(loot));
@@ -260,6 +260,8 @@ export default function MainPage() {
             }))
             dispatch(changeCurrentScene('村莊'));
             dispatch(changeInMaze(false));
+
+            dispatch(changeStage(enemyStage + 1));
           };
         }, 3000)
       }

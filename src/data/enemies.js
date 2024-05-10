@@ -92,6 +92,7 @@ const enemies = [
     img: lion,
     weakness: "fire",
     isBoss: true,
+    stage: 1,
     stats: {
       HP: 150,
       maxHP: 150,

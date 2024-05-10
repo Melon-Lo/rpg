@@ -4,7 +4,6 @@ const systemStatusSlice = createSlice({
   name: "systemStatus",
   initialState: {
     // 創立角色
-    // DEV ONLY 為了寫 MainPage 才設為 true，不然預設是 false
     roleCreated: false,
 
     // 一般狀況
@@ -17,6 +16,9 @@ const systemStatusSlice = createSlice({
 
     // 已破解的迷宮，寶箱不會再出現
     visitedMazes: [],
+
+    // 遊戲進行到的階段，不同階段會有不同事件
+    stage: 1,
   },
   reducers: {
     changeRoleCreated(state, action) {
@@ -41,6 +43,9 @@ const systemStatusSlice = createSlice({
     changeVisitedMazes(state, action) {
       state.visitedMazes = action.payload;
     },
+    changeStage(state, action) {
+      state.stage = action.payload;
+    },
   },
 });
 
@@ -51,5 +56,6 @@ export const {
   changeCurrentDialogue,
   addVisitedMaze,
   changeVisitedMazes,
+  changeStage,
 } = systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;
