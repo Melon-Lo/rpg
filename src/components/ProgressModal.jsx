@@ -72,7 +72,7 @@ export default function ProgressModal() {
   return (
     <div className="fixed bg-gray-800/75 inset-0 z-10">
       <div className="relative w-full h-full">
-        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-5/6 rounded-lg overflow-y-hidden`}>
+        <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-${typeColor}-200 w-10/12 h-5/6 rounded-lg overflow-y-hidden max-w-[768px]`}>
           <div className="relative flex flex-col justify-center items-center py-3">
             <h1 className="text-3xl text-gray-800">{titleText}</h1>
             <div onClick={handleCloseModal} className="absolute top-2 right-2">

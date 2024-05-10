@@ -3,17 +3,45 @@ import { FaPlusCircle, FaMinusCircle } from "react-icons/fa";
 import itemsData from "../data/items";
 import Swal from "sweetalert2";
 
-export default function ShopItem({ item, price, total, setTotal, shoppingCart, setShoppingCart }) {
+export default function ShopItem({
+  item,
+  price,
+  total,
+  setTotal,
+  shoppingCart,
+  setShoppingCart,
+  quantityHeld,
+  type,
+}) {
   const [quantity, setQuantity] = useState(0);
+
+  // 切換買賣時所有數據歸 0
+  useEffect(() => {
+    setQuantity(0);
+    setTotal(0)
+  }, [type])
 
   // 增減項目，同時計算總價和修改 shoppingCart
   const handleCalculate = (plusNumber) => {
-    setQuantity(quantity + plusNumber);
+    // 購買
+    if (type === 'buy') {
+      if (plusNumber > 0) {
+        setTotal(total + price);
+      } else if (plusNumber < 0) {
+        setTotal(total - price);
+      }
+      setQuantity(quantity + plusNumber);
+    }
 
-    if (plusNumber > 0) {
-      setTotal(total + price);
-    } else if (plusNumber < 0) {
-      setTotal(total - price);
+    // 販賣
+    if (type === 'sell') {
+      if (plusNumber > 0) {
+        if (quantity + 1 > quantityHeld) return;
+        setTotal(total + price);
+      } else if (plusNumber < 0) {
+        setTotal(total - price);
+      }
+      setQuantity(quantity + plusNumber);
     }
 
     // 先判別 shoppingCart 裡面有沒有該項目
@@ -49,8 +77,9 @@ export default function ShopItem({ item, price, total, setTotal, shoppingCart, s
 
   return (
     <div className="w-full flex justify-between items-center p-3 text-gray-700 even:bg-gray-500/10">
-      <h5 className="w-5/12" onClick={handleShowDetail}>{item}</h5>
-      <h5 className="w-4/12 font-bold">$ {price}</h5>
+      <h5 className="w-3/12" onClick={handleShowDetail}>{item}</h5>
+      <h5 className="w-3/12 font-bold">$ {price}</h5>
+      <h5 className="w-3/12">持有：{quantityHeld}</h5>
       <div className="w-3/12 flex justify-end items-center">
         {/* 只有在大於 0 時才能減少 */}
         { quantity > 0 &&
