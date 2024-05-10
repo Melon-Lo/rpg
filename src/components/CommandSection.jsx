@@ -185,8 +185,9 @@ export default function CommandSection() {
   // 交談（可交談對象們）
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
-
+    // 選出要顯示的對話
     let dialogueIndex = stage - 1;
+    // 根據現在的 stage 來顯示，若更新 stage 後對話沒有變，則停在最新的對話
     if (charItem.dialogues.length < stage) {
       dialogueIndex = charItem.dialogues.length - 1;
     }
@@ -230,9 +231,13 @@ export default function CommandSection() {
   // 移動（場景們）
   const renderedScenes = scenes.map(sceneItem => {
     const sceneName = sceneItem.name;
+    const sceneStage = sceneItem.stage;
 
     // 不能前往當前地點
     if (currentScene === sceneName) return null;
+
+    // 不能前往 stage 還沒到的地方
+    if (sceneStage > stage) return null;
 
     const handleClick = () => {
       // 將場景改為點擊地點
