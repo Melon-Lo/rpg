@@ -273,7 +273,7 @@ export default function CommandSection() {
             setCurrentStep('主頁');
           };
         });
-      } else if (button === '遊戲說明') {
+      } else if (button === '冒險指南') {
         setShowModal('manual');
       }
     };

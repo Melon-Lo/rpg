@@ -14,7 +14,7 @@ export default function ManualModal() {
       <div className="relative w-full h-full">
         <div className={`absolute top-20 left-1/2 -translate-x-1/2 z-20 bg-gray-200 w-10/12 max-w-[1024px] h-5/6 rounded-lg overflow-y-hidden`}>
           <div className="relative flex flex-col justify-center items-center py-5">
-            <h1 className="text-3xl text-gray-800">遊戲說明</h1>
+            <h1 className="text-3xl text-gray-800">冒險指南</h1>
             <div onClick={handleCloseModal} className="absolute top-2 right-2">
               <RxCross1 className="text-2xl text-gray-900" />
             </div>
@@ -64,6 +64,7 @@ export default function ManualModal() {
             <h5 className="text-xl my-2 font-medium">等級與技能</h5>
             <p className="leading-6 text-gray-800">
               ＊經驗值達到當前等級要求經驗值時，則會升級。<br />
+              ＊升級後當前 HP 和 MP 自動補滿。<br />
               ＊升級後各項數值提升，根據不同職業，在特定的等級會學習到特定的技能。
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
@@ -74,6 +75,13 @@ export default function ManualModal() {
               ＊大部分的攻擊魔法都有屬性，少數會是無屬性。<br />
               ＊玩家自身不會有屬性。<br />
               ＊所有敵人都有一個弱點屬性，對其施展該屬性攻擊魔法時傷害會加乘。
+            </p>
+            <div className="w-full h-px bg-gray-400 my-4"></div>
+            <h5 className="text-xl my-2 font-medium">村莊設施</h5>
+            <p className="leading-6 text-gray-800">
+              ＊位於村莊時，會有一些村莊獨有的指令可進行，供玩家補充資源、恢復裝態。<br />
+              ＊「商店」：可買賣各項商品，可購買的品項隨著進度逐漸開放；出售的價格為買進的一半。<br />
+              ＊「旅館」：只需要花 $10 便可使恢復狀態至最佳。
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
             <p className="leading-6 text-gray-800">

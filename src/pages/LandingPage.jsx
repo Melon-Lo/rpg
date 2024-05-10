@@ -41,7 +41,7 @@ export default function LandingPage() {
       <div>
         <Button green className="my-3" onClick={handleGoCreatePage}>新的冒險</Button>
         <Button blue className="my-3" onClick={handleShowProgressModal}>讀取進度</Button>
-        <Button amber className="my-3" onClick={handleShowManualModal}>遊戲說明</Button>
+        <Button amber className="my-3" onClick={handleShowManualModal}>冒險指南</Button>
       </div>
       {showModal === 'progress' && <ProgressModal />}
       {showModal === 'manual' && <ManualModal />}
