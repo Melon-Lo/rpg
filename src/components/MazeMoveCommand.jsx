@@ -9,20 +9,24 @@ import { changePlayerPosition, addMessage, changeItem, changeVisitedMazesChests 
 
 const moves = [
   {
-    direction: 'left',
-    img: FaArrowLeft,
-  },
-  {
     direction: 'up',
     img: FaArrowUp,
+    className: 'top-0 left-1/2 -translate-x-1/2',
   },
   {
     direction: 'down',
     img: FaArrowDown,
+    className: 'bottom-0 left-1/2 -translate-x-1/2',
+  },
+  {
+    direction: 'left',
+    img: FaArrowLeft,
+    className: 'top-1/2 left-0 -translate-y-1/2',
   },
   {
     direction: 'right',
     img: FaArrowRight,
+    className: 'top-1/2 right-0 -translate-y-1/2',
   },
 ]
 
@@ -121,14 +125,18 @@ export default function MazeMoveCommand() {
 
   const renderedMoves = moves.map(move => {
     return (
-      <div key={move.direction} className="w-8 h-8 bg-slate-100 rounded-full mx-1 flex justify-center items-center" onClick={() => handleMove(move.direction)}>
+      <div
+        key={move.direction}
+        className={'absolute w-8 h-8 bg-slate-100 rounded-full flex justify-center items-center shadow-md ' + move.className}
+        onClick={() => handleMove(move.direction)}
+      >
         <move.img />
       </div>
     );
   });
 
   return (
-    <div className="flex">
+    <div className="flex relative w-24 h-24 ml-2">
       {renderedMoves}
     </div>
   );

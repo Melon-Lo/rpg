@@ -25,23 +25,19 @@ export default function ShopItem({
   const handleCalculate = (plusNumber) => {
     // 購買
     if (type === 'buy') {
-      if (plusNumber > 0) {
-        setTotal(total + price);
-      } else if (plusNumber < 0) {
-        setTotal(total - price);
-      }
-      setQuantity(quantity + plusNumber);
+      const newTotal = total + plusNumber * price;
+      const newQuantity = quantity + plusNumber;
+      setTotal(newTotal);
+      setQuantity(newQuantity);
     }
 
     // 販賣
     if (type === 'sell') {
-      if (plusNumber > 0) {
-        if (quantity + 1 > quantityHeld) return;
-        setTotal(total + price);
-      } else if (plusNumber < 0) {
-        setTotal(total - price);
-      }
-      setQuantity(quantity + plusNumber);
+      if (plusNumber > 0 && quantity + 1 > quantityHeld) return;
+      const newTotal = total + plusNumber * price;
+      const newQuantity = quantity + plusNumber;
+      setTotal(newTotal);
+      setQuantity(newQuantity);
     }
 
     // 先判別 shoppingCart 裡面有沒有該項目
