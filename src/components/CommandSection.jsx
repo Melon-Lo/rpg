@@ -22,6 +22,7 @@ import MazeEscapeButton from "./MazeEscapeButton";
 import commands from "../data/commands";
 import scenes from "../data/scenes";
 import systemButtons from "../data/systemButtons";
+import quests from "../data/quests";
 
 // contexts
 import { ModalContext } from "../contexts/modal";
@@ -39,6 +40,9 @@ export default function CommandSection() {
   // 對話相關變數
   const [sentence, setSentence] = useState(0);
   const { stage } = useSelector(state => state.systemStatus);
+
+  // 任務相關變數
+  const { currentQuests, finishedQuests } = useSelector(state => state.systemStatus.quests);
 
   // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
@@ -185,13 +189,29 @@ export default function CommandSection() {
   // 交談（可交談對象們）
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
-    // 選出要顯示的對話
-    let dialogueIndex = stage - 1;
-    // 根據現在的 stage 來顯示，若更新 stage 後對話沒有變，則停在最新的對話
-    if (charItem.dialogues.length < stage) {
-      dialogueIndex = charItem.dialogues.length - 1;
+    let targetDialogue;
+    const quest = quests.find(quest => quest.npc === charItem.name) || '';
+    const questIsFinished = finishedQuests.includes(quest.name);
+
+    // 如果該 NPC 有任務
+    if (quest) {
+      if (!questIsFinished) {
+        targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'start').dialogue;
+      } else {
+        targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'end').dialogue;
+      }
     }
-    const targetDialogue = charItem.dialogues[dialogueIndex].dialogue;
+
+    // 如果該 NPC 沒任務
+    if (!quest) {
+      // 選出要顯示的對話
+      let dialogueIndex = stage - 1;
+      // 根據現在的 stage 來顯示，若更新 stage 後對話沒有變，則停在最新的對話
+      if (charItem.dialogues.length < stage) {
+        dialogueIndex = charItem.dialogues.length - 1;
+      }
+      targetDialogue = charItem.dialogues[dialogueIndex].dialogue;
+    }
 
     // 與人交談
     const handleClick = () => {

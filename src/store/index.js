@@ -33,6 +33,8 @@ import {
   addVisitedMaze,
   changeVisitedMazes,
   changeStage,
+  changeCurrentQuests,
+  addFinishedQuest,
 } from "./slices/systemStatusSlice";
 
 // messages
@@ -105,6 +107,8 @@ export {
   changeCurrentDialogue,
   changeVisitedMazes,
   changeStage,
+  changeCurrentQuests,
+  addFinishedQuest,
 
   // items
   changeItem,

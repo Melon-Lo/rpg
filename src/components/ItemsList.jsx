@@ -18,7 +18,16 @@ export default function ItemsList() {
   const Item = ({ name, quantity }) => {
     // 先抓到 items 列表中的該物件，取得該 item 的屬性
     const item = items.find(item => item.name === name);
+    const canUseStyle = item.canUse ? 'text-gray-800 font-bold' : 'text-gray-600'
+
     const handleClick = () => {
+      if (!item.canUse) {
+        Swal.fire({
+          text: `${item.description}`,
+        });
+        return;
+      }
+
       Swal.fire({
         title: `要使用「${item.name}」嗎？`,
         html: `
@@ -74,8 +83,8 @@ export default function ItemsList() {
 
     return (
       <div className="w-3/6 flex justify-between" onClick={handleClick}>
-        <h5 className="px-2 py-1 font-bold">{name}</h5>
-        <h5 className="px-2 py-1 text-gray-600">x{quantity}</h5>
+        <h5 className={"px-2 py-1 " + canUseStyle}>{name}</h5>
+        <h5 className={"px-2 py-1 " + canUseStyle}>x{quantity}</h5>
       </div>
     );
   };
