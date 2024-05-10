@@ -6,10 +6,10 @@ const classeslevelsSkills = [
   {
     classTitle: "法師",
     levelsSkills: [
-      { level: 2, skill: "治療" },
-      { level: 5, skill: "聲波" },
-      { level: 8, skill: "強聲波" },
-      { level: 12, skill: "滂沱大雨" },
+      { level: 3, skill: "水花" },
+      { level: 5, skill: "落石" },
+      { level: 7, skill: "風暴" },
+      { level: 9, skill: "春風咒" },
     ],
   },
 ];

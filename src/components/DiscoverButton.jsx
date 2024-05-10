@@ -18,7 +18,7 @@ export default function DiscoverButton() {
       title: `確定要進入「${currentScene}」探險嗎？`,
       html: `
         <p>進入迷宮後無法存檔，而且只有打倒地區魔王、戰鬥失敗或脫逃才能離開哦！</p>
-        <p>【注意】脫逃會損失一半金錢、戰鬥失敗會損失一半經驗值</p>
+        <p>【注意】脫逃會損失 50% 金錢、戰鬥失敗會損失 50% 經驗值</p>
       `,
       icon: 'question',
       showCancelButton: true,

@@ -111,7 +111,7 @@ export default function ShopModal() {
   const currentItems = type === 'buy' ? currentShopItems : items;
   const renderedItems = currentItems.map(item => {
     const itemName = type === 'buy' ? item.item : item.name;
-    // 賣價為買價的一半
+    // 賣價為買價的 50% 
     const sellItemPrice = Math.floor(shopsItems.find(shop => shop.shop === currentScene).items.find(item => item.item === itemName).price) / 2;
     const itemPrice = type === 'buy' ? item.price : sellItemPrice;
     const currentHeld = items.find(item => item.name === itemName)?.quantity || 0;

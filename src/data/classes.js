@@ -35,10 +35,10 @@ const classes = [
       maxMDEF: 15,
       minSPD: 2,
       maxSPD: 3,
-      maxHP: 70,
-      maxMP: 35,
+      maxHP: 80,
+      maxMP: 40,
     },
-    initialSkills: ["火焰"],
+    initialSkills: ["火焰", "治療"],
   },
 ];
 

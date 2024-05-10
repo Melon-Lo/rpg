@@ -114,7 +114,7 @@ export default function SkillItem({ name, costMP, type, attributes }) {
           setTimeout(() => {
             dispatch(addMessage({
               type: 'attack',
-              content: `${effectiveText}${enemyName} 受到了 ${damage} 點傷害！`,
+              content: `${effectiveText}${enemyName}受到了 ${damage} 點傷害！`,
             }));
             dispatch(changeEnemyHP(enemyHP - damage));
 
@@ -142,7 +142,7 @@ export default function SkillItem({ name, costMP, type, attributes }) {
           setTimeout(() => {
             dispatch(addMessage({
               type: 'attack',
-              content: `${enemyName} 受到了 ${damage} 點傷害！`,
+              content: `${enemyName}受到了 ${damage} 點傷害！`,
             }));
             dispatch(changeEnemyHP(enemyHP - damage));
 

@@ -27,8 +27,12 @@ const shopsItems = [
         price: 80,
       },
       {
-        item: "究極魔法藥",
+        item: "大師魔法藥",
         price: 200,
+      },
+      {
+        item: "女神之吻",
+        price: 1000,
       },
     ],
   },

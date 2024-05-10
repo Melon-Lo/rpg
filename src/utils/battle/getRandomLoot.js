@@ -1,4 +1,4 @@
-// 戰鬥勝利時，有一半的機率會獲得一種戰利品
+// 戰鬥勝利時，有 50% 的機率會獲得一種戰利品
 function getRandomLoot(loot) {
   const randomNum = Math.random();
   if (randomNum < 0.5) return;

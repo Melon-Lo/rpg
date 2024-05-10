@@ -13,7 +13,7 @@ export default function MazeEscapeButton() {
   const handleClick = () => {
     Swal.fire({
       title: `確定從迷宮中脫逃嗎？`,
-      text: '將損失一半的金錢，且敵人將會重置！',
+      text: '將損失 50% 的金錢，且敵人將會重置！',
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -29,12 +29,12 @@ export default function MazeEscapeButton() {
 
         Swal.fire({
           title: '從迷宮中脫逃了！',
-          text: '損失一半金錢',
+          text: '損失 50% 金錢',
         })
 
         dispatch(addMessage({
           type: 'basic',
-          content: '從迷宮中脫逃了！損失一半金錢⋯⋯'
+          content: '從迷宮中脫逃了！損失 50% 金錢⋯⋯'
         }));
       }
     })

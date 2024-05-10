@@ -224,7 +224,7 @@ export default function MainPage() {
 
           // 隨機獲得戰利品
           const loot = getRandomLoot(enemyLoot);
-          // 如果有獲得戰利品（一半機率）
+          // 如果有獲得戰利品（ 50% 機率）
           if (loot) {
             lootText = `、${loot.name} * ${loot.quantity}`;
             dispatch(changeItem(loot));
@@ -281,7 +281,7 @@ export default function MainPage() {
         setTimeout(() => {
           // HP 留下 1
           dispatch(changeHP(1));
-          // 經驗值減少一半
+          // 經驗值減少 50% 
           dispatch(changeEXP(selfEXP / 2));
           // 回到村莊
           dispatch(changeCurrentScene('村莊'));

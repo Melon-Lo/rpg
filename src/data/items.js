@@ -60,13 +60,33 @@ const items = [
     },
   },
   {
-    name: "究極魔法藥",
+    name: "大師魔法藥",
     type: "healMP",
     description: "使用後全身充滿魔力，可謂神藥。",
     effectDescription: "恢復 MP 200 點",
     effectMessage: "MP 恢復了 200 點",
     effect: (mp) => {
       return mp + 200;
+    },
+  },
+  {
+    name: "大師魔法藥",
+    type: "healMP",
+    description: "使用後全身充滿魔力，可謂神藥。",
+    effectDescription: "恢復 MP 200 點",
+    effectMessage: "MP 恢復了 200 點",
+    effect: (mp) => {
+      return mp + 200;
+    },
+  },
+  {
+    name: "女神之吻",
+    type: "healAll",
+    description: "使用後如重獲新生，達到最完美的狀態。",
+    effectDescription: "恢復 HP & MP 100%",
+    effectMessage: "HP 和 MP 全部恢復了！",
+    effect: (maxValue) => {
+      return maxValue;
     },
   },
   // DEV ONLY 方便自己損血
