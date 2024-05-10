@@ -5,8 +5,6 @@ const systemStatusSlice = createSlice({
   initialState: {
     // 創立角色
     roleCreated: false,
-
-    // 一般狀況
     currentScene: "村莊",
     currentDialogue: {
       talker: "",
@@ -19,6 +17,12 @@ const systemStatusSlice = createSlice({
 
     // 遊戲進行到的階段，不同階段會有不同事件
     stage: 1,
+
+    // 任務
+    quests: {
+      currentQuests: [],
+      finishedQuests: [],
+    },
   },
   reducers: {
     changeRoleCreated(state, action) {

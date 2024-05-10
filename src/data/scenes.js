@@ -92,7 +92,7 @@ const scenes = [
     img: cave,
     stage: 2,
     isDiscoverable: true,
-    recommendedLevel: 4,
+    recommendedLevel: 5,
     characters: [
       {
         name: "山頂洞人",
@@ -100,7 +100,13 @@ const scenes = [
         dialogues: [
           {
             stage: 1,
-            dialogue: ["啊啦估？"],
+            dialogue: [
+              "啊啦咕？",
+              "怪物、恐怖！",
+              "角、壞！",
+              "水、啊啦、怕！",
+              "咕唧！",
+            ],
           },
         ],
       },

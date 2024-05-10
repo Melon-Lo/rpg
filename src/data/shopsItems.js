@@ -29,12 +29,12 @@ const shopsItems = [
       },
       {
         item: "高等魔法藥",
-        stage: 2,
+        stage: 3,
         price: 80,
       },
       {
         item: "大師魔法藥",
-        stage: 3,
+        stage: 4,
         price: 200,
       },
       {
