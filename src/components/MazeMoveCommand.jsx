@@ -62,8 +62,9 @@ export default function MazeMoveCommand() {
         }));
 
         // 同一個地點不會再出現寶箱
-        const filteredChests = chests.filter(chest => chest.position.x !== playerPosition.x && chest.position.y !== playerPosition.y);
+        const filteredChests = chests.filter(chest => chest.position.x !== playerPosition.x || chest.position.y !== playerPosition.y);
         const existingIndex = visitedMazesChests.findIndex(item => item.mazeName === currentScene);
+
         let updatedVisitedMazesChests = [...visitedMazesChests];
         updatedVisitedMazesChests[existingIndex] = {
           ...visitedMazesChests[existingIndex],

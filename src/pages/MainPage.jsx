@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useContext, useEffect, useState } from "react";
-import { changeItem, changeEnemy, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage, addVisitedMaze, changeMazeName, changePlayerPosition, changeEnemies, changeBoss } from "../store";
+import { useContext, useEffect } from "react";
+import { changeItem, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -12,7 +12,6 @@ import CommandSection from "../components/CommandSection";
 import ShopModal from "../components/ShopModal";
 import ProgressModal from "../components/ProgressModal";
 import ManualModal from "../components/ManualModal";
-import Button from "../components/Button";
 
 // data
 import enemiesData from "../data/enemies";
@@ -34,19 +33,18 @@ export default function MainPage() {
   const navigate = useNavigate();
 
   // 系統數據
-  const { roleCreated, visitedMazes } = useSelector(state => state.systemStatus);
+  const { roleCreated } = useSelector(state => state.systemStatus);
 
   // contexts
   const { showModal } = useContext(ModalContext);
 
   // 戰鬥相關數據
-  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
   const selfStats = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
   const { money } = useSelector(state => state.items);
-  const { mazeName } = useSelector(state => state.maze);
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -62,16 +60,6 @@ export default function MainPage() {
   // --------------------------------------------
   // 戰鬥狀態
   // --------------------------------------------
-
-  // DEV ONLY
-  // 敵人出現後，將該敵人的數值傳給 enemiesSlice
-  const handleShowEnemy = () => {
-    const currentEnemy = enemiesData.find(enemy => enemy.name === '蝙蝠');
-    const { name, img, loot, exp, money, weakness } = currentEnemy;
-    const { HP, maxHP, ATK, MATK, DEF, MDEF, SPD } = currentEnemy.stats;
-    dispatch(changeEnemy({ name, img, exp, money, loot, HP, maxHP, ATK, MATK, DEF, MDEF, SPD, weakness }));
-    dispatch(changeInBattle(true));
-  };
 
   // 敵人出現後，由敵我雙方的 SPD 決定先攻
   useEffect(() => {
@@ -251,12 +239,12 @@ export default function MainPage() {
             Swal.fire({
               icon: 'success',
               title: '迷宮被破解了！',
-              text: '已成功打倒地區魔王，返回村莊'
+              text: '已返回村莊！商店已開放新商品、可以去的地方增加了！'
             })
 
             dispatch(addMessage({
               type: 'basic',
-              content: '已破解迷宮，返回村莊'
+              content: '已破解迷宮、返回村莊。商店已開放新商品、可以去的地方增加了！'
             }))
             dispatch(changeCurrentScene('村莊'));
             dispatch(changeInMaze(false));
@@ -363,35 +351,12 @@ export default function MainPage() {
       {showModal === 'manual' && <ManualModal />}
 
       {/* DEV ONLY */}
-      {/* <Button blue onClick={handleShowEnemy}>
-        出現蝙蝠
-      </Button> */}
-
-      {/* DEV ONLY */}
-      {/* <Button blue onClick={() => navigate('create')}>to create</Button> */}
-
-      {/* DEV ONLY */}
       {/* <Button blue onClick={() => dispatch(changeItem({
         name: '補藥',
         quantity: 1,
       }))}>
         加1個補藥
       </Button> */}
-
-      {/* DEV ONLY */}
-      {/* <Button blue onClick={() => {
-        const { initialPlayerPosition: playerPosition, enemies, chests } = mazes.find(maze => maze.mazeName === '洞穴');
-        const boss = mazes.find(maze => maze.mazeName === '洞穴').boss;
-        dispatch(changeInMaze(true));
-        dispatch(changeMazeName('洞穴'));
-        dispatch(changePlayerPosition(playerPosition));
-        dispatch(changeEnemies(enemies));
-        dispatch(changeChests(chests)); // 已過時
-        dispatch(changeBoss(boss));
-      }}>
-        進入洞穴迷宮
-      </Button> */}
-
     </div>
   );
 };

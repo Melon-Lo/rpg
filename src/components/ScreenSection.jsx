@@ -21,7 +21,7 @@ export default function ScreenSection() {
   const { visitedMazesChests } = useSelector(state => state.maze);
   const foundChestsQuantity = totalChestsQuantity - visitedMazesChests.find(maze => maze.mazeName === currentScene)?.chests.length;
   const foundAllChests = foundChestsQuantity === totalChestsQuantity;
-  let chestStyle = foundAllChests ? 'blue' : 'gray';
+  const chestStyle = foundAllChests ? 'blue' : 'gray';
 
   // 戰鬥變數
   const { inBattle } = useSelector(state => state.battle);

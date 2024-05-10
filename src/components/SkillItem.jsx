@@ -6,11 +6,14 @@ import Swal from "sweetalert2";
 import skillsData from "../data/skills";
 
 // icons
+import { FaWind } from "react-icons/fa";
 import { FaFire } from "react-icons/fa";
 import { IoWaterSharp } from "react-icons/io5";
+import { GiStoneBlock } from "react-icons/gi";
 import { FaRegCircle } from "react-icons/fa";
-import { LuSword } from "react-icons/lu";
 import { GiHealthNormal } from "react-icons/gi";
+import { LuSword } from "react-icons/lu";
+
 
 export default function SkillItem({ name, costMP, type, attributes }) {
   const dispatch = useDispatch();
@@ -32,10 +35,14 @@ export default function SkillItem({ name, costMP, type, attributes }) {
   const Icon = () => {
     let iconComponent;
     if (type === 'attack') {
-      if (attributes === 'fire') {
+      if (attributes === 'wind') {
+        iconComponent = <FaWind />;
+      } else if (attributes === 'fire') {
         iconComponent = <FaFire />;
       } else if (attributes === 'water') {
         iconComponent = <IoWaterSharp />;
+      } else if (attributes === 'earth') {
+        iconComponent = <GiStoneBlock />;
       } else if (attributes === 'none') {
         iconComponent = <FaRegCircle />;
       }

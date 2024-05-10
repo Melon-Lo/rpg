@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages } from "../store";
+import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";
@@ -25,7 +25,7 @@ export default function ProgressItem({
   // 取得所有的資料
   const { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills } = useSelector(state => state.characterStats);
   const { money: currentMoney, data } = useSelector(state => state.items);
-  const { currentScene: scene, visitedMazes } = useSelector(state => state.systemStatus);
+  const { currentScene: scene, visitedMazes, stage } = useSelector(state => state.systemStatus);
   const { visitedMazesChests } = useSelector(state => state.maze);
   const { setShowModal } = useContext(ModalContext);
 
@@ -60,7 +60,7 @@ export default function ProgressItem({
         const progressData = {
           characterStats: { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills },
           items: { money: currentMoney, data },
-          systemStatus: { currentScene: scene, visitedMazes },
+          systemStatus: { currentScene: scene, visitedMazes, stage },
           currentTime: { currentTime },
           visitedMazesChests: { visitedMazesChests },
         };
@@ -106,6 +106,7 @@ export default function ProgressItem({
         dispatch(changeCharacterStats({ ...progressData.characterStats }));
         dispatch(changeCurrentScene(progressData.systemStatus.currentScene));
         dispatch(changeVisitedMazes(progressData.systemStatus.visitedMazes));
+        dispatch(changeStage(progressData.systemStatus.stage));
         dispatch(changeSkills(progressData.characterStats.skills));
         dispatch(changeItems(progressData.items.data));
         dispatch(changeMoney(progressData.items.money));

@@ -59,6 +59,7 @@ const scenes = [
     img: forest,
     stage: 1,
     isDiscoverable: true,
+    recommendedLevel: 1,
     characters: [
       {
         name: "精靈",
@@ -91,6 +92,7 @@ const scenes = [
     img: cave,
     stage: 2,
     isDiscoverable: true,
+    recommendedLevel: 4,
     characters: [
       {
         name: "山頂洞人",

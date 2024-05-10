@@ -3,22 +3,24 @@ import { addMessage, changeInMaze, changeBoss, changeMazeName, changePlayerPosit
 import Button from "./Button";
 import Swal from "sweetalert2";
 import mazes from "../data/mazes";
-
 import { useContext } from "react";
 import { StepContext } from "../contexts/step";
+import scenes from "../data/scenes";
 
 export default function DiscoverButton() {
   const dispatch = useDispatch();
   const { currentScene, visitedMazes } = useSelector(state => state.systemStatus);
   const { visitedMazesChests } = useSelector(state => state.maze);
   const { setCurrentStep } = useContext(StepContext);
+  const recommendedLevel = scenes.find(scene => scene.name === currentScene).recommendedLevel;
 
   const handleClick = () => {
     Swal.fire({
       title: `確定要進入「${currentScene}」探險嗎？`,
       html: `
+        <p>【建議等級：${recommendedLevel}】</p>
         <p>進入迷宮後無法存檔，而且只有打倒地區魔王、戰鬥失敗或脫逃才能離開哦！</p>
-        <p>【注意】脫逃會損失 50% 金錢、戰鬥失敗會損失 50% 經驗值</p>
+        <p>脫逃會損失 50% 金錢、戰鬥失敗會損失 50% 經驗值</p>
       `,
       icon: 'question',
       showCancelButton: true,

@@ -81,7 +81,7 @@ export default function ManualModal() {
             <h5 className="text-xl my-2 font-medium">村莊設施</h5>
             <p className="leading-6 text-gray-800">
               ＊位於村莊時，會有一些村莊獨有的指令可進行，供玩家補充資源、恢復裝態。<br />
-              ＊「商店」：可買賣各項商品，可購買的品項隨著進度逐漸開放；出售的價格為買進的一半。<br />
+              ＊「商店」：可買賣各項商品，可購買的品項隨著遊戲進程逐漸開放；出售的價格為買進的一半。<br />
               ＊「旅館」：只需要花 $10 便可使恢復狀態至最佳。
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
