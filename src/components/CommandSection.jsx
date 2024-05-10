@@ -38,6 +38,7 @@ export default function CommandSection() {
 
   // 對話相關變數
   const [sentence, setSentence] = useState(0);
+  const { stage } = useSelector(state => state.systemStatus);
 
   // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
@@ -185,23 +186,29 @@ export default function CommandSection() {
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
 
+    let dialogueIndex = stage - 1;
+    if (charItem.dialogues.length < stage) {
+      dialogueIndex = charItem.dialogues.length - 1;
+    }
+    const targetDialogue = charItem.dialogues[dialogueIndex].dialogue;
+
     // 與人交談
     const handleClick = () => {
       // 將交談對象設定為點擊對象
       dispatch(changeCurrentDialogue({
         talker: charItem.name,
         img: charItem.img,
-        content: charItem.dialogue
+        content: targetDialogue
       }));
 
       // 點擊人物後顯示第一句話，剩下的交給 NextButton 處理
       dispatch(addMessage({
         type: 'basic',
-        content: `${charItem.name}：「${charItem.dialogue[0]}」`,
+        content: `${charItem.name}：「${targetDialogue[0]}」`,
       }));
 
       // 如果只有一句對話，則點擊後馬上跳回主頁，不會顯示下一頁
-      if (charItem.dialogue.length === 1) {
+      if (targetDialogue.length === 1) {
         setCurrentStep('主頁');
       // 如果對話不只一句，則句子往下走
       } else {

@@ -8,11 +8,9 @@ import { StepContext } from "../contexts/step";
 export default function NextButton({ sentence, setSentence }) {
   const dispatch = useDispatch();
   const { setCurrentStep } = useContext(StepContext);
-
-  const talker = useSelector(state => state.systemStatus.currentDialogue.talker);
-  const content = useSelector(state => state.systemStatus.currentDialogue.content);
-  const contentLength = useSelector(state => state.systemStatus.currentDialogue.content.length);
-
+  const { talker, content } = useSelector(state => state.systemStatus.currentDialogue);
+  const contentLength = content.length;
+  const { stage } = useSelector(state => state.systemStatus);
 
   const handleClick = () => {
     dispatch(addMessage({
