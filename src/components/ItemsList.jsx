@@ -14,14 +14,10 @@ export default function ItemsList() {
   const { HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, name: selfName } = useSelector(state => state.characterStats);
   const { inBattle } = useSelector(state => state.battle);
 
-  console.log(itemsData);
-
   // 查看、使用物品
   const Item = ({ name, quantity }) => {
     // 先抓到 items 列表中的該物件，取得該 item 的屬性
     const item = items.find(itemData => itemData.name === name);
-    console.log(item);
-
     const canUseStyle = item.canUse ? 'text-gray-800 font-bold' : 'text-gray-600'
 
     const handleClick = () => {
