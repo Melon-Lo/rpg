@@ -106,6 +106,12 @@ const items = [
     type: "quest",
     description: "彈力十足的皮球，上面的花紋鮮豔活潑。",
   },
+  {
+    name: "獅子的鬃毛",
+    canUse: false,
+    type: "quest",
+    description: "強者的象徵。",
+  },
   // DEV ONLY 方便自己損血
   // {
   //   name: "毒藥",

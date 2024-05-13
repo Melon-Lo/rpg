@@ -211,9 +211,10 @@ export default function MainPage() {
           dispatch(changeEXP(selfEXP + enemyEXP));
           dispatch(changeMoney(money + enemyMoney));
 
-          // 隨機獲得戰利品
-          const loot = getRandomLoot(enemyLoot);
-          // 如果有獲得戰利品（50% 機率）
+          // 如果敵人是BOSS，則一定會獲得戰利品；如果不是則 50% 機率獲得
+          const loot = enemyIsBoss ? getRandomLoot(enemyLoot, 1) : getRandomLoot(enemyLoot);
+
+          // 如果有獲得戰利品，多出提示文字
           if (loot) {
             lootText = `、${loot.name} * ${loot.quantity}`;
             dispatch(changeItem(loot));

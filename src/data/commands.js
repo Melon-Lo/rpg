@@ -24,7 +24,7 @@ const commands = [
       },
       {
         command: "探索",
-        color: "stone",
+        color: "emerald",
         img: GiMaze,
       },
       {

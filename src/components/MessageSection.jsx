@@ -43,7 +43,7 @@ export default function MessageSection() {
   return (
     // 包兩層，flex 才不會跟 overflow 互相影響
     <div id="message-section" className="w-11/12 h-16 bg-slate-200 rounded-md my-1 px-2 py-1 flex flex-col justify-end">
-      <div id="messages" className="overflow-y-scroll">
+      <div id="messages" className="overflow-y-scroll overflow-x-hidden">
         {renderedMessages}
       </div>
     </div>

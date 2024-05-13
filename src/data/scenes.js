@@ -8,6 +8,7 @@ import elder from "../assets/images/npcs/elder.png";
 import elf from "../assets/images/npcs/elf.png";
 import caveman from "../assets/images/npcs/caveman.png";
 import villager from "../assets/images/npcs/villager.png";
+import kid from "../assets/images/npcs/kid.png";
 
 const scenes = [
   {
@@ -34,23 +35,27 @@ const scenes = [
       {
         name: "村民",
         img: villager,
-        dialogues: [
-          {
-            stage: 1,
-            dialogue: [
-              "聽說附近森林最近有許多生物在作亂。",
-              "唉⋯⋯不知道何時村莊才能安寧一點。",
-            ],
-          },
-          {
-            stage: 2,
-            dialogue: [
-              "聽說森林裡這幾天平靜了許多。",
-              "不知道是發生什麼事？",
-              "不過很好，這樣大家也能安心一點。",
-            ],
-          },
-        ],
+        // dialogues: [
+        //   {
+        //     stage: 1,
+        //     dialogue: [
+        //       "聽說附近森林最近有許多生物在作亂。",
+        //       "唉⋯⋯不知道何時村莊才能安寧一點。",
+        //     ],
+        //   },
+        //   {
+        //     stage: 2,
+        //     dialogue: [
+        //       "聽說森林裡這幾天平靜了許多。",
+        //       "不知道是發生什麼事？",
+        //       "不過很好，這樣大家也能安心一點。",
+        //     ],
+        //   },
+        // ],
+      },
+      {
+        name: "小男孩",
+        img: kid,
       },
     ],
   },

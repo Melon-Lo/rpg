@@ -94,7 +94,7 @@ const enemies = [
     isBoss: true,
     stage: 1,
     stats: {
-      HP: 150,
+      HP: 1,
       maxHP: 150,
       ATK: 13,
       DEF: 5,
@@ -106,7 +106,7 @@ const enemies = [
     money: 80,
     loot: [
       {
-        name: "補藥",
+        name: "獅子的鬃毛",
         quantity: 1,
       },
     ],
