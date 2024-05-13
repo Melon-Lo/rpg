@@ -8,6 +8,7 @@ import { changeItem, changeMoney } from "../store";
 import { ModalContext } from "../contexts/modal";
 import { StepContext } from "../contexts/step";
 import shopsItems from "../data/shopsItems";
+import itemsData from "../data/items";
 
 export default function ShopModal() {
   const dispatch = useDispatch();
@@ -110,7 +111,7 @@ export default function ShopModal() {
 
   // 購買
   const renderedBuyItems = currentShopItems.map(item => {
-    const itemName = type === 'buy' ? item.item : item.name;
+    const itemName = item.item;
     const currentHeld = items.find(item => item.name === itemName)?.quantity || 0;
 
     // 如果還沒到達特定 stage，不會販賣該品項
@@ -134,8 +135,13 @@ export default function ShopModal() {
   // 販賣
   const renderedSellItems = items.map(item => {
     const itemName = item.name;
+
+    // 任務道具不能販賣
+    const sellItemType = itemsData.find(itemData => itemData.name === itemName).type;
+    if (sellItemType === 'quest') return null;
+
     // 賣價為買價的 50%
-    const sellItemPrice = Math.floor(shopsItems.find(shop => shop.shop === currentScene).items.find(item => item.item === itemName).price) / 2;
+    const sellItemPrice = Math.floor((shopsItems.find(shop => shop.shop === currentScene).items.find(item => item.item === itemName).price) / 2);
 
     return (
       <ShopItem
