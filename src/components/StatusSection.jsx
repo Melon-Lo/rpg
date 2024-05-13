@@ -1,13 +1,30 @@
 import { useSelector } from "react-redux";
 import { RiCoinsLine } from "react-icons/ri";
 import StatusBar from "./StatusBar";
+import { useEffect, useState } from "react";
 
 export default function StatusSection() {
   const { name, classTitle, level, HP, maxHP, MP, maxMP, exp, expToNextLevel } = useSelector(state => state.characterStats);
   const { money } = useSelector(state => state.items);
 
+  const [prevHP, setPrevHP] = useState(HP);
+  const [hurtStyle, setHurtStyle] = useState('');
+
+  // 受傷動畫
+  useEffect(() => {
+    if (HP < prevHP) {
+      setHurtStyle('animate-shake');
+
+      setTimeout(() => {
+        setHurtStyle('');
+      }, 500)
+    }
+
+    setPrevHP(HP);
+  }, [HP, prevHP])
+
   return (
-    <section id="status-section" className="w-11/12 flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded my-1">
+    <section id="status-section" className={`w-11/12 flex flex-col items-end px-3 text-gray-800 border-2 border-gray-500 rounded my-1 ` + hurtStyle}>
       <div className="flex justify-between items-center w-full">
         <div className="w-4/12">
           <div>

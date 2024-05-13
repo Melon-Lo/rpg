@@ -137,11 +137,11 @@ export default function ShopModal() {
     const itemName = item.name;
 
     // 任務道具不能販賣
-    const sellItemType = itemsData.find(itemData => itemData.name === itemName).type;
-    if (sellItemType === 'quest') return null;
+    const sellItemType = itemsData.find(itemData => itemData.name === itemName)?.type;
+    if (sellItemType && sellItemType === 'quest') return null;
 
     // 賣價為買價的 50%
-    const sellItemPrice = Math.floor((shopsItems.find(shop => shop.shop === currentScene).items.find(item => item.item === itemName).price) / 2);
+    const sellItemPrice = Math.floor((shopsItems.find(shop => shop.shop === currentScene).items.find(item => item.item === itemName).price) / 2) || null;
 
     return (
       <ShopItem

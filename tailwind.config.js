@@ -2,7 +2,19 @@
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"], // 修改這行
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        shake: "shake 0.1s linear infinite",
+      },
+      keyframes: {
+        shake: {
+          "0%": { transform: "translate(-5px, -5px)", background: "pink" },
+          "50%": { transform: "translate(3px, 7px)" },
+          "75%": { transform: "translate(-1px, -5px)" },
+          "100%": { transform: "translate(5px, -3px)", background: "white" },
+        },
+      },
+    },
   },
   plugins: [],
   // 確保這些樣式可以正常顯示
