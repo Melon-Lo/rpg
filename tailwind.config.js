@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       animation: {
         shake: "shake 0.1s linear infinite",
+        enemyShake: "enemyShake 0.1s linear infinite",
       },
       keyframes: {
         shake: {
@@ -12,6 +13,12 @@ module.exports = {
           "50%": { transform: "translate(3px, 7px)" },
           "75%": { transform: "translate(-1px, -5px)" },
           "100%": { transform: "translate(5px, -3px)", background: "white" },
+        },
+        enemyShake: {
+          "0%": { transform: "translate(-5px, -5px)", opacity: 0 },
+          "50%": { transform: "translate(3px, 7px)" },
+          "75%": { transform: "translate(-1px, -5px)" },
+          "100%": { transform: "translate(5px, -3px)", opacity: 1 },
         },
       },
     },

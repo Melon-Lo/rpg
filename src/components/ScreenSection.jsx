@@ -1,5 +1,5 @@
 import { GiLockedChest } from "react-icons/gi";
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMessage } from '../store';
 import StatusBar from './StatusBar';
@@ -26,6 +26,23 @@ export default function ScreenSection() {
   // 戰鬥變數
   const { inBattle } = useSelector(state => state.battle);
   const { isBoss } = useSelector(state => state.enemies);
+
+    // 動畫相關變數
+  const [prevEnemyHP, setPrevEnemyHP] = useState(currentEnemyHP);
+  const [hurtStyle, setHurtStyle] = useState('');
+
+  // 受傷動畫
+  useEffect(() => {
+    if (currentEnemyHP < prevEnemyHP) {
+      setHurtStyle('animate-enemyShake');
+
+      setTimeout(() => {
+        setHurtStyle('');
+      }, 500)
+    }
+
+    setPrevEnemyHP(currentEnemyHP);
+  }, [currentEnemyHP, prevEnemyHP])
 
   // 每當出現敵人時，顯示訊息
   useEffect(() => {
@@ -78,7 +95,7 @@ export default function ScreenSection() {
             {/* 戰鬥狀態時，顯示敵人 */}
             { inBattle &&
               <>
-                <img className="w-full h-full object-contain" src={currentEnemyImgSrc} alt="npc-img" />
+                <img className={`w-full h-full object-contain ` + hurtStyle} src={currentEnemyImgSrc} alt="npc-img" />
                 <div className="absolute bottom-2 w-full px-3">
                   <StatusBar type="HP" color="red" currentValue={currentEnemyHP} maxValue={currentEnemyMaxHP} />
                 </div>

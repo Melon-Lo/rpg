@@ -7,6 +7,7 @@ export default function StatusSection() {
   const { name, classTitle, level, HP, maxHP, MP, maxMP, exp, expToNextLevel } = useSelector(state => state.characterStats);
   const { money } = useSelector(state => state.items);
 
+  // 動畫相關變數
   const [prevHP, setPrevHP] = useState(HP);
   const [hurtStyle, setHurtStyle] = useState('');
 
