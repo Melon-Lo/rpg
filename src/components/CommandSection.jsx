@@ -253,7 +253,7 @@ export default function CommandSection() {
     return <Button
       key={charItem.name}
       blue
-      className="mx-1"
+      className="m-1"
       onClick={handleClick}
     >
       {charItem.name}
@@ -353,7 +353,7 @@ export default function CommandSection() {
       <Button
         key={sceneName}
         green
-        className="mx-1"
+        className="m-1"
         onClick={handleClick}
       >
         {sceneName}
@@ -388,7 +388,7 @@ export default function CommandSection() {
     };
 
     return (
-      <Button onClick={handleClick} className="mx-1" rose key={button}>{button}</Button>
+      <Button onClick={handleClick} className="m-1" rose key={button}>{button}</Button>
     );
   });
 

@@ -85,6 +85,12 @@ export default function ManualModal() {
               ＊「旅館」：只需要花 $10 便可使恢復狀態至最佳。
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
+            <h5 className="text-xl my-2 font-medium">任務</h5>
+            <p className="leading-6 text-gray-800">
+              ＊有些 NPC 可以承接任務，任務內容各異，有些很明確、有些則需要動點腦才能完成，完成後記得跟原本的 NPC 回報。<br />
+              ＊獎勵通常都很不錯，所以當個熱於助人的冒險者吧！<br />
+            </p>
+            <div className="w-full h-px bg-gray-400 my-4"></div>
             <p className="leading-6 text-gray-800">
               感謝您遊玩好玩的RPG，此遊戲由 Melon Lo 獨立設計與製作，部分素材來自網路。<br />
               如果有任何的建議或是想要交流，歡迎與我聯絡～<br />
