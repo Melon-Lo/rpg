@@ -94,7 +94,7 @@ const enemies = [
     isBoss: true,
     stage: 1,
     stats: {
-      HP: 1,
+      HP: 150,
       maxHP: 150,
       ATK: 13,
       DEF: 5,
