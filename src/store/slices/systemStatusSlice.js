@@ -20,8 +20,9 @@ const systemStatusSlice = createSlice({
 
     // 任務
     quests: {
-      currentQuests: [],
-      finishedQuests: [],
+      finishingQuest: false,
+      currentQuests: [], // 整包 quest
+      finishedQuests: [], // 整包 quest
     },
   },
   reducers: {
@@ -50,6 +51,9 @@ const systemStatusSlice = createSlice({
     changeStage(state, action) {
       state.stage = action.payload;
     },
+    changeFinishingQuest(state, action) {
+      state.quests.finishingQuest = action.payload;
+    },
     changeCurrentQuests(state, action) {
       state.quests.currentQuests = action.payload;
     },
@@ -70,6 +74,7 @@ export const {
   addVisitedMaze,
   changeVisitedMazes,
   changeStage,
+  changeFinishingQuest,
   changeCurrentQuests,
   addFinishedQuest,
 } = systemStatusSlice.actions;

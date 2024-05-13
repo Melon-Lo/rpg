@@ -1,7 +1,9 @@
 const quests = [
   {
-    name: "幫村民在森林裡找皮球",
+    quest: "幫村民在森林裡找皮球",
     npc: "村民",
+    requirements: [{ type: "item", content: [{ name: "皮球", quantity: 1 }] }],
+    rewards: [{ type: "item", content: [{ name: "厲害補藥", quantity: 3 }] }],
     dialogues: [
       {
         timing: "start",
@@ -20,11 +22,7 @@ const quests = [
         dialogue: ["真的嗎？謝謝你！", "那就麻煩你了，請注意安全！"],
       },
       {
-        timing: "reject",
-        dialogue: ["好吧，畢竟森林那麼危險，", "不好意思打擾你了。"],
-      },
-      {
-        timing: "notFinish",
+        timing: "doing",
         dialogue: ["找到皮球了嗎？", "森林那麼大，一定要注意安全。"],
       },
       {
@@ -43,7 +41,6 @@ const quests = [
         ],
       },
     ],
-    rewards: [{ name: "補藥", quantity: 1 }],
   },
 ];
 

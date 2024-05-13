@@ -2,7 +2,7 @@ import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { addMessage, changeCurrentScene, changeCurrentDialogue } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeCurrentQuests } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -39,7 +39,7 @@ export default function CommandSection() {
 
   // 對話相關變數
   const [sentence, setSentence] = useState(0);
-  const { stage } = useSelector(state => state.systemStatus);
+  const { stage, currentDialogue } = useSelector(state => state.systemStatus);
 
   // 任務相關變數
   const { currentQuests, finishedQuests } = useSelector(state => state.systemStatus.quests);
@@ -191,13 +191,23 @@ export default function CommandSection() {
   const renderedCharacters = currentCharacters.map(charItem => {
     let targetDialogue;
     const quest = quests.find(quest => quest.npc === charItem.name) || '';
-    const questIsFinished = finishedQuests.includes(quest.name);
+    const questIsDoing = currentQuests.includes(quest);
+    const questIsFinished = finishedQuests.includes(quest);
 
     // 如果該 NPC 有任務
     if (quest) {
-      if (!questIsFinished) {
+      // 未承接任務
+      if (!questIsFinished && !questIsDoing) {
         targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'start').dialogue;
-      } else {
+      }
+
+      // 已承接，未完成任務
+      if (!questIsFinished && questIsDoing) {
+        targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'doing').dialogue;
+      }
+
+      // 已完成任務
+      if (questIsFinished) {
         targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'end').dialogue;
       }
     }
@@ -246,7 +256,72 @@ export default function CommandSection() {
     >
       {charItem.name}
     </Button>;
-  })
+  });
+
+  // 承接任務的當下，自動跳出對話
+  useEffect(() => {
+    const quest = currentQuests.find(quest => quest.npc === currentDialogue.talker) || null;
+
+    // 防止沒任務時跳出
+    if (!quest) return;
+
+    const targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'accept').dialogue;
+
+    dispatch(changeCurrentDialogue({
+      talker: currentDialogue.talker,
+      img: currentDialogue.img,
+      content: targetDialogue
+    }));
+
+    // 點擊人物後顯示第一句話，剩下的交給 NextButton 處理
+    dispatch(addMessage({
+      type: 'basic',
+      content: `${currentDialogue.talker}：「${targetDialogue[0]}」`,
+    }));
+
+    // 如果只有一句對話，則點擊後馬上跳回主頁，不會顯示下一頁
+    if (targetDialogue.length === 1) {
+      setCurrentStep('主頁');
+    // 如果對話不只一句，則句子往下走
+    } else {
+      setSentence(sentence + 1);
+      setCurrentStep('talking');
+    }
+  }, [currentQuests])
+
+  // 完成任務的當下，自動跳出對話
+  useEffect(() => {
+    const quest = currentQuests.find(quest => quest.npc === currentDialogue.talker) || null;
+
+    // 防止沒任務時跳出
+    if (!quest) return;
+
+    const targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'finish').dialogue;
+
+    dispatch(changeCurrentDialogue({
+      talker: currentDialogue.talker,
+      img: currentDialogue.img,
+      content: targetDialogue
+    }));
+
+    const updatedQuests = currentQuests.filter(questItem => questItem !== quest);
+    dispatch(changeCurrentQuests(updatedQuests));
+
+    // 顯示第一句話，剩下的交給 NextButton 處理
+    dispatch(addMessage({
+      type: 'basic',
+      content: `${currentDialogue.talker}：「${targetDialogue[0]}」`,
+    }));
+
+    // 如果只有一句對話，則點擊後馬上跳回主頁，不會顯示下一頁
+    if (targetDialogue.length === 1) {
+      setCurrentStep('主頁');
+    // 如果對話不只一句，則句子往下走
+    } else {
+      setSentence(sentence + 1);
+      setCurrentStep('talking');
+    }
+  }, [finishedQuests])
 
   // 移動（場景們）
   const renderedScenes = scenes.map(sceneItem => {

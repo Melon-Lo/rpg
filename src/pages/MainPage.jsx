@@ -12,6 +12,7 @@ import CommandSection from "../components/CommandSection";
 import ShopModal from "../components/ShopModal";
 import ProgressModal from "../components/ProgressModal";
 import ManualModal from "../components/ManualModal";
+import Button from "../components/Button";
 
 // data
 import enemiesData from "../data/enemies";
@@ -351,12 +352,12 @@ export default function MainPage() {
       {showModal === 'manual' && <ManualModal />}
 
       {/* DEV ONLY */}
-      {/* <Button blue onClick={() => dispatch(changeItem({
-        name: '補藥',
+      <Button blue onClick={() => dispatch(changeItem({
+        name: '皮球',
         quantity: 1,
       }))}>
-        加1個補藥
-      </Button> */}
+        加1個皮球
+      </Button>
     </div>
   );
 };

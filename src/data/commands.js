@@ -11,6 +11,7 @@ import { FaShop } from "react-icons/fa6";
 import { FaHotel } from "react-icons/fa6";
 import { FaGear } from "react-icons/fa6";
 import { BsEscape } from "react-icons/bs";
+import { FaListAlt } from "react-icons/fa";
 
 const commands = [
   {
@@ -45,6 +46,11 @@ const commands = [
         command: "狀態",
         color: "teal",
         img: FaPerson,
+      },
+      {
+        command: "任務",
+        color: "neutral",
+        img: FaListAlt,
       },
       {
         command: "探險",
