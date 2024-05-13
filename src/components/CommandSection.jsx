@@ -8,6 +8,7 @@ import { addMessage, changeCurrentScene, changeCurrentDialogue, changeCurrentQue
 import CommandItem from "./CommandItem";
 import ItemsList from "./ItemsList";
 import SkillsList from "./SkillsList";
+import QuestsList from "./QuestsList";
 import Button from "./Button";
 import CharacterStatsList from "./CharacterStatsList";
 import MazeMoveCommand from "./MazeMoveCommand";
@@ -459,6 +460,9 @@ export default function CommandSection() {
 
         {/* 狀態 */}
         { currentStep === '狀態' && <CharacterStatsList /> }
+
+        {/* 任務 */}
+        { currentStep === '任務' && <QuestsList /> }
 
         {/* 迷宮 */}
         { currentStep === '探索' && <MazeMoveCommand /> }
