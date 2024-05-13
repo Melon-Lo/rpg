@@ -33,7 +33,7 @@ const mazes = [
       { chest: "魔法藥", quantity: 1, position: { x: 3, y: 3 } },
       { chest: "魔法藥", quantity: 1, position: { x: 2, y: 2 } },
       { chest: "補藥", quantity: 1, position: { x: 5, y: 2 } },
-      { chest: "厲害補藥", quantity: 1, position: { x: 5, y: 4 } },
+      { chest: "高級補藥", quantity: 1, position: { x: 5, y: 4 } },
     ],
   },
 ];
