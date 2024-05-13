@@ -57,6 +57,9 @@ const systemStatusSlice = createSlice({
     changeCurrentQuests(state, action) {
       state.quests.currentQuests = action.payload;
     },
+    changeFinishedQuests(state, action) {
+      state.quests.finishedQuests = action.payload;
+    },
     addFinishedQuest(state, action) {
       state.quests.finishedQuests = [
         ...state.quests.finishedQuests,
@@ -76,6 +79,7 @@ export const {
   changeStage,
   changeFinishingQuest,
   changeCurrentQuests,
+  changeFinishedQuests,
   addFinishedQuest,
 } = systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;

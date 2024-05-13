@@ -34,8 +34,8 @@ export default function NextButton({ sentence, setSentence }) {
       if (!quest) return;
 
       // 以下是有任務的狀態
-      const questIsDoing = currentQuests.includes(quest);
-      const questIsFinished = finishedQuests.includes(quest);
+      const questIsDoing = currentQuests.some(questItem => questItem.quest === quest.quest);
+      const questIsFinished = finishedQuests.some(questItem => questItem.quest === quest.quest);
       const questRequiredItems = quest.requirements.find(requirement => requirement.type === 'item').content || null;
       const haveRequiredItems = currentItems.some(itemA => {
         return questRequiredItems.some(itemB => itemB.name === itemA.name && itemB.quantity === itemA.quantity) || null;

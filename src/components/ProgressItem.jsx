@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage } from "../store";
+import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage, changeCurrentQuests, addFinishedQuests, changeFinishedQuests } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";
@@ -26,6 +26,7 @@ export default function ProgressItem({
   const { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills } = useSelector(state => state.characterStats);
   const { money: currentMoney, data } = useSelector(state => state.items);
   const { currentScene: scene, visitedMazes, stage } = useSelector(state => state.systemStatus);
+  const { currentQuests, finishedQuests } = useSelector(state => state.systemStatus.quests);
   const { visitedMazesChests } = useSelector(state => state.maze);
   const { setShowModal } = useContext(ModalContext);
 
@@ -63,6 +64,7 @@ export default function ProgressItem({
           systemStatus: { currentScene: scene, visitedMazes, stage },
           currentTime: { currentTime },
           visitedMazesChests: { visitedMazesChests },
+          quests: { currentQuests, finishedQuests },
         };
 
         localStorage.setItem(`progressData${index}`, JSON.stringify(progressData));
@@ -111,6 +113,8 @@ export default function ProgressItem({
         dispatch(changeItems(progressData.items.data));
         dispatch(changeMoney(progressData.items.money));
         dispatch(changeVisitedMazesChests(progressData.visitedMazesChests.visitedMazesChests));
+        dispatch(changeCurrentQuests(progressData.quests.currentQuests));
+        dispatch(changeFinishedQuests(progressData.quests.finishedQuests));
         dispatch(changeMessages([
           {
             type: 'basic',

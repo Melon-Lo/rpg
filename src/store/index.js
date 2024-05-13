@@ -35,6 +35,7 @@ import {
   changeStage,
   changeFinishingQuest,
   changeCurrentQuests,
+  changeFinishedQuests,
   addFinishedQuest,
 } from "./slices/systemStatusSlice";
 
@@ -110,6 +111,7 @@ export {
   changeStage,
   changeFinishingQuest,
   changeCurrentQuests,
+  changeFinishedQuests,
   addFinishedQuest,
 
   // items

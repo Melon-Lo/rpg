@@ -190,13 +190,14 @@ export default function CommandSection() {
   // 交談（可交談對象們）
   const currentCharacters = scenes.find(sceneItem => currentScene === sceneItem.name).characters;
   const renderedCharacters = currentCharacters.map(charItem => {
+    const quest = quests.find(quest => quest.npc === charItem.name) || null;
     let targetDialogue;
-    const quest = quests.find(quest => quest.npc === charItem.name) || '';
-    const questIsDoing = currentQuests.includes(quest);
-    const questIsFinished = finishedQuests.includes(quest);
 
     // 如果該 NPC 有任務
     if (quest) {
+      const questIsDoing = currentQuests.some(questItem => questItem.quest === quest.quest);
+      const questIsFinished = finishedQuests.some(questItem => questItem.quest === quest.quest);
+
       // 未承接任務
       if (!questIsFinished && !questIsDoing) {
         targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'start').dialogue;
