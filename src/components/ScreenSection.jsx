@@ -95,7 +95,7 @@ export default function ScreenSection() {
             {/* 戰鬥狀態時，顯示敵人 */}
             { inBattle &&
               <>
-                <img className={`w-full h-full object-contain ` + hurtStyle} src={currentEnemyImgSrc} alt="npc-img" />
+                <img className={"w-full h-full object-contain " + hurtStyle} src={currentEnemyImgSrc} alt="npc-img" />
                 <div className="absolute bottom-2 w-full px-3">
                   <StatusBar type="HP" color="red" currentValue={currentEnemyHP} maxValue={currentEnemyMaxHP} />
                 </div>

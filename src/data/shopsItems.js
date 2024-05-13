@@ -8,7 +8,7 @@ const shopsItems = [
         price: 20,
       },
       {
-        item: "厲害補藥",
+        item: "高級補藥",
         stage: 2,
         price: 50,
       },

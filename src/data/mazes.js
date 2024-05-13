@@ -29,11 +29,11 @@ const mazes = [
       { enemy: "蝙蝠", position: { x: 4, y: 5 } },
     ],
     chests: [
-      { chest: "高級補藥", quantity: 1, position: { x: 1, y: 5 } },
+      { chest: "補藥", quantity: 1, position: { x: 1, y: 5 } },
       { chest: "魔法藥", quantity: 1, position: { x: 3, y: 3 } },
       { chest: "魔法藥", quantity: 1, position: { x: 2, y: 2 } },
       { chest: "補藥", quantity: 1, position: { x: 5, y: 2 } },
-      { chest: "補藥", quantity: 1, position: { x: 5, y: 4 } },
+      { chest: "厲害補藥", quantity: 1, position: { x: 5, y: 4 } },
     ],
   },
 ];

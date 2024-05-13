@@ -12,7 +12,7 @@ const items = [
     },
   },
   {
-    name: "厲害補藥",
+    name: "高級補藥",
     canUse: true,
     type: "healHP",
     description: "比一般的補藥效果更好。",
