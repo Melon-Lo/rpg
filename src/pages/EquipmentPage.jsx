@@ -11,6 +11,8 @@ import { RiShieldFlashLine } from "react-icons/ri";
 import { PiBoot } from "react-icons/pi";
 import { PiArrowBendRightUpBold } from "react-icons/pi";
 import { PiArrowBendRightDownBold } from "react-icons/pi";
+import { MdBloodtype } from "react-icons/md";
+import { GiCrystalShine } from "react-icons/gi";
 
 // data
 import itemsData from "../data/items";
@@ -24,32 +26,44 @@ const stats = [
   {
     name: '攻',
     engName: 'ATK',
-    color: 'red',
+    color: 'orange',
     img: TbSword,
-  },
-  {
-    name: '魔攻',
-    engName: 'MATK',
-    color: 'rose',
-    img: LuWand2,
-  },
-  {
-    name: '速',
-    engName: 'SPD',
-    color: 'blue',
-    img: PiBoot,
   },
   {
     name: '防',
     engName: 'DEF',
-    color: 'green',
+    color: 'orange',
     img: MdOutlineShield,
+  },
+  {
+    name: '魔攻',
+    engName: 'MATK',
+    color: 'cyan',
+    img: LuWand2,
   },
   {
     name: '魔防',
     engName: 'MDEF',
-    color: 'emerald',
+    color: 'cyan',
     img: RiShieldFlashLine,
+  },
+  {
+    name: 'HP',
+    engName: 'maxHP',
+    color: 'red',
+    img: MdBloodtype,
+  },
+  {
+    name: 'MP',
+    engName: 'maxMP',
+    color: 'blue',
+    img: GiCrystalShine,
+  },
+  {
+    name: '速',
+    engName: 'SPD',
+    color: 'green',
+    img: PiBoot,
   },
 ]
 
@@ -76,8 +90,8 @@ export default function EquipmentPage() {
   const [selectedEquipment, setSelectedEquipment] = useState({});
 
   const { roleCreated } = useSelector(state => state.systemStatus);
-  const { equipments, classTitle, HP, MP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
-  const valuesCollection = { HP, MP, ATK, DEF, MATK, MDEF, SPD };
+  const { equipments, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
+  const valuesCollection = { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD };
   const { data: currentItems } = useSelector(state => state.items);
 
   // 裝備數值
@@ -90,7 +104,9 @@ export default function EquipmentPage() {
   const totalDEF = (weaponStats.DEF || 0) + (armorStats.DEF || 0) + (accessoryStats.DEF || 0);
   const totalMDEF = (weaponStats.MDEF || 0) + (armorStats.MDEF || 0) + (accessoryStats.MDEF || 0);
   const totalSPD = (weaponStats.SPD || 0) + (armorStats.SPD || 0) + (accessoryStats.SPD || 0);
-  const totalEquipmentValues = { ATK: totalATK, MATK: totalMATK, DEF: totalDEF, MDEF: totalMDEF, SPD: totalSPD };
+  const totalMaxHP = (weaponStats.maxHP || 0) + (armorStats.maxHP || 0) + (accessoryStats.maxHP || 0);
+  const totalMaxMP = (weaponStats.maxMP || 0) + (armorStats.maxMP || 0) + (accessoryStats.maxMP || 0);
+  const totalEquipmentValues = { ATK: totalATK, MATK: totalMATK, DEF: totalDEF, MDEF: totalMDEF, SPD: totalSPD, maxHP: totalMaxHP, maxMP: totalMaxMP };
 
   const hasSelectedEquipment = !(Object.keys(selectedEquipment).length === 0 && selectedEquipment.constructor === Object);
 
@@ -116,6 +132,8 @@ export default function EquipmentPage() {
     setSelectedEquipment(value);
   };
 
+
+  // 上方狀態數值
   const SingleStats = ({ name, engName, color, Icon }) => {
     // 原本自身的數值
     const selfValue = valuesCollection[engName];
@@ -138,7 +156,7 @@ export default function EquipmentPage() {
     }
 
     return (
-      <div className="flex items-center p-2 w-4/12">
+      <div className="flex items-center p-2 w-1/2">
         <div className={`w-10 h-10 bg-${color}-200 shadow-md rounded-full relative`}>
           <div className="absolute inset-0">
             <Icon className={`w-full h-full p-1 text-${color}-300`} />
@@ -153,13 +171,13 @@ export default function EquipmentPage() {
             {/* 數值有改變才會出現變化箭頭 */}
             { hasSelectedEquipment && updatedValue > originalValue &&
               <>
-                <PiArrowBendRightUpBold className="text-blue-500" />
+                <PiArrowBendRightUpBold className="text-blue-500 mx-1" />
                 <p className="text-blue-800">{selfValue + updatedValue}</p>
               </>
             }
             { hasSelectedEquipment && updatedValue < originalValue &&
               <>
-                <PiArrowBendRightDownBold className="text-red-500" />
+                <PiArrowBendRightDownBold className="text-red-500 mx-1" />
                 <p className="text-red-800">{selfValue + updatedValue}</p>
               </>
             }
@@ -179,6 +197,7 @@ export default function EquipmentPage() {
     />
   );
 
+  // 中間選裝備種類
   const SingleEquipmentType = ({ type, engType }) => {
     const equipment = equipments[engType] || '無';
     const selectedStyle = equipmentType === engType ? 'border-blue-500' : 'border-gray-300';
@@ -204,11 +223,15 @@ export default function EquipmentPage() {
     />
   );
 
+  // 下面裝備列表
   const renderedEquipments = currentItems.map(item => {
     const renderedItem = itemsData.find(itemData => itemData.name === item.name);
     const selectedStyle = selectedEquipment.name === item.name && 'bg-blue-100 font-bold rounded-md';
 
-    // 只顯示裝備
+    // 防止 bug
+    if (!renderedItem) return null;
+
+    // 只顯示裝備，不顯示其他物品
     const itemType = renderedItem.type;
     if (itemType !== 'equipment') return null;
 
@@ -259,15 +282,15 @@ export default function EquipmentPage() {
 
   return (
     <div className="flex flex-col items-center py-3 mb-3 min-w-[325px] w-10/12 max-w-[1024px]">
-      <div className="w-full flex flex-wrap justify-start max-w-[768px] border-2 border-gray-300 rounded-lg">
+      <div className="w-full flex flex-wrap justify-start max-w-[425px] border-2 border-gray-300 rounded-lg">
         {renderedStats}
       </div>
-      <div className="w-full flex my-5">
+      <div className="w-full flex my-5 max-w-[425px]">
         {renderedEquipmentTypes}
       </div>
       { equipmentType === '' ?
         <h5 className="text-center text-xl">請選擇裝備種類</h5> :
-        <div className="w-full flex">
+        <div className="w-full flex max-w-[425px]">
           <div className="w-3/4 max-h-32 border-2 border-gray-300 rounded-lg p-3 overflow-y-scroll">
             {renderedEquipments ? renderedEquipments : '無任何裝備'}
           </div>

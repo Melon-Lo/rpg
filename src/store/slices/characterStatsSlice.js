@@ -22,7 +22,7 @@ const characterStats = createSlice({
     skills: [],
     equipments: {
       weapon: "木製法杖",
-      armor: "鐵盔甲",
+      // armor: "鐵盔甲",
     },
   },
   reducers: {
