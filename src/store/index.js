@@ -12,6 +12,7 @@ import {
   changeEXP,
   addSkill,
   changeSkills,
+  changeEquipments,
   changeCharacterStats,
 } from "./slices/characterStatsSlice";
 
@@ -100,6 +101,7 @@ export {
   changeEXP,
   addSkill,
   changeSkills,
+  changeEquipments,
   changeCharacterStats,
   addVisitedMaze,
 

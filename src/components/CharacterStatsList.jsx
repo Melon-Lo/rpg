@@ -3,7 +3,7 @@ import skillsData from '../data/skills';
 import Swal from "sweetalert2";
 
 export default function CharacterStatsList() {
-  const { name, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD, level, skills } = useSelector(state => state.characterStats);
+  const { name, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD, level, skills, equipments } = useSelector(state => state.characterStats);
 
   const renderedSkills = skills.map(skill => {
     const { name: skillName, costMP: skillCostMP, effectDescription: skillEffectDescription } = skillsData.find(skillItem => skillItem.name === skill);
@@ -38,9 +38,19 @@ export default function CharacterStatsList() {
         <li>速度：{SPD}</li>
       </ul>
       <div className="w-1/2 p-3">
-        <h5 className="font-bold mb-3">【技能】</h5>
-        <div className="flex flex-wrap justify-between">
-          {renderedSkills}
+        <div className="h-1/2 overflow-y-scroll">
+          <h5 className="font-bold mb-3">【技能】</h5>
+          <div className="flex flex-wrap justify-between">
+            {renderedSkills}
+          </div>
+        </div>
+        <div className="h-1/2 overflow-y-scroll">
+          <h5 className="font-bold mb-3">【裝備】</h5>
+          <div>
+            <p>武器：{equipments.weapon}</p>
+            <p>防具：{equipments.armor ? equipments.armor : '無'}</p>
+            <p>飾品：{equipments.accessory ? equipments.accessory : '無'}</p>
+          </div>
         </div>
       </div>
     </div>

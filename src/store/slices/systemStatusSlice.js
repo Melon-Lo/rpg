@@ -4,7 +4,8 @@ const systemStatusSlice = createSlice({
   name: "systemStatus",
   initialState: {
     // 創立角色
-    roleCreated: false,
+    // DEV ONLY
+    roleCreated: true,
     currentScene: "村莊",
     currentDialogue: {
       talker: "",

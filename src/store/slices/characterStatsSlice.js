@@ -19,6 +19,7 @@ const characterStats = createSlice({
     exp: 0,
     expToNextLevel: 20,
     skills: [],
+    equipments: {},
   },
   reducers: {
     changeName(state, action) {
@@ -57,6 +58,8 @@ const characterStats = createSlice({
       );
       const currentClassTitleInitialStats = currentClassTitle.initialStats;
       const currentClassTitleInitialSkills = currentClassTitle.initialSkills;
+      const currentClassTitleInitialEquipments =
+        currentClassTitle.initialEquipments;
 
       function getRandomStat(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -89,6 +92,7 @@ const characterStats = createSlice({
       state.maxMP = currentClassTitleInitialStats.maxMP;
       state.MP = currentClassTitleInitialStats.maxMP;
       state.skills = currentClassTitleInitialSkills;
+      state.equipments = currentClassTitleInitialEquipments;
 
       // 1 級狀態
       state.level = 1;
@@ -142,6 +146,9 @@ const characterStats = createSlice({
     changeSkills(state, action) {
       state.skills = action.payload;
     },
+    changeEquipments(state, action) {
+      state.equipments = action.payload;
+    },
     changeCharacterStats(state, action) {
       const {
         level,
@@ -183,6 +190,7 @@ export const {
   changeEXP,
   addSkill,
   changeSkills,
+  changeEquipments,
   changeCharacterStats,
 } = characterStats.actions;
 export const characterStatsReducer = characterStats.reducer;

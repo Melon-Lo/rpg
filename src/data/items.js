@@ -112,6 +112,89 @@ const items = [
     type: "quest",
     description: "強者的象徵。",
   },
+  // equipment
+  {
+    name: "長劍",
+    canUse: false,
+    type: "equipment",
+    description: "攻擊力 + 5、防禦力 + 5",
+    equipmentType: "weapon",
+    availableClasses: ["戰士"],
+    stats: {
+      ATK: 5,
+      DEF: 5,
+    },
+  },
+  {
+    name: "斬鐵劍",
+    canUse: false,
+    type: "equipment",
+    description: "攻擊力 + 10、防禦力 + 8",
+    equipmentType: "weapon",
+    availableClasses: ["戰士"],
+    stats: {
+      ATK: 10,
+      DEF: 8,
+    },
+  },
+  {
+    name: "木製法杖",
+    canUse: false,
+    type: "equipment",
+    description: "魔法攻擊力 + 5、魔法防禦力 + 5",
+    equipmentType: "weapon",
+    availableClasses: ["法師"],
+    stats: {
+      MATK: 5,
+      MDEF: 5,
+    },
+  },
+  {
+    name: "精神法杖",
+    canUse: false,
+    type: "equipment",
+    description: "魔法攻擊力 + 10、魔法防禦力 + 8",
+    equipmentType: "weapon",
+    availableClasses: ["法師"],
+    stats: {
+      MATK: 10,
+      MDEF: 8,
+    },
+  },
+  {
+    name: "鐵盔甲",
+    canUse: false,
+    type: "equipment",
+    description: "防禦力 + 3",
+    equipmentType: "armor",
+    availableClasses: ["戰士", "法師"],
+    stats: {
+      DEF: 3,
+    },
+  },
+  {
+    name: "金縷衣",
+    canUse: false,
+    type: "equipment",
+    description: "防禦力 + 8",
+    equipmentType: "armor",
+    availableClasses: ["戰士", "法師"],
+    stats: {
+      DEF: 8,
+    },
+  },
+  {
+    name: "祝福項鍊",
+    canUse: false,
+    type: "equipment",
+    description: "HP上限 + 30",
+    equipmentType: "accessory",
+    availableClasses: ["戰士", "法師"],
+    stats: {
+      HP: 30,
+    },
+  },
+
   // DEV ONLY 方便自己損血
   // {
   //   name: "毒藥",

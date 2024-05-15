@@ -20,6 +20,7 @@ const classes = [
       maxMP: 10,
     },
     initialSkills: ["重砍"],
+    initialEquipments: { weapon: "長劍" },
   },
   {
     classTitle: "法師",
@@ -39,6 +40,7 @@ const classes = [
       maxMP: 40,
     },
     initialSkills: ["火焰", "治療"],
+    initialEquipments: { weapon: "木製法杖" },
   },
 ];
 

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage, changeCurrentQuests, addFinishedQuests, changeFinishedQuests } from "../store";
+import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage, changeCurrentQuests, addFinishedQuests, changeFinishedQuests, changeEquipments } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";
@@ -23,7 +23,7 @@ export default function ProgressItem({
   const { setCurrentStep } = useContext(StepContext);
 
   // 取得所有的資料
-  const { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills } = useSelector(state => state.characterStats);
+  const { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills, equipments } = useSelector(state => state.characterStats);
   const { money: currentMoney, data } = useSelector(state => state.items);
   const { currentScene: scene, visitedMazes, stage } = useSelector(state => state.systemStatus);
   const { currentQuests, finishedQuests } = useSelector(state => state.systemStatus.quests);
@@ -59,7 +59,7 @@ export default function ProgressItem({
         minutes = minutes < 10 ? '0' + minutes : minutes;
         const currentTime = `${year}/${month}/${date} ${hours}:${minutes}`
         const progressData = {
-          characterStats: { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills },
+          characterStats: { name: currentName, classTitle: currentClassTitle, level: currentLevel, HP, maxHP, MP, maxMP, ATK, DEF, MATK, MDEF, SPD, exp, expToNextLevel, skills, equipments },
           items: { money: currentMoney, data },
           systemStatus: { currentScene: scene, visitedMazes, stage },
           currentTime: { currentTime },
@@ -110,6 +110,7 @@ export default function ProgressItem({
         dispatch(changeVisitedMazes(progressData.systemStatus.visitedMazes));
         dispatch(changeStage(progressData.systemStatus.stage));
         dispatch(changeSkills(progressData.characterStats.skills));
+        dispatch(changeEquipments(progressData.characterStats.equipments));
         dispatch(changeItems(progressData.items.data));
         dispatch(changeMoney(progressData.items.money));
         dispatch(changeVisitedMazesChests(progressData.visitedMazesChests.visitedMazesChests));
