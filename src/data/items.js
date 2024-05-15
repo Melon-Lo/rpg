@@ -191,7 +191,7 @@ const items = [
     equipmentType: "accessory",
     availableClasses: ["戰士", "法師"],
     stats: {
-      HP: 30,
+      maxHP: 30,
     },
   },
 

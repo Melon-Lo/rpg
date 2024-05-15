@@ -1,10 +1,11 @@
 import className from 'classnames';
 import { twMerge } from 'tailwind-merge';
 
-export default function Button({ children, blue, gray, green, yellow, red, rose, purple, fuchsia, lime, amber, disabled, outline, rounded, ...rest }) {
+export default function Button({ children, slate, blue, gray, green, yellow, red, rose, purple, fuchsia, lime, amber, disabled, outline, rounded, ...rest }) {
   const classes = twMerge(
     className(rest.className,
       'flex items-center px-3 py-2 border rounded-md cursor-pointer', {
+      'border-slate-500 bg-slate-500 text-white': slate,
       'border-blue-500 bg-blue-500 text-white': blue,
       'border-gray-900 bg-gray-900 text-white': gray,
       'border-green-500 bg-green-500 text-white': green,

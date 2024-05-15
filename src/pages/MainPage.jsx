@@ -353,12 +353,12 @@ export default function MainPage() {
       {showModal === 'manual' && <ManualModal />}
 
       {/* DEV ONLY */}
-      {/* <Button blue onClick={() => dispatch(changeItem({
-        name: '皮球',
+      <Button blue onClick={() => dispatch(changeItem({
+        name: '精神法杖',
         quantity: 1,
       }))}>
-        加1個皮球
-      </Button> */}
+        加1個精神法杖
+      </Button>
     </div>
   );
 };

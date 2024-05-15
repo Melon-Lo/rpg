@@ -12,6 +12,7 @@ import { FaHotel } from "react-icons/fa6";
 import { FaGear } from "react-icons/fa6";
 import { BsEscape } from "react-icons/bs";
 import { FaListAlt } from "react-icons/fa";
+import { FaTshirt } from "react-icons/fa";
 
 const commands = [
   {
@@ -41,6 +42,11 @@ const commands = [
         command: "物品",
         color: "yellow",
         img: BsFillBackpackFill,
+      },
+      {
+        command: "裝備",
+        color: "slate",
+        img: FaTshirt,
       },
       {
         command: "狀態",

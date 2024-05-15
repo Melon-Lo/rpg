@@ -403,6 +403,17 @@ export default function CommandSection() {
     )
   }
 
+  // 裝備按鈕
+  const EquipmentButton = () => {
+    const handleClick = () => {
+      navigate('/equipment');
+    }
+
+    return (
+      <Button onClick={handleClick} slate>更改裝備</Button>
+    )
+  }
+
   // --------------------------------------------
   // 戰鬥狀態（battleTime 為真時）
   // --------------------------------------------
@@ -455,6 +466,9 @@ export default function CommandSection() {
 
         {/* 物品 */}
         { currentStep === '物品' && <ItemsList /> }
+
+        {/* 物品 */}
+        { currentStep === '裝備' && <EquipmentButton /> }
 
         {/* 技能 */}
         { currentStep === '技能' && <SkillsList /> }

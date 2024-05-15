@@ -4,22 +4,26 @@ import classes from "../../data/classes";
 const characterStats = createSlice({
   name: "characterStats",
   initialState: {
-    name: "",
-    classTitle: "",
+    // DEV ONLY
+    name: "小明",
+    classTitle: "法師",
     level: 1,
-    HP: 0,
-    maxHP: 0,
-    MP: 0,
-    maxMP: 0,
-    ATK: 0,
-    DEF: 0,
-    MATK: 0,
-    MDEF: 0,
-    SPD: 0,
+    HP: 100,
+    maxHP: 100,
+    MP: 50,
+    maxMP: 50,
+    ATK: 10,
+    DEF: 5,
+    MATK: 10,
+    MDEF: 5,
+    SPD: 1,
     exp: 0,
     expToNextLevel: 20,
     skills: [],
-    equipments: {},
+    equipments: {
+      weapon: "木製法杖",
+      armor: "鐵盔甲",
+    },
   },
   reducers: {
     changeName(state, action) {

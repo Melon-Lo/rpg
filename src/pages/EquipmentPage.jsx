@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { changeItem, changeEquipments } from "../store";
 
 // icons
 import { TbSword } from "react-icons/tb";
@@ -11,38 +12,87 @@ import { PiBoot } from "react-icons/pi";
 import { PiArrowBendRightUpBold } from "react-icons/pi";
 import { PiArrowBendRightDownBold } from "react-icons/pi";
 
+// data
+import itemsData from "../data/items";
+
+// components
+import Button from "../components/Button";
+
+import Swal from "sweetalert2";
+
 const stats = [
   {
     name: '攻',
+    engName: 'ATK',
     color: 'red',
     img: TbSword,
   },
   {
     name: '魔攻',
+    engName: 'MATK',
     color: 'rose',
     img: LuWand2,
   },
   {
     name: '速',
+    engName: 'SPD',
     color: 'blue',
     img: PiBoot,
   },
   {
     name: '防',
+    engName: 'DEF',
     color: 'green',
     img: MdOutlineShield,
   },
   {
     name: '魔防',
+    engName: 'MDEF',
     color: 'emerald',
     img: RiShieldFlashLine,
   },
 ]
 
+const equipmentTypes = [
+  {
+    type: '武器',
+    engType: 'weapon',
+  },
+  {
+    type: '防具',
+    engType: 'armor',
+  },
+  {
+    type: '飾品',
+    engType: 'accessory',
+  },
+]
+
 export default function EquipmentPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [equipmentType, setEquipmentType] = useState('');
+  const [selectedEquipment, setSelectedEquipment] = useState({});
 
   const { roleCreated } = useSelector(state => state.systemStatus);
+  const { equipments, classTitle, HP, MP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
+  const valuesCollection = { HP, MP, ATK, DEF, MATK, MDEF, SPD };
+  const { data: currentItems } = useSelector(state => state.items);
+
+  // 裝備數值
+  const weaponStats = itemsData.find(itemData => itemData.name === equipments.weapon)?.stats || {};
+  const armorStats = itemsData.find(itemData => itemData.name === equipments.armor)?.stats || {};
+  const accessoryStats = itemsData.find(itemData => itemData.name === equipments.accessory)?.stats || {};
+
+  const totalATK = (weaponStats.ATK || 0) + (armorStats.ATK || 0) + (accessoryStats.ATK || 0);
+  const totalMATK = (weaponStats.MATK || 0) + (armorStats.MATK || 0) + (accessoryStats.MATK || 0);
+  const totalDEF = (weaponStats.DEF || 0) + (armorStats.DEF || 0) + (accessoryStats.DEF || 0);
+  const totalMDEF = (weaponStats.MDEF || 0) + (armorStats.MDEF || 0) + (accessoryStats.MDEF || 0);
+  const totalSPD = (weaponStats.SPD || 0) + (armorStats.SPD || 0) + (accessoryStats.SPD || 0);
+  const totalEquipmentValues = { ATK: totalATK, MATK: totalMATK, DEF: totalDEF, MDEF: totalMDEF, SPD: totalSPD };
+
+  const hasSelectedEquipment = !(Object.keys(selectedEquipment).length === 0 && selectedEquipment.constructor === Object);
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -53,43 +103,188 @@ export default function EquipmentPage() {
     };
 
     handleNavigate();
-  }, [])
+  }, []);
 
-  const SingleStats = ({ name, color, Icon }) => {
+  // 切換裝備種類
+  const handleSelectEquipmentType = (value) => {
+    setEquipmentType(value);
+    setSelectedEquipment({});
+  };
+
+  // 選擇裝備
+  const handleSelectEquipment = (value) => {
+    setSelectedEquipment(value);
+  };
+
+  const SingleStats = ({ name, engName, color, Icon }) => {
+    // 原本自身的數值
+    const selfValue = valuesCollection[engName];
+
+    // 原本所有的裝備加起來的數值
+    const originalValue = totalEquipmentValues[engName];
+
+    // 其他剩下的裝備加起來的數值
+    const currentEquipmentValue = itemsData.find(itemData => itemData.name === equipments[equipmentType])?.stats[engName] || 0;
+    const leftEquipmentsValue = originalValue - currentEquipmentValue;
+
+    // 更新過後增加的數值 = 更改的裝備數值 + 其他剩下的裝備加起來的數值
+    let updatedValue;
+    let selectedEquipmentValue;
+    if (hasSelectedEquipment) {
+      selectedEquipmentValue = selectedEquipment.stats[engName] || 0
+      updatedValue = selectedEquipmentValue + leftEquipmentsValue;
+    } else {
+      updatedValue = 0;
+    }
+
     return (
       <div className="flex items-center p-2 w-4/12">
         <div className={`w-10 h-10 bg-${color}-200 shadow-md rounded-full relative`}>
           <div className="absolute inset-0">
             <Icon className={`w-full h-full p-1 text-${color}-300`} />
           </div>
-          <p className="absolute inset-0 flex justify-center items-center text-gray-800">
+          <p className="absolute inset-0 flex justify-center items-center text-gray-800 text-nowrap">
             {name}
           </p>
         </div>
         <div className="flex text-md pl-2 text-gray-800">
-          <p>10</p>
+          <p>{selfValue + originalValue}</p>
           <div className="flex items-center">
-            <PiArrowBendRightUpBold className="text-blue-500" />
-            <p className="text-blue-800">12</p>
+            {/* 數值有改變才會出現變化箭頭 */}
+            { hasSelectedEquipment && updatedValue > originalValue &&
+              <>
+                <PiArrowBendRightUpBold className="text-blue-500" />
+                <p className="text-blue-800">{selfValue + updatedValue}</p>
+              </>
+            }
+            { hasSelectedEquipment && updatedValue < originalValue &&
+              <>
+                <PiArrowBendRightDownBold className="text-red-500" />
+                <p className="text-red-800">{selfValue + updatedValue}</p>
+              </>
+            }
           </div>
         </div>
       </div>
     )
-  }
+  };
 
   const renderedStats = stats.map(statsItem =>
     <SingleStats
+      key={statsItem.name}
       name={statsItem.name}
+      engName={statsItem.engName}
       color={statsItem.color}
       Icon={statsItem.img}
     />
-  )
+  );
+
+  const SingleEquipmentType = ({ type, engType }) => {
+    const equipment = equipments[engType] || '無';
+    const selectedStyle = equipmentType === engType ? 'border-blue-500' : 'border-gray-300';
+
+    return (
+      <div
+        onClick={() => handleSelectEquipmentType(engType)}
+        className="w-2/6 flex flex-col items-center p-1"
+      >
+        <h5 className="text-xl font-bold mb-3">{type}</h5>
+        <div className={"w-full h-20 border-2 rounded-lg p-5 text-gray-800 flex justify-center items-center text-nowrap " + selectedStyle}>
+          {equipment}
+        </div>
+      </div>
+    )
+  };
+
+  const renderedEquipmentTypes = equipmentTypes.map(item =>
+    <SingleEquipmentType
+      key={item.type}
+      type={item.type}
+      engType={item.engType}
+    />
+  );
+
+  const renderedEquipments = currentItems.map(item => {
+    const renderedItem = itemsData.find(itemData => itemData.name === item.name);
+    const selectedStyle = selectedEquipment.name === item.name && 'bg-blue-100 font-bold rounded-md';
+
+    // 只顯示裝備
+    const itemType = renderedItem.type;
+    if (itemType !== 'equipment') return null;
+
+    // 只顯示當前種類的裝備
+    const itemEquipmentType = renderedItem.equipmentType;
+    if (itemEquipmentType !== equipmentType) return null;
+
+    return (
+      <div
+        onClick={() => handleSelectEquipment(renderedItem)}
+        key={item.name}
+        className={"my-1 p-1 text-gray-800 " + selectedStyle}
+      >
+        {item.name}
+      </div>
+    )
+  });
+
+  // 確定裝備
+  const handleEquip = () => {
+    if (!hasSelectedEquipment) {
+      Swal.fire({
+        icon: 'info',
+        title: '請選擇裝備！',
+      });
+
+      return;
+    }
+
+    if (equipmentType === 'weapon') {
+      dispatch(changeEquipments({ ...equipments, weapon: selectedEquipment.name }));
+      dispatch(changeItem({ name: equipments.weapon, quantity: 1 }));
+    } else if (equipmentType === 'armor') {
+      dispatch(changeEquipments({ ...equipments, armor: selectedEquipment.name }));
+      dispatch(changeItem({ name: equipments.armor, quantity: 1 }));
+    } else if (equipmentType === 'accessory') {
+      dispatch(changeEquipments({ ...equipments, accessory: selectedEquipment.name }));
+      dispatch(changeItem({ name: equipments.accessory, quantity: 1 }));
+    }
+    dispatch(changeItem({ name: selectedEquipment.name, quantity: -1 }));
+    setSelectedEquipment({});
+  };
+
+  // 取消
+  const handleCancel = () => {
+    setSelectedEquipment({});
+  };
 
   return (
-    <div className="flex flex-col items-center py-3 mb-3 border-2 border-gray-300 min-w-[325px] w-10/12 max-w-[1024px] rounded-lg">
-      <div className="w-full flex flex-wrap justify-start max-w-[768px]">
+    <div className="flex flex-col items-center py-3 mb-3 min-w-[325px] w-10/12 max-w-[1024px]">
+      <div className="w-full flex flex-wrap justify-start max-w-[768px] border-2 border-gray-300 rounded-lg">
         {renderedStats}
       </div>
+      <div className="w-full flex my-5">
+        {renderedEquipmentTypes}
+      </div>
+      { equipmentType === '' ?
+        <h5 className="text-center text-xl">請選擇裝備種類</h5> :
+        <div className="w-full flex">
+          <div className="w-3/4 max-h-32 border-2 border-gray-300 rounded-lg p-3 overflow-y-scroll">
+            {renderedEquipments ? renderedEquipments : '無任何裝備'}
+          </div>
+          <div className="w-1/4 flex flex-col justify-center items-center">
+            <Button
+              onClick={handleEquip}
+              className="my-1"
+              rounded
+              blue={hasSelectedEquipment}
+              disabled={!hasSelectedEquipment}
+            >
+              裝備
+            </Button>
+            <Button onClick={handleCancel} className="my-1" rounded yellow>取消</Button>
+          </div>
+        </div>
+      }
     </div>
   );
 }
