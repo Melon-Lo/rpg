@@ -13,6 +13,8 @@ import {
   addSkill,
   changeSkills,
   changeEquipments,
+  changeEquipmentsStats,
+  changeTotalStats,
   changeCharacterStats,
 } from "./slices/characterStatsSlice";
 
@@ -102,6 +104,8 @@ export {
   addSkill,
   changeSkills,
   changeEquipments,
+  changeEquipmentsStats,
+  changeTotalStats,
   changeCharacterStats,
   addVisitedMaze,
 

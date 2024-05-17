@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import classes from "../../data/classes";
+import itemsData from "../../data/items";
+import calculateEquipmentsStats from "../../utils/characterStats/calculateEquipmentsStats";
 
 const characterStats = createSlice({
   name: "characterStats",
@@ -22,8 +24,10 @@ const characterStats = createSlice({
     skills: [],
     equipments: {
       weapon: "木製法杖",
-      // armor: "鐵盔甲",
     },
+    equipmentsStats: {},
+    // 總數值 = 自身數值 + 裝備數值
+    totalStats: {},
   },
   reducers: {
     changeName(state, action) {
@@ -153,6 +157,21 @@ const characterStats = createSlice({
     changeEquipments(state, action) {
       state.equipments = action.payload;
     },
+    changeEquipmentsStats(state, action) {
+      state.equipmentsStats = calculateEquipmentsStats(state.equipments);
+    },
+    changeTotalStats(state, action) {
+      state.totalStats = {
+        ...state.totalStats,
+        ATK: state.ATK + (state.equipmentsStats.ATK || 0),
+        DEF: state.DEF + (state.equipmentsStats.DEF || 0),
+        MATK: state.MATK + (state.equipmentsStats.MATK || 0),
+        MDEF: state.MDEF + (state.equipmentsStats.MDEF || 0),
+        SPD: state.SPD + (state.equipmentsStats.SPD || 0),
+        maxHP: state.maxHP + (state.equipmentsStats.maxHP || 0),
+        maxMP: state.maxMP + (state.equipmentsStats.maxMP || 0),
+      };
+    },
     changeCharacterStats(state, action) {
       const {
         level,
@@ -195,6 +214,8 @@ export const {
   addSkill,
   changeSkills,
   changeEquipments,
+  changeEquipmentsStats,
+  changeTotalStats,
   changeCharacterStats,
 } = characterStats.actions;
 export const characterStatsReducer = characterStats.reducer;

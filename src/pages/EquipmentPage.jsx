@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { changeItem, changeEquipments } from "../store";
+import { changeItem, changeEquipments, changeEquipmentsStats, changeTotalStats, changeCharacterStats, changeStats } from "../store";
 
 // icons
 import { TbSword } from "react-icons/tb";
@@ -100,23 +100,10 @@ export default function EquipmentPage() {
   }
 
   const { roleCreated } = useSelector(state => state.systemStatus);
-  const { equipments, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
-  const valuesCollection = { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD };
+  const { equipments, equipmentsStats, totalStats, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
+  const characterStats = useSelector(state => state.characterStats);
+  const selfStats = { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD };
   const { data: currentItems } = useSelector(state => state.items);
-
-  // 裝備數值
-  const weaponStats = itemsData.find(itemData => itemData.name === equipments.weapon)?.stats || {};
-  const armorStats = itemsData.find(itemData => itemData.name === equipments.armor)?.stats || {};
-  const accessoryStats = itemsData.find(itemData => itemData.name === equipments.accessory)?.stats || {};
-
-  const totalATK = (weaponStats.ATK || 0) + (armorStats.ATK || 0) + (accessoryStats.ATK || 0);
-  const totalMATK = (weaponStats.MATK || 0) + (armorStats.MATK || 0) + (accessoryStats.MATK || 0);
-  const totalDEF = (weaponStats.DEF || 0) + (armorStats.DEF || 0) + (accessoryStats.DEF || 0);
-  const totalMDEF = (weaponStats.MDEF || 0) + (armorStats.MDEF || 0) + (accessoryStats.MDEF || 0);
-  const totalSPD = (weaponStats.SPD || 0) + (armorStats.SPD || 0) + (accessoryStats.SPD || 0);
-  const totalMaxHP = (weaponStats.maxHP || 0) + (armorStats.maxHP || 0) + (accessoryStats.maxHP || 0);
-  const totalMaxMP = (weaponStats.maxMP || 0) + (armorStats.maxMP || 0) + (accessoryStats.maxMP || 0);
-  const totalEquipmentValues = { ATK: totalATK, MATK: totalMATK, DEF: totalDEF, MDEF: totalMDEF, SPD: totalSPD, maxHP: totalMaxHP, maxMP: totalMaxMP };
 
   // 是否有選中裝備
   const hasSelectedEquipment = !(Object.keys(selectedEquipment).length === 0 && selectedEquipment.constructor === Object);
@@ -135,6 +122,12 @@ export default function EquipmentPage() {
     handleNavigate();
   }, []);
 
+  // 每次更換裝備後，更新數值
+  useEffect(() => {
+    dispatch(changeEquipmentsStats());
+    dispatch(changeTotalStats());
+  }, [equipments])
+
   // 切換裝備種類
   const handleSelectEquipmentType = (value) => {
     setEquipmentType(value);
@@ -149,10 +142,10 @@ export default function EquipmentPage() {
   // 上方狀態數值
   const SingleStats = ({ name, engName, color, Icon }) => {
     // 原本自身的數值
-    const selfValue = valuesCollection[engName];
+    const selfValue = selfStats[engName];
 
-    // 原本所有的裝備加起來的數值
-    const originalValue = totalEquipmentValues[engName];
+    // 原本所有的裝備加起來的數值，如果沒有就代表是 0
+    const originalValue = equipmentsStats[engName] || 0;
 
     // 其他剩下的裝備加起來的數值
     const currentEquipmentValue = itemsData.find(itemData => itemData.name === equipments[equipmentType])?.stats[engName] || 0;
@@ -335,6 +328,24 @@ export default function EquipmentPage() {
     }
   };
 
+  // 整備完畢，改變自身數值，回到主頁
+  const handleSubmit = () => {
+    Swal.fire({
+      title: '整裝好了嗎？',
+      text: '即將回到主頁',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: '確認',
+      cancelButtonText: '取消'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/');
+      };
+    });
+  };
+
   return (
     <div className="flex flex-col items-center py-3 mb-3 min-w-[325px] w-10/12 max-w-[1024px]">
       {/* 上方數值 */}
@@ -382,7 +393,7 @@ export default function EquipmentPage() {
 
       {/* 返回主頁按鈕 */}
       <Button
-        onClick={() => navigate('/')}
+        onClick={handleSubmit}
         className="mt-5"
         blue
       >

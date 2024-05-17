@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useContext, useEffect } from "react";
-import { changeItem, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage } from "../store";
+import { changeItem, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage, changeEquipments, changeEquipmentsStats, changeTotalStats } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -40,7 +40,7 @@ export default function MainPage() {
   const { showModal } = useContext(ModalContext);
 
   // 戰鬥相關數據
-  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel } = useSelector(state => state.characterStats);
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
   const selfStats = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
@@ -56,6 +56,12 @@ export default function MainPage() {
     };
 
     handleNavigate();
+  }, [])
+
+  // 到主頁後，先更新裝備數值
+  useEffect(() => {
+    dispatch(changeEquipmentsStats());
+    dispatch(changeTotalStats());
   }, [])
 
   // --------------------------------------------

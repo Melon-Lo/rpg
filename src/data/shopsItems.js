@@ -34,6 +34,10 @@ const shopsItems = [
         item: "女神之吻",
         stage: 5,
       },
+      {
+        item: "祝福項鍊",
+        stage: 1,
+      },
     ],
   },
 ];
