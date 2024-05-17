@@ -53,8 +53,8 @@ export default function CreatePage() {
           <h5>最大MP：${maxMP}</h5>
           <h5>攻擊力：${ATK}</h5>
           <h5>防禦力：${DEF}</h5>
-          <h5>魔法攻擊力：${MATK}</h5>
-          <h5>魔法防禦力：${MDEF}</h5>
+          <h5>魔攻：${MATK}</h5>
+          <h5>魔防：${MDEF}</h5>
           <h5>速度：${SPD}</h5>
         <div>
       `,
@@ -194,8 +194,8 @@ export default function CreatePage() {
             <h5>最大MP：{maxMP ? maxMP : '-'}</h5>
             <h5>攻擊力：{ATK ? ATK : '-'}</h5>
             <h5>防禦力：{DEF ? DEF : '-'}</h5>
-            <h5>魔法攻擊力：{MATK ? MATK : '-'}</h5>
-            <h5>魔法防禦力：{MDEF ? MDEF : '-'}</h5>
+            <h5>魔攻：{MATK ? MATK : '-'}</h5>
+            <h5>魔防：{MDEF ? MDEF : '-'}</h5>
             <h5>速度：{SPD ? SPD : '-'}</h5>
           </div>
         </div>

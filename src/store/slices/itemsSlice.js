@@ -4,37 +4,7 @@ const itemsSlice = createSlice({
   name: "items",
   initialState: {
     money: 50,
-    data: [
-      {
-        name: "補藥",
-        quantity: 2,
-      },
-      {
-        name: "魔法藥",
-        quantity: 1,
-      },
-      // DEV ONLY
-      {
-        name: "長劍",
-        quantity: 1,
-      },
-      {
-        name: "精神法杖",
-        quantity: 1,
-      },
-      {
-        name: "金縷衣",
-        quantity: 1,
-      },
-      {
-        name: "祝福項鍊",
-        quantity: 1,
-      },
-      // {
-      //   name: "毒藥",
-      //   quantity: 2,
-      // },
-    ],
+    data: [],
   },
   reducers: {
     changeItem(state, action) {

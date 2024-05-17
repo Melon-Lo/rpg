@@ -3,7 +3,7 @@ const quests = [
     quest: "幫村民在森林裡找皮球",
     npc: "村民",
     requirements: [{ type: "item", content: [{ name: "皮球", quantity: 1 }] }],
-    rewards: [{ type: "item", content: [{ name: "高級補藥", quantity: 3 }] }],
+    rewards: [{ type: "item", content: [{ name: "祝福項鍊", quantity: 1 }] }],
     dialogues: [
       {
         timing: "start",

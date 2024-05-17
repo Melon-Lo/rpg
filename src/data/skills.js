@@ -164,7 +164,7 @@ const skills = [
   // 物理技能
   {
     name: "重砍",
-    basicValue: 20,
+    basicValue: 15,
     attributes: "none",
     costMP: 5,
     canUseOutsideBattle: false,
@@ -175,9 +175,9 @@ const skills = [
   },
   {
     name: "劍舞",
-    basicValue: 35,
+    basicValue: 30,
     attributes: "none",
-    costMP: 8,
+    costMP: 10,
     canUseOutsideBattle: false,
     type: "physicalAttack",
     effectDescription: "物理技能，傷害一般",
@@ -186,7 +186,7 @@ const skills = [
   },
   {
     name: "飛燕還巢",
-    basicValue: 60,
+    basicValue: 45,
     attributes: "none",
     costMP: 15,
     canUseOutsideBattle: false,

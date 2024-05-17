@@ -8,7 +8,7 @@ const classeslevelsStats = [
         const level = index + 1;
         const baseStats = {
           maxHP: 21,
-          maxMP: 8,
+          maxMP: 5,
           ATK: 3,
           DEF: 3,
           MATK: 1,
@@ -30,7 +30,7 @@ const classeslevelsStats = [
         const level = index + 1;
         const baseStats = {
           maxHP: 12,
-          maxMP: 12,
+          maxMP: 10,
           ATK: 1,
           DEF: 1,
           MATK: 3,

@@ -57,13 +57,27 @@ export default function MainPage() {
   const { showModal } = useContext(ModalContext);
 
   // 戰鬥相關數據
-  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, HP: selfHP, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, HP: selfHP, MP: selfMP, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
   const { ATK: totalATK, MATK: totalMATK, SPD: totalSPD, maxHP: totalMaxHP, maxMP: totalMaxMP, DEF: totalDEF, MDEF: totalMDEF } = useSelector(state => state.characterStats.totalStats);
   const selfStats = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
   const { turn } = useSelector(state => state.battle);
   const { money } = useSelector(state => state.items);
+
+  // 確保血量不會超過最大值
+  useEffect(() => {
+    // 防止 first render 的 bug
+    if (totalMaxHP === 0 || totalMaxMP === 0) return;
+
+    if (selfHP > totalMaxHP) {
+      dispatch(changeHP(totalMaxHP));
+    }
+
+    if (selfMP > totalMaxMP) {
+      dispatch(changeMP(totalMaxMP));
+    }
+  }, [selfHP, totalMaxHP, selfMP, totalMaxMP])
 
   // --------------------------------------------
   // 戰鬥狀態
@@ -338,8 +352,8 @@ export default function MainPage() {
                 <h5>最大MP：${totalMaxMP} -> ${updatedLevelStats.maxMP}</h5>
                 <h5>攻擊力：${totalATK} -> ${updatedLevelStats.ATK}</h5>
                 <h5>防禦力：${totalDEF} -> ${updatedLevelStats.DEF}</h5>
-                <h5>魔法攻擊力：${totalMATK} -> ${updatedLevelStats.MATK}</h5>
-                <h5>魔法防禦力：${totalMDEF} -> ${updatedLevelStats.MDEF}</h5>
+                <h5>魔攻：${totalMATK} -> ${updatedLevelStats.MATK}</h5>
+                <h5>魔防：${totalMDEF} -> ${updatedLevelStats.MDEF}</h5>
                 <h5>速度：${totalSPD} -> ${updatedLevelStats.SPD}</h5>
                 <h5>${getNewSkillText}</h5>
               <div>
@@ -353,12 +367,6 @@ export default function MainPage() {
     handleLevelUp();
   }, [selfEXP, selfEXPtoNextLevel])
 
-  // 升級後補滿狀態
-  useEffect(() => {
-    dispatch(changeHP(totalMaxHP));
-    dispatch(changeMP(totalMaxMP));
-  }, [selfLevel])
-
   return (
     <div id="main-page" className="flex flex-col items-center w-full">
       <ScreenSection />
@@ -370,12 +378,12 @@ export default function MainPage() {
       {showModal === 'manual' && <ManualModal />}
 
       {/* DEV ONLY */}
-      <Button blue onClick={() => dispatch(changeItem({
+      {/* <Button blue onClick={() => dispatch(changeItem({
         name: '精神法杖',
         quantity: 1,
       }))}>
         加1個精神法杖
-      </Button>
+      </Button> */}
     </div>
   );
 };

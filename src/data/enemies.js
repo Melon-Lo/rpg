@@ -13,15 +13,15 @@ const enemies = [
     weakness: "fire",
     isBoss: false,
     stats: {
-      HP: 50,
-      maxHP: 50,
+      HP: 70,
+      maxHP: 70,
       ATK: 10,
       DEF: 3,
       MATK: 2,
       MDEF: 1,
       SPD: 2,
     },
-    exp: 50,
+    exp: 30,
     money: 12,
     loot: [
       {
@@ -53,8 +53,8 @@ const enemies = [
     weakness: "earth",
     isBoss: false,
     stats: {
-      HP: 35,
-      maxHP: 35,
+      HP: 60,
+      maxHP: 60,
       ATK: 9,
       DEF: 3,
       MATK: 5,
@@ -94,7 +94,7 @@ const enemies = [
     isBoss: true,
     stage: 1,
     stats: {
-      HP: 150,
+      HP: 200,
       maxHP: 150,
       ATK: 13,
       DEF: 5,

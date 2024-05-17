@@ -1,7 +1,10 @@
 const classeslevelsSkills = [
   {
     classTitle: "戰士",
-    levelsSkills: [{ level: 2, skill: "治療" }],
+    levelsSkills: [
+      { level: 4, skill: "劍舞" },
+      { level: 8, skill: "飛燕還巢" },
+    ],
   },
   {
     classTitle: "法師",

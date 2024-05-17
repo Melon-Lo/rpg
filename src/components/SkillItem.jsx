@@ -20,7 +20,8 @@ export default function SkillItem({ name, costMP, type, attributes }) {
   const { setCurrentStep } = useContext(StepContext);
 
   // 各項數據
-  const { HP: selfHP, MP: selfMP, ATK: selfATK, MATK: selfMATK, name: selfName } = useSelector(state => state.characterStats);
+  const { HP: selfHP, MP: selfMP, name: selfName } = useSelector(state => state.characterStats);
+  const { ATK: totalATK, MATK: totalMATK } = useSelector(state => state.characterStats.totalStats);
   const { DEF: enemyDEF, MDEF: enemyMDEF, HP: enemyHP, name: enemyName, weakness: enemyWeakness } = useSelector(state => state.enemies);
   const { inBattle } = useSelector(state => state.battle);
 
@@ -109,7 +110,7 @@ export default function SkillItem({ name, costMP, type, attributes }) {
           dispatch(changeExecutingCommand(true));
           setCurrentStep('主頁');
 
-          const damage = skill.effect(selfMATK, enemyMDEF, skill.basicValue, skill.attributes, enemyWeakness);
+          const damage = skill.effect(totalMATK, enemyMDEF, skill.basicValue, skill.attributes, enemyWeakness);
           // 如果打到弱點，則出現「擊中弱點！」
           const effectiveText = skill.attributes === enemyWeakness ? '擊中弱點！' : '';
 
@@ -139,7 +140,7 @@ export default function SkillItem({ name, costMP, type, attributes }) {
           dispatch(changeExecutingCommand(true));
           setCurrentStep('主頁');
 
-          const damage = skill.effect(selfATK, enemyDEF, skill.basicValue);
+          const damage = skill.effect(totalATK, enemyDEF, skill.basicValue);
 
           dispatch(addMessage({
             type: 'basic',

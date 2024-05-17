@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const mazeSlice = createSlice({
   name: "maze",
   initialState: {
-    // DEV ONLY
     inMaze: false,
     mazeName: "",
     playerPosition: {},

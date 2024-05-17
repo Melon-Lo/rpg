@@ -410,7 +410,7 @@ export default function CommandSection() {
     }
 
     return (
-      <Button onClick={handleClick} slate>更改裝備</Button>
+      <Button onClick={handleClick} slate>更換裝備</Button>
     )
   }
 
