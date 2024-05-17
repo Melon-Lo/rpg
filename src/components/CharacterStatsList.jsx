@@ -3,7 +3,8 @@ import skillsData from '../data/skills';
 import Swal from "sweetalert2";
 
 export default function CharacterStatsList() {
-  const { name, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD, level, skills, equipments } = useSelector(state => state.characterStats);
+  const { name, classTitle, level, skills, equipments, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
+  const { maxHP: equipmentMaxHP, maxMP: equipmentMaxMP, ATK: equipmentATK, DEF: equipmentDEF, MATK: equipmentMATK, MDEF: equipmentMDEF, SPD: equipmentSPD } = useSelector(state => state.characterStats.equipmentsStats);
 
   const renderedSkills = skills.map(skill => {
     const { name: skillName, costMP: skillCostMP, effectDescription: skillEffectDescription } = skillsData.find(skillItem => skillItem.name === skill);
@@ -29,13 +30,13 @@ export default function CharacterStatsList() {
         <li>名字：{name}</li>
         <li>職業：{classTitle}</li>
         <li>等級：{level}</li>
-        <li>最大HP：{maxHP}</li>
-        <li>最大MP：{maxMP}</li>
-        <li>攻擊力：{ATK}</li>
-        <li>防禦力：{DEF}</li>
-        <li>魔法攻擊力：{MATK}</li>
-        <li>魔法防禦力：{MDEF}</li>
-        <li>速度：{SPD}</li>
+        <li>最大HP：{maxHP}{equipmentMaxHP && ' + ' + equipmentMaxHP}</li>
+        <li>最大MP：{maxMP}{equipmentMaxMP && ' + ' + equipmentMaxMP}</li>
+        <li>攻擊力：{ATK}{equipmentATK && ' + ' + equipmentATK}</li>
+        <li>防禦力：{DEF}{equipmentDEF && ' + ' + equipmentDEF}</li>
+        <li>魔攻：{MATK}{equipmentMATK && ' + ' + equipmentMATK}</li>
+        <li>魔防：{MDEF}{equipmentMDEF && ' + ' + equipmentMDEF}</li>
+        <li>速度：{SPD}{equipmentSPD && ' + ' + equipmentSPD}</li>
       </ul>
       <div className="w-1/2 p-3">
         <div className="h-1/2 overflow-y-scroll">

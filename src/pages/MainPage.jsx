@@ -33,20 +33,6 @@ export default function MainPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 系統數據
-  const { roleCreated } = useSelector(state => state.systemStatus);
-
-  // contexts
-  const { showModal } = useContext(ModalContext);
-
-  // 戰鬥相關數據
-  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
-  const selfStats = useSelector(state => state.characterStats);
-  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
-  const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
-  const { turn } = useSelector(state => state.battle);
-  const { money } = useSelector(state => state.items);
-
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
     const handleNavigate = () => {
@@ -63,6 +49,20 @@ export default function MainPage() {
     dispatch(changeEquipmentsStats());
     dispatch(changeTotalStats());
   }, [])
+
+  // 系統數據
+  const { roleCreated } = useSelector(state => state.systemStatus);
+
+  // contexts
+  const { showModal } = useContext(ModalContext);
+
+  // 戰鬥相關數據
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
+  const selfStats = useSelector(state => state.characterStats);
+  const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
+  const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
+  const { turn } = useSelector(state => state.battle);
+  const { money } = useSelector(state => state.items);
 
   // --------------------------------------------
   // 戰鬥狀態
