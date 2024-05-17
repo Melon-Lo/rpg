@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/rpg/static/css/main.f0717c0d.css",
-    "main.js": "/rpg/static/js/main.15d89f32.js",
+    "main.css": "/rpg/static/css/main.1fcc4ea2.css",
+    "main.js": "/rpg/static/js/main.0803cfd0.js",
     "static/media/devil.png": "/rpg/static/media/devil.9ed451a0c395d8634b5e.png",
     "static/media/lion.png": "/rpg/static/media/lion.7436ecde3ae246f34e9a.png",
     "static/media/bear.png": "/rpg/static/media/bear.4087e65f40621d63f049.png",
@@ -17,11 +17,11 @@
     "static/media/snake.png": "/rpg/static/media/snake.ec0d57a2d01b6a96867b.png",
     "static/media/cave.jpg": "/rpg/static/media/cave.5982dd2b12828047ca7d.jpg",
     "index.html": "/rpg/index.html",
-    "main.f0717c0d.css.map": "/rpg/static/css/main.f0717c0d.css.map",
-    "main.15d89f32.js.map": "/rpg/static/js/main.15d89f32.js.map"
+    "main.1fcc4ea2.css.map": "/rpg/static/css/main.1fcc4ea2.css.map",
+    "main.0803cfd0.js.map": "/rpg/static/js/main.0803cfd0.js.map"
   },
   "entrypoints": [
-    "static/css/main.f0717c0d.css",
-    "static/js/main.15d89f32.js"
+    "static/css/main.1fcc4ea2.css",
+    "static/js/main.0803cfd0.js"
   ]
 }
