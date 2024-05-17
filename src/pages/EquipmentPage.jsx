@@ -89,6 +89,16 @@ export default function EquipmentPage() {
   const [equipmentType, setEquipmentType] = useState('');
   const [selectedEquipment, setSelectedEquipment] = useState({});
 
+  // 裝備種類的中文
+  let equipmentType_CH;
+  if (equipmentType === 'weapon') {
+    equipmentType_CH = '武器';
+  } else if (equipmentType === 'armor') {
+    equipmentType_CH = '防具';
+  } else if (equipmentType === 'accessory') {
+    equipmentType_CH = '飾品';
+  }
+
   const { roleCreated } = useSelector(state => state.systemStatus);
   const { equipments, classTitle, maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD } = useSelector(state => state.characterStats);
   const valuesCollection = { maxHP, maxMP, ATK, DEF, MATK, MDEF, SPD };
@@ -108,7 +118,11 @@ export default function EquipmentPage() {
   const totalMaxMP = (weaponStats.maxMP || 0) + (armorStats.maxMP || 0) + (accessoryStats.maxMP || 0);
   const totalEquipmentValues = { ATK: totalATK, MATK: totalMATK, DEF: totalDEF, MDEF: totalMDEF, SPD: totalSPD, maxHP: totalMaxHP, maxMP: totalMaxMP };
 
+  // 是否有選中裝備
   const hasSelectedEquipment = !(Object.keys(selectedEquipment).length === 0 && selectedEquipment.constructor === Object);
+
+  // 選中的裝備種類內是否有裝備
+  const selectedEquipmentTypeHasEquipment = equipments[equipmentType] || null;
 
   // 若還未創建角色，自動導航到創建頁面
   useEffect(() => {
@@ -199,7 +213,7 @@ export default function EquipmentPage() {
 
   // 中間選裝備種類
   const SingleEquipmentType = ({ type, engType }) => {
-    const equipment = equipments[engType] || '無';
+    const equipment = equipments[engType] || <span className="text-gray-500">無</span>;
     const selectedStyle = equipmentType === engType ? 'border-blue-500' : 'border-gray-300';
 
     return (
@@ -228,9 +242,6 @@ export default function EquipmentPage() {
     const renderedItem = itemsData.find(itemData => itemData.name === item.name);
     const selectedStyle = selectedEquipment.name === item.name && 'bg-blue-100 font-bold rounded-md';
 
-    // 防止 bug
-    if (!renderedItem) return null;
-
     // 只顯示裝備，不顯示其他物品
     const itemType = renderedItem.type;
     if (itemType !== 'equipment') return null;
@@ -250,6 +261,9 @@ export default function EquipmentPage() {
     )
   });
 
+  // 裝備列表的長度（不要計算null）
+  const renderedEquipmentsLength = renderedEquipments.filter(item => item !== null).length;
+
   // 確定裝備
   const handleEquip = () => {
     if (!hasSelectedEquipment) {
@@ -263,51 +277,110 @@ export default function EquipmentPage() {
 
     if (equipmentType === 'weapon') {
       dispatch(changeEquipments({ ...equipments, weapon: selectedEquipment.name }));
-      dispatch(changeItem({ name: equipments.weapon, quantity: 1 }));
+
+      // 如果原本有武器，物品增一個一個舊武器
+      if (equipments.weapon) {
+        dispatch(changeItem({ name: equipments.weapon, quantity: 1 }));
+      }
     } else if (equipmentType === 'armor') {
       dispatch(changeEquipments({ ...equipments, armor: selectedEquipment.name }));
-      dispatch(changeItem({ name: equipments.armor, quantity: 1 }));
+
+      // 如果原本有防具，物品增一個一個舊防具
+      if (equipments.armor) {
+        dispatch(changeItem({ name: equipments.armor, quantity: 1 }));
+      }
     } else if (equipmentType === 'accessory') {
       dispatch(changeEquipments({ ...equipments, accessory: selectedEquipment.name }));
-      dispatch(changeItem({ name: equipments.accessory, quantity: 1 }));
+
+      // 如果原本有飾品，物品增一個一個舊飾品
+      if (equipments.accessory) {
+        dispatch(changeItem({ name: equipments.accessory, quantity: 1 }));
+      }
     }
     dispatch(changeItem({ name: selectedEquipment.name, quantity: -1 }));
     setSelectedEquipment({});
   };
 
-  // 取消
-  const handleCancel = () => {
-    setSelectedEquipment({});
+  // 卸下裝備
+  const handleUnequip = () => {
+    if (!selectedEquipmentTypeHasEquipment) {
+      Swal.fire({
+        icon: 'info',
+        title: `無${equipmentType_CH}可卸下`,
+      });
+
+      return;
+    }
+
+    if (equipmentType === 'weapon') {
+      Swal.fire({
+        icon: 'info',
+        title: '不可卸下武器！',
+      });
+
+      return;
+    } else if (equipmentType === 'armor') {
+      dispatch(changeEquipments({ ...equipments, armor: '' }));
+      dispatch(changeItem({ name: equipments.armor, quantity: 1 }));
+    } else if (equipmentType === 'accessory') {
+      dispatch(changeEquipments({ ...equipments, accessory: '' }));
+      dispatch(changeItem({ name: equipments.accessory, quantity: 1 }));
+    }
   };
 
   return (
     <div className="flex flex-col items-center py-3 mb-3 min-w-[325px] w-10/12 max-w-[1024px]">
+      {/* 上方數值 */}
       <div className="w-full flex flex-wrap justify-start max-w-[425px] border-2 border-gray-300 rounded-lg">
         {renderedStats}
       </div>
+
+      {/* 中間武器種類 */}
       <div className="w-full flex my-5 max-w-[425px]">
         {renderedEquipmentTypes}
       </div>
+
+      {/* 下方武器列表 */}
       { equipmentType === '' ?
         <h5 className="text-center text-xl">請選擇裝備種類</h5> :
         <div className="w-full flex max-w-[425px]">
-          <div className="w-3/4 max-h-32 border-2 border-gray-300 rounded-lg p-3 overflow-y-scroll">
-            {renderedEquipments ? renderedEquipments : '無任何裝備'}
+          <div className="w-3/4 h-32 border-2 border-gray-300 rounded-lg p-3 overflow-y-scroll">
+            { renderedEquipmentsLength !== 0 ?
+              renderedEquipments :
+              <div className="px-1 py-2 text-gray-500">物品欄內無任何{equipmentType_CH}</div>
+            }
           </div>
           <div className="w-1/4 flex flex-col justify-center items-center">
             <Button
               onClick={handleEquip}
               className="my-1"
               rounded
-              blue={hasSelectedEquipment}
+              green={hasSelectedEquipment}
               disabled={!hasSelectedEquipment}
             >
               裝備
             </Button>
-            <Button onClick={handleCancel} className="my-1" rounded yellow>取消</Button>
+            <Button
+              onClick={handleUnequip}
+              className="my-1"
+              rounded
+              yellow={selectedEquipmentTypeHasEquipment}
+              disabled={!selectedEquipmentTypeHasEquipment}
+            >
+              卸下
+            </Button>
           </div>
         </div>
       }
+
+      {/* 返回主頁按鈕 */}
+      <Button
+        onClick={() => navigate('/')}
+        className="mt-5"
+        blue
+      >
+        返回主頁
+      </Button>
     </div>
   );
 }
