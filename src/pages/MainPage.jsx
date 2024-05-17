@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useContext, useEffect } from "react";
-import { changeItem, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage, changeEquipments, changeEquipmentsStats, changeTotalStats } from "../store";
+import { changeItem, addMessage, changeInBattle, changeTurn, changeExecutingCommand, changeSelfDefeated, changeEnemyDefeated, changeEXP, changeHP, changeMP, changeCurrentScene, changeMoney, changeCharacterStats, changeInMaze, addSkill, changeStage, changeEquipments, changeEquipmentsStats, changeTotalStats } from "../store";
 import Swal from "sweetalert2";
 
 // components
@@ -57,7 +57,8 @@ export default function MainPage() {
   const { showModal } = useContext(ModalContext);
 
   // 戰鬥相關數據
-  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, ATK: selfATK, MATK: selfMATK, SPD: selfSPD, HP: selfHP, maxHP: selfMaxHP, maxMP: selfMaxMP, DEF: selfDEF, MDEF: selfMDEF, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
+  const { name: selfName, classTitle: selfClassTitle, level: selfLevel, HP: selfHP, exp: selfEXP, expToNextLevel: selfEXPtoNextLevel, equipments, equipmentsStats, totalStats } = useSelector(state => state.characterStats);
+  const { ATK: totalATK, MATK: totalMATK, SPD: totalSPD, maxHP: totalMaxHP, maxMP: totalMaxMP, DEF: totalDEF, MDEF: totalMDEF } = useSelector(state => state.characterStats.totalStats);
   const selfStats = useSelector(state => state.characterStats);
   const { name: enemyName, maxHP: enemyMaxHP, HP: enemyHP, ATK: enemyATK, MATK: enemyMATK, SPD: enemySPD, exp: enemyEXP, money: enemyMoney, loot: enemyLoot, isBoss: enemyIsBoss, stage: enemyStage } = useSelector(state => state.enemies);
   const { selfDefeated, enemyDefeated, inBattle } = useSelector(state => state.battle);
@@ -71,7 +72,7 @@ export default function MainPage() {
   // 敵人出現後，由敵我雙方的 SPD 決定先攻
   useEffect(() => {
     if (inBattle && turn === '') {
-      const firstTurn = decideTurnOrder(selfSPD, enemySPD);
+      const firstTurn = decideTurnOrder(totalSPD, enemySPD);
       setTimeout(() => {
         if (firstTurn === 'self') {
           dispatch(addMessage({
@@ -87,7 +88,7 @@ export default function MainPage() {
         dispatch(changeTurn(firstTurn));
       }, 1500)
     };
-  }, [dispatch, selfSPD, enemySPD, inBattle, turn, selfName])
+  }, [dispatch, totalSPD, enemySPD, inBattle, turn, selfName])
 
   // 敵方戰鬥回合
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function MainPage() {
 
         // 對方發動一般攻擊
         if (nextEnemyAction.action === 'attack') {
-          const damage = decideDamage(enemyATK, selfDEF);
+          const damage = decideDamage(enemyATK, totalDEF);
           setTimeout(() => {
             dispatch(addMessage({
               type: 'basic',
@@ -131,7 +132,7 @@ export default function MainPage() {
           const skillName = nextEnemyAction.skill;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
           const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;
-          const damage = skillEffect(enemyMATK, selfMDEF, skillBasicValue);
+          const damage = skillEffect(enemyMATK, totalMDEF, skillBasicValue);
 
           setTimeout(() => {
             dispatch(addMessage({
@@ -163,7 +164,7 @@ export default function MainPage() {
           const skillName = nextEnemyAction.skill;
           const skillEffect = skills.find(skill => skill.name === skillName).effect;
           const skillBasicValue = skills.find(skill => skill.name === skillName).basicValue;
-          const damage = skillEffect(enemyATK, selfDEF, skillBasicValue);
+          const damage = skillEffect(enemyATK, totalDEF, skillBasicValue);
 
           setTimeout(() => {
             dispatch(addMessage({
@@ -325,17 +326,21 @@ export default function MainPage() {
             content: `等級提升！HP 和 MP 恢復至全滿！${getNewSkillText}`
           }));
 
+          // 更新裝備數值
+          dispatch(changeEquipmentsStats());
+          dispatch(changeTotalStats());
+
           Swal.fire({
             title: `等級提升至${updatedLevelStats.level}級！`,
             html: `
               <div>
-                <h5>最大HP：${selfMaxHP} -> ${updatedLevelStats.maxHP}</h5>
-                <h5>最大MP：${selfMaxMP} -> ${updatedLevelStats.maxMP}</h5>
-                <h5>攻擊力：${selfATK} -> ${updatedLevelStats.ATK}</h5>
-                <h5>防禦力：${selfDEF} -> ${updatedLevelStats.DEF}</h5>
-                <h5>魔法攻擊力：${selfMATK} -> ${updatedLevelStats.MATK}</h5>
-                <h5>魔法防禦力：${selfMDEF} -> ${updatedLevelStats.MDEF}</h5>
-                <h5>速度：${selfSPD} -> ${updatedLevelStats.SPD}</h5>
+                <h5>最大HP：${totalMaxHP} -> ${updatedLevelStats.maxHP}</h5>
+                <h5>最大MP：${totalMaxMP} -> ${updatedLevelStats.maxMP}</h5>
+                <h5>攻擊力：${totalATK} -> ${updatedLevelStats.ATK}</h5>
+                <h5>防禦力：${totalDEF} -> ${updatedLevelStats.DEF}</h5>
+                <h5>魔法攻擊力：${totalMATK} -> ${updatedLevelStats.MATK}</h5>
+                <h5>魔法防禦力：${totalMDEF} -> ${updatedLevelStats.MDEF}</h5>
+                <h5>速度：${totalSPD} -> ${updatedLevelStats.SPD}</h5>
                 <h5>${getNewSkillText}</h5>
               <div>
             `,
@@ -346,7 +351,13 @@ export default function MainPage() {
     };
 
     handleLevelUp();
-  }, [dispatch, selfEXP, selfEXPtoNextLevel, selfStats, selfClassTitle, selfLevel, selfATK, selfDEF, selfMATK, selfMDEF, selfSPD, selfMaxHP, selfMaxMP])
+  }, [selfEXP, selfEXPtoNextLevel])
+
+  // 升級後補滿狀態
+  useEffect(() => {
+    dispatch(changeHP(totalMaxHP));
+    dispatch(changeMP(totalMaxMP));
+  }, [selfLevel])
 
   return (
     <div id="main-page" className="flex flex-col items-center w-full">

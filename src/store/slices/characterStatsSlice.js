@@ -39,8 +39,8 @@ const characterStats = createSlice({
     changeHP(state, action) {
       state.HP = Math.floor(action.payload);
       // HP 不會超過最大值
-      if (state.HP >= state.maxHP) {
-        state.HP = state.maxHP;
+      if (state.HP >= state.totalStats.maxHP) {
+        state.HP = state.totalStats.maxHP;
       }
 
       // HP 不會低於 0
@@ -51,8 +51,8 @@ const characterStats = createSlice({
     changeMP(state, action) {
       state.MP = Math.floor(action.payload);
       // MP 不會超過最大值
-      if (state.MP >= state.maxMP) {
-        state.MP = state.maxMP;
+      if (state.MP >= state.totalStats.maxMP) {
+        state.MP = state.totalStats.maxMP;
       }
 
       // MP 不會低於 0

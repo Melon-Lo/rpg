@@ -11,8 +11,8 @@ export default function HotelButton() {
   const { setCurrentStep } = useContext(StepContext);
 
   const { money } = useSelector(state => state.items);
-  const selfMaxHP = useSelector(state => state.characterStats.maxHP);
-  const selfMaxMP = useSelector(state => state.characterStats.maxMP);
+  const selfMaxHP = useSelector(state => state.characterStats.totalStats.maxHP);
+  const selfMaxMP = useSelector(state => state.characterStats.totalStats.maxMP);
 
   const handleClick = () => {
     // 錢不夠不能休息
@@ -48,11 +48,11 @@ export default function HotelButton() {
             type: 'success',
             content: '休息完畢，神清氣爽！HP 和 MP 都恢復了！'
           }))
-  
+
           // 補滿 HP 和 MP
           dispatch(changeHP(selfMaxHP));
           dispatch(changeMP(selfMaxMP));
-  
+
           // 回歸先前狀態
           setCurrentStep('主頁');
           dispatch(changeExecutingCommand(false));

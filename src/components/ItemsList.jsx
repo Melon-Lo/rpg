@@ -11,7 +11,8 @@ export default function ItemsList() {
   const { setCurrentStep } = useContext(StepContext);
 
   const { data: itemsData } = useSelector(state => state.items);
-  const { HP: selfHP, maxHP: selfMaxHP, MP: selfMP, maxMP: selfMaxMP, name: selfName } = useSelector(state => state.characterStats);
+  const { HP: selfHP, MP: selfMP, name: selfName } = useSelector(state => state.characterStats);
+  const { maxHP: totalMaxHP, maxMP: totalMaxMP } = useSelector(state => state.characterStats.totalStats);
   const { inBattle } = useSelector(state => state.battle);
 
   // 查看、使用物品
@@ -55,8 +56,8 @@ export default function ItemsList() {
             valueAfterEffect = item.effect(selfMP);
             dispatch(changeMP(valueAfterEffect));
           } else if (item.type === 'healAll') {
-            dispatch(changeHP(selfMaxHP));
-            dispatch(changeMP(selfMaxMP));
+            dispatch(changeHP(totalMaxHP));
+            dispatch(changeMP(totalMaxMP));
           }
 
           // 使用完物品後數量要 -1

@@ -4,7 +4,8 @@ import StatusBar from "./StatusBar";
 import { useEffect, useState } from "react";
 
 export default function StatusSection() {
-  const { name, classTitle, level, HP, maxHP, MP, maxMP, exp, expToNextLevel } = useSelector(state => state.characterStats);
+  const { name, classTitle, level, HP, MP, exp, expToNextLevel } = useSelector(state => state.characterStats);
+  const { maxHP: totalMaxHP, maxMP: totalMaxMP } = useSelector(state => state.characterStats.totalStats);
   const { money } = useSelector(state => state.items);
 
   // 動畫相關變數
@@ -37,8 +38,8 @@ export default function StatusSection() {
           </div>
         </div>
         <div className="w-8/12 max-w-80">
-          <StatusBar selfStatus type="HP" color="red" currentValue={HP} maxValue={maxHP} />
-          <StatusBar selfStatus type="MP" color="blue" currentValue={MP} maxValue={maxMP} />
+          <StatusBar selfStatus type="HP" color="red" currentValue={HP} maxValue={totalMaxHP} />
+          <StatusBar selfStatus type="MP" color="blue" currentValue={MP} maxValue={totalMaxMP} />
         </div>
       </div>
       <div className="flex items-center justify-between w-full">
