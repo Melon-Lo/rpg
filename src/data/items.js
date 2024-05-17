@@ -2,6 +2,7 @@ const items = [
   // 補藥
   {
     name: "補藥",
+    price: 20,
     canUse: true,
     type: "healHP",
     description: "大家常備的藥品，冒險的好幫手。",
@@ -13,6 +14,7 @@ const items = [
   },
   {
     name: "高級補藥",
+    price: 50,
     canUse: true,
     type: "healHP",
     description: "比一般的補藥效果更好。",
@@ -24,6 +26,7 @@ const items = [
   },
   {
     name: "強效補藥",
+    price: 100,
     canUse: true,
     type: "healHP",
     description: "重傷時趕快使用就對了。",
@@ -35,6 +38,7 @@ const items = [
   },
   {
     name: "究極補藥",
+    price: 300,
     canUse: true,
     type: "healHP",
     description: "有起死回生之效果，極難取得。",
@@ -46,6 +50,7 @@ const items = [
   },
   {
     name: "魔法藥",
+    price: 50,
     canUse: true,
     type: "healMP",
     description: "魔法師常用藥品，沒了它寸步難行。",
@@ -57,6 +62,7 @@ const items = [
   },
   {
     name: "高等魔法藥",
+    price: 80,
     canUse: true,
     type: "healMP",
     description: "高等魔法師愛用，沒個幾罐都不敢講自己會魔法。",
@@ -68,6 +74,7 @@ const items = [
   },
   {
     name: "大師魔法藥",
+    price: 200,
     canUse: true,
     type: "healMP",
     description: "使用後全身充滿魔力，可謂神藥。",
@@ -79,6 +86,7 @@ const items = [
   },
   {
     name: "大師魔法藥",
+    price: 300,
     canUse: true,
     type: "healMP",
     description: "使用後全身充滿魔力，可謂神藥。",
@@ -90,6 +98,7 @@ const items = [
   },
   {
     name: "女神之吻",
+    price: 1000,
     canUse: true,
     type: "healAll",
     description: "使用後如重獲新生，達到最完美的狀態。",
@@ -115,6 +124,7 @@ const items = [
   // equipment
   {
     name: "長劍",
+    price: 200,
     canUse: false,
     type: "equipment",
     description: "攻擊力 + 5、防禦力 + 5",
@@ -127,6 +137,7 @@ const items = [
   },
   {
     name: "斬鐵劍",
+    price: 500,
     canUse: false,
     type: "equipment",
     description: "攻擊力 + 10、防禦力 + 8",
@@ -139,6 +150,7 @@ const items = [
   },
   {
     name: "木製法杖",
+    price: 200,
     canUse: false,
     type: "equipment",
     description: "魔法攻擊力 + 5、魔法防禦力 + 5",
@@ -151,6 +163,7 @@ const items = [
   },
   {
     name: "精神法杖",
+    price: 500,
     canUse: false,
     type: "equipment",
     description: "魔法攻擊力 + 10、魔法防禦力 + 8",
@@ -163,6 +176,7 @@ const items = [
   },
   {
     name: "鐵盔甲",
+    price: 200,
     canUse: false,
     type: "equipment",
     description: "防禦力 + 3",
@@ -174,6 +188,7 @@ const items = [
   },
   {
     name: "金縷衣",
+    price: 400,
     canUse: false,
     type: "equipment",
     description: "防禦力 + 8",
@@ -185,6 +200,7 @@ const items = [
   },
   {
     name: "祝福項鍊",
+    price: 600,
     canUse: false,
     type: "equipment",
     description: "HP上限 + 30",

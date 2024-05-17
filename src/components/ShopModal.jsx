@@ -112,6 +112,7 @@ export default function ShopModal() {
   // 購買
   const renderedBuyItems = currentShopItems.map(item => {
     const itemName = item.item;
+    const itemPrice = itemsData.find(itemData => itemData.name === itemName)?.price || 0;
     const currentHeld = items.find(item => item.name === itemName)?.quantity || 0;
 
     // 如果還沒到達特定 stage，不會販賣該品項
@@ -119,9 +120,9 @@ export default function ShopModal() {
 
     return (
       <ShopItem
-        key={item.item}
-        item={item.item}
-        price={item.price}
+        key={itemName}
+        item={itemName}
+        price={itemPrice}
         total={total}
         setTotal={setTotal}
         shoppingCart={shoppingCart}
@@ -141,7 +142,7 @@ export default function ShopModal() {
     if (sellItemType && sellItemType === 'quest') return null;
 
     // 賣價為買價的 50%
-    const sellItemPrice = Math.floor((shopsItems.find(shop => shop.shop === currentScene).items.find(item => item.item === itemName).price) / 2) || null;
+    const sellItemPrice = Math.floor(itemsData.find(itemsData => itemsData.name === itemName).price / 2) || null;
 
     return (
       <ShopItem
