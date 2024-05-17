@@ -267,6 +267,10 @@ export default function CommandSection() {
     // 防止沒任務時跳出
     if (!quest) return;
 
+    // 防止沒承接任務卻跳出
+    const hasQuest = currentQuests.some(currentQuest => currentQuest.name === quest.name);
+    if (!hasQuest) return;
+
     const targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'accept').dialogue;
 
     dispatch(changeCurrentDialogue({
@@ -297,6 +301,10 @@ export default function CommandSection() {
 
     // 防止沒任務時跳出
     if (!quest) return;
+
+    // 防止任務沒完成卻跳出
+    const hasFinished = finishedQuests.some(finishedQuest => finishedQuest.name === quest.name);
+    if (!hasFinished) return;
 
     const targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'finish').dialogue;
 
