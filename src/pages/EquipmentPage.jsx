@@ -146,7 +146,6 @@ export default function EquipmentPage() {
     setSelectedEquipment(value);
   };
 
-
   // 上方狀態數值
   const SingleStats = ({ name, engName, color, Icon }) => {
     // 原本自身的數值
@@ -270,6 +269,14 @@ export default function EquipmentPage() {
       Swal.fire({
         icon: 'info',
         title: '請選擇裝備！',
+      });
+
+      return;
+    }
+
+    if (!selectedEquipment.availableClasses.includes(classTitle)) {
+      Swal.fire({
+        title: `${classTitle}無法裝備此武器！`
       });
 
       return;
