@@ -46,7 +46,7 @@ export default function ManualModal() {
               ＊迷宮中不可存檔。<br />
               ＊打倒地區魔王、戰鬥失敗或是脫逃才能離開迷宮。<br />
               ＊若選擇脫逃，會損失 50% 金錢。<br />
-              ＊每次進入迷宮，寶箱和敵人等都會刷新。<br />
+              ＊每次進入迷宮，敵人和地區魔王會刷新。<br />
               <b className="text-red-500">＊所有寶箱都只會被開啟一次，開過就不會再有，請特別注意。</b>
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
@@ -80,7 +80,7 @@ export default function ManualModal() {
             <div className="w-full h-px bg-gray-400 my-4"></div>
             <h5 className="text-xl my-2 font-medium">村莊設施</h5>
             <p className="leading-6 text-gray-800">
-              ＊位於村莊時，會有一些村莊獨有的指令可進行，供玩家補充資源、恢復裝態。<br />
+              ＊位於村莊時，會有一些村莊獨有的指令可進行，供玩家補充資源、恢復狀態。<br />
               ＊「商店」：可買賣各項商品，可購買的品項隨著遊戲進程逐漸開放；出售的價格為買進的一半。<br />
               ＊「旅館」：只需要花 $10 便可使恢復狀態至最佳。
             </p>
