@@ -68,7 +68,13 @@ export default function SkillItem({ name, costMP, type, attributes }) {
       const reason = selfMP >= costMP && !skill.canUseOutsideBattle ? '此技能只能在戰鬥中使用' : selfMP < costMP ? 'MP不足' : '目前無法使用';
 
       Swal.fire({
-        title: `${reason}`,
+        html: `
+          <div>
+            <h5>${skill.effectDescription}</h5>
+            <h5>花費MP：${skill.costMP} 點</h5>
+            <h5>目前無法使用。（${reason}）</h4>
+          <div>
+        `,
         icon: 'info',
       })
 

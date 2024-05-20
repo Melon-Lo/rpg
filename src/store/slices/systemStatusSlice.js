@@ -61,13 +61,16 @@ const systemStatusSlice = createSlice({
     changeFinishedQuests(state, action) {
       state.quests.finishedQuests = action.payload;
     },
+    changeShownAcceptDialogue(state, action) {
+      state.quests.shownAcceptDialogue = action.payload;
+    },
     addFinishedQuest(state, action) {
       state.quests.finishedQuests = [
         ...state.quests.finishedQuests,
         action.payload,
       ];
     },
-    changeShownAcceptDialogue(state, action) {
+    addShownAcceptDialogue(state, action) {
       state.quests.shownAcceptDialogue = [
         ...state.quests.shownAcceptDialogue,
         action.payload,
@@ -87,7 +90,8 @@ export const {
   changeFinishingQuest,
   changeCurrentQuests,
   changeFinishedQuests,
-  addFinishedQuest,
   changeShownAcceptDialogue,
+  addFinishedQuest,
+  addShownAcceptDialogue,
 } = systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;

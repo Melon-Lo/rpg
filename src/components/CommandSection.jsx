@@ -2,7 +2,7 @@ import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeCurrentQuests, changeShownAcceptDialogue } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeCurrentQuests, addShownAcceptDialogue } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -278,7 +278,7 @@ export default function CommandSection() {
     if (shownBefore) {
       return;
     } else {
-      dispatch(changeShownAcceptDialogue(currentDialogue.talker));
+      dispatch(addShownAcceptDialogue(currentDialogue.talker));
     }
 
     dispatch(changeCurrentDialogue({

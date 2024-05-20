@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage, changeCurrentQuests, changeFinishedQuests, changeEquipments, changeEquipmentsStats, changeTotalStats, changeShownAcceptDialogue } from "../store";
+import { changeCharacterStats, changeName, changeClassTitle, changeCurrentScene, changeSkills, changeItems, changeMoney, changeRoleCreated, changeVisitedMazes, changeVisitedMazesChests, changeMessages, changeStage, changeCurrentQuests, changeFinishedQuests, changeEquipments, changeEquipmentsStats, changeTotalStats, addShownAcceptDialogue, changeShownAcceptDialogue } from "../store";
 import Swal from "sweetalert2";
 
 import { useContext } from "react";

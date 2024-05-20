@@ -1,7 +1,7 @@
 import Button from "../components/Button";
 import classes from "../data/classes";
 import { useDispatch, useSelector } from "react-redux";
-import { changeName, changeClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems, changeCurrentScene, changeVisitedMazes, changeVisitedMazesChests, changeCurrentQuests, changeFinishedQuests, changeStage } from "../store";
+import { changeName, changeClassTitle, resetStats, generateStats, changeRoleCreated, addMessage, clearMessages, resetItems, changeCurrentScene, changeVisitedMazes, changeVisitedMazesChests, changeCurrentQuests, changeFinishedQuests, changeShownAcceptDialogue, changeStage } from "../store";
 import { RiDiceFill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
@@ -89,6 +89,7 @@ export default function CreatePage() {
         // quests
         dispatch(changeCurrentQuests([]));
         dispatch(changeFinishedQuests([]));
+        dispatch(changeShownAcceptDialogue([]));
 
         navigate('/');
 

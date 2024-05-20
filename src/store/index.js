@@ -39,8 +39,9 @@ import {
   changeFinishingQuest,
   changeCurrentQuests,
   changeFinishedQuests,
-  addFinishedQuest,
   changeShownAcceptDialogue,
+  addFinishedQuest,
+  addShownAcceptDialogue,
 } from "./slices/systemStatusSlice";
 
 // messages
@@ -119,8 +120,9 @@ export {
   changeFinishingQuest,
   changeCurrentQuests,
   changeFinishedQuests,
-  addFinishedQuest,
   changeShownAcceptDialogue,
+  addFinishedQuest,
+  addShownAcceptDialogue,
 
   // items
   changeItem,

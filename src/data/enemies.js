@@ -94,15 +94,15 @@ const enemies = [
     isBoss: true,
     stage: 1,
     stats: {
-      HP: 150,
-      maxHP: 150,
-      ATK: 13,
+      HP: 200,
+      maxHP: 200,
+      ATK: 16,
       DEF: 5,
       MATK: 10,
       MDEF: 5,
       SPD: 3,
     },
-    exp: 50,
+    exp: 30,
     money: 80,
     loot: [
       {
@@ -176,7 +176,7 @@ const enemies = [
     isBoss: false,
     stats: {
       HP: 90,
-      maxHP: 50,
+      maxHP: 90,
       ATK: 18,
       DEF: 5,
       MATK: 5,
@@ -224,7 +224,7 @@ const enemies = [
       MDEF: 12,
       SPD: 5,
     },
-    exp: 90,
+    exp: 60,
     money: 100,
     loot: [
       {

@@ -24,7 +24,12 @@ export default function ItemsList() {
     const handleClick = () => {
       if (!item.canUse) {
         Swal.fire({
-          text: `${item.description}`,
+          html: `
+            <div>
+              <h5>${item.description}</h5>
+              <h5>${item.effectDescription}</h5>
+            <div>
+          `,
         });
         return;
       }
