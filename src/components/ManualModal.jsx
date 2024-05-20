@@ -62,6 +62,14 @@ export default function ManualModal() {
               ＊戰鬥失敗時，被傳送回村莊，並且損失 50% 的經驗值。<br />
             </p>
             <div className="w-full h-px bg-gray-400 my-4"></div>
+            <h5 className="text-xl my-2 font-medium">裝備</h5>
+            <p className="leading-6 text-gray-800">
+              ＊裝備分為武器、防具、飾品三種，每樣裝備都有著不同的素質，可於裝備頁進行整備。<br />
+              ＊有些裝備只有特定的職業可以裝備。如：木製法杖只有法師可以裝備。<br />
+              ＊不可卸下武器。<br />
+              ＊可透過迷宮寶箱、商店、任務獎勵等方式獲得。
+            </p>
+            <div className="w-full h-px bg-gray-400 my-4"></div>
             <h5 className="text-xl my-2 font-medium">等級與技能</h5>
             <p className="leading-6 text-gray-800">
               ＊經驗值達到當前等級要求經驗值時，則會升級。<br />
