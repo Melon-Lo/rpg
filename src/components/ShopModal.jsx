@@ -98,8 +98,7 @@ export default function ShopModal() {
 
         // 回歸買賣前狀態
         setShoppingCart([]);
-        // setShowModal('');
-        // setCurrentStep('主頁');
+        setShowModal('');
 
         Swal.fire({
           title: `${typeText}成功！`,

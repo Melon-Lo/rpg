@@ -22,6 +22,7 @@ import Button from "../components/Button";
 
 import Swal from "sweetalert2";
 import { StepContext } from "../contexts/step";
+import { nanoid } from "nanoid";
 
 const stats = [
   {
@@ -247,7 +248,7 @@ export default function EquipmentPage() {
     return (
       <div
         onClick={() => handleSelectEquipment(renderedItem)}
-        key={item.name}
+        key={nanoid()}
         className={"my-1 p-1 text-gray-800 " + selectedStyle}
       >
         {item.name}

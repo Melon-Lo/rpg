@@ -25,6 +25,7 @@ export default function ProgressModal() {
     }
   }, [])
 
+  // 關閉 modal
   const handleCloseModal = () => {
     setShowModal('');
   };
