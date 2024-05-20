@@ -21,6 +21,7 @@ const systemStatusSlice = createSlice({
     // 任務
     quests: {
       finishingQuest: false,
+      shownAcceptDialogue: [], // 任務的npc，用來判別有沒有出現過接受對話了
       currentQuests: [], // 整包 quest
       finishedQuests: [], // 整包 quest
     },
@@ -66,6 +67,12 @@ const systemStatusSlice = createSlice({
         action.payload,
       ];
     },
+    changeShownAcceptDialogue(state, action) {
+      state.quests.shownAcceptDialogue = [
+        ...state.quests.shownAcceptDialogue,
+        action.payload,
+      ];
+    },
   },
 });
 
@@ -81,5 +88,6 @@ export const {
   changeCurrentQuests,
   changeFinishedQuests,
   addFinishedQuest,
+  changeShownAcceptDialogue,
 } = systemStatusSlice.actions;
 export const systemStatusSliceReducer = systemStatusSlice.reducer;

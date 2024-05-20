@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { changeItem, changeEquipments, changeEquipmentsStats, changeTotalStats, changeCharacterStats, changeStats } from "../store";
 
 // icons
@@ -21,6 +21,7 @@ import itemsData from "../data/items";
 import Button from "../components/Button";
 
 import Swal from "sweetalert2";
+import { StepContext } from "../contexts/step";
 
 const stats = [
   {
@@ -88,6 +89,7 @@ export default function EquipmentPage() {
 
   const [equipmentType, setEquipmentType] = useState('');
   const [selectedEquipment, setSelectedEquipment] = useState({});
+  const { setCurrentStep } = useContext(StepContext);
 
   // 裝備種類的中文
   let equipmentType_CH;
@@ -342,6 +344,7 @@ export default function EquipmentPage() {
     }).then((result) => {
       if (result.isConfirmed) {
         navigate('/');
+        setCurrentStep('主頁');
       };
     });
   };

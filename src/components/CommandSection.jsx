@@ -2,7 +2,7 @@ import { TiArrowBack } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { addMessage, changeCurrentScene, changeCurrentDialogue, changeCurrentQuests } from "../store";
+import { addMessage, changeCurrentScene, changeCurrentDialogue, changeCurrentQuests, changeShownAcceptDialogue } from "../store";
 
 // components
 import CommandItem from "./CommandItem";
@@ -43,7 +43,7 @@ export default function CommandSection() {
   const { stage, currentDialogue } = useSelector(state => state.systemStatus);
 
   // 任務相關變數
-  const { currentQuests, finishedQuests } = useSelector(state => state.systemStatus.quests);
+  const { currentQuests, finishedQuests, shownAcceptDialogue } = useSelector(state => state.systemStatus.quests);
 
   // 場景相關變數
   const { currentScene } = useSelector(state => state.systemStatus);
@@ -272,6 +272,14 @@ export default function CommandSection() {
     if (!hasQuest) return;
 
     const targetDialogue = quest.dialogues.find(dialogue => dialogue.timing === 'accept').dialogue;
+    const shownBefore = shownAcceptDialogue.includes(currentDialogue.talker);
+
+    // 防止之前已承接任務，但還沒完成時跳出
+    if (shownBefore) {
+      return;
+    } else {
+      dispatch(changeShownAcceptDialogue(currentDialogue.talker));
+    }
 
     dispatch(changeCurrentDialogue({
       talker: currentDialogue.talker,

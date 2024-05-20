@@ -21,7 +21,7 @@ const enemies = [
       MDEF: 1,
       SPD: 2,
     },
-    exp: 30,
+    exp: 9,
     money: 12,
     loot: [
       {
@@ -135,7 +135,7 @@ const enemies = [
     weakness: "wind",
     isBoss: false,
     stats: {
-      HP: 60,
+      HP: 80,
       maxHP: 60,
       ATK: 15,
       DEF: 8,
@@ -175,7 +175,7 @@ const enemies = [
     weakness: "fire",
     isBoss: false,
     stats: {
-      HP: 50,
+      HP: 90,
       maxHP: 50,
       ATK: 18,
       DEF: 5,
@@ -216,7 +216,7 @@ const enemies = [
     isBoss: true,
     stage: 2,
     stats: {
-      HP: 250,
+      HP: 350,
       maxHP: 250,
       ATK: 22,
       DEF: 12,
