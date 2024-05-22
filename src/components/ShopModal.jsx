@@ -17,6 +17,7 @@ export default function ShopModal() {
   const { currentScene, stage } = useSelector(state => state.systemStatus);
   const { money, data: items } = useSelector(state => state.items);
   const currentShopItems = shopsItems.find(shop => shop.shop === currentScene).items;
+  const { equipments } = useSelector(state => state.characterStats);
 
   const [total, setTotal] = useState(0);
   const [shoppingCart, setShoppingCart] = useState([]);
@@ -117,6 +118,9 @@ export default function ShopModal() {
     // 如果還沒到達特定 stage，不會販賣該品項
     if (stage < item.stage) return null;
 
+    // 判別當前有沒有裝備著該物品
+    const hasEquipped = Object.values(equipments).includes(itemName);
+
     return (
       <ShopItem
         key={itemName}
@@ -128,6 +132,7 @@ export default function ShopModal() {
         setShoppingCart={setShoppingCart}
         type={type}
         quantityHeld={currentHeld}
+        hasEquipped={hasEquipped}
       />
     )
   })

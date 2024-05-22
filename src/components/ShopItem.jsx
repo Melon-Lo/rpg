@@ -12,6 +12,7 @@ export default function ShopItem({
   setShoppingCart,
   quantityHeld,
   type,
+  hasEquipped,
 }) {
   const [quantity, setQuantity] = useState(0);
 
@@ -73,7 +74,13 @@ export default function ShopItem({
 
   return (
     <div className="w-full flex justify-between items-center p-3 text-gray-700 even:bg-gray-500/10">
-      <h5 className="w-3/12" onClick={handleShowDetail}>{item}</h5>
+      <h5 className="w-3/12" onClick={handleShowDetail}>
+        {item}
+        {/* 如果現在裝備著該物品，則在旁邊顯示小小的E */}
+        { hasEquipped &&
+          <span className="text-gray-900 text-xs font-bold ml-1">(E)</span>
+        }
+      </h5>
       <h5 className="w-3/12 font-bold">$ {price}</h5>
       <h5 className="w-3/12">持有：{quantityHeld}</h5>
       <div className="w-3/12 flex justify-end items-center">
