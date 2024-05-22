@@ -27,7 +27,7 @@ export default function ItemsList() {
           html: `
             <div>
               <h5>${item.description}</h5>
-              <h5>${item.effectDescription}</h5>
+              <h5>${item.effectDescription || ''}</h5>
             <div>
           `,
         });

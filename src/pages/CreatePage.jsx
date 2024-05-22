@@ -43,6 +43,15 @@ export default function CreatePage() {
       return
     }
 
+    // 需要先擲骰子決定數值
+    if (!maxHP) {
+      Swal.fire({
+        text: "請擲骰子決定數值！",
+        icon: "warning"
+      });
+      return
+    }
+
     Swal.fire({
       title: '都確定了嗎？',
       html: `
